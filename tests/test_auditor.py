@@ -1,4 +1,5 @@
 """Auditor plumbing: page split, page selection and the anti-hallucination checks."""
+
 from valuation_gerdau import auditor, sources
 
 HTML = (
@@ -20,12 +21,19 @@ def test_pages_split_and_rows_stay_on_one_line(tmp_path):
 
 
 def _answer(**over):
-    base = {"net_revenue": (67026, 2, "Net Sales 16,822 67,026"), "gross_debt": (13637, 3, "Gross Debt 13,637"),
-            "net_debt": (5360, 3, "Net Debt 5,360"),
-            "cash": (8277, 3, "Cash, cash equivalents and short-term investments 8,277")}
+    base = {
+        "net_revenue": (67026, 2, "Net Sales 16,822 67,026"),
+        "gross_debt": (13637, 3, "Gross Debt 13,637"),
+        "net_debt": (5360, 3, "Net Debt 5,360"),
+        "cash": (8277, 3, "Cash, cash equivalents and short-term investments 8,277"),
+    }
     base.update(over)
-    return {"figures": [{"metric": k, "found": True, "value_rs_million": v, "page": pg, "quote": q, "column": "12M"}
-                        for k, (v, pg, q) in base.items()]}
+    return {
+        "figures": [
+            {"metric": k, "found": True, "value_rs_million": v, "page": pg, "quote": q, "column": "12M"}
+            for k, (v, pg, q) in base.items()
+        ]
+    }
 
 
 def test_check_accepts_a_correct_answer(tmp_path):
@@ -49,17 +57,25 @@ def test_billions_in_text_are_accepted():
 
 
 def test_golden_scoring():
-    rows = [{"fiscal_year": 2024, "metric": "cash", "document": 8277.0},
-            {"fiscal_year": 2024, "metric": "net_debt", "document": 9999.0}]
-    golden = {"cases": [{"fiscal_year": 2024, "metric": "cash", "value": 8277},
-                        {"fiscal_year": 2024, "metric": "net_debt", "value": 5360}]}
+    rows = [
+        {"fiscal_year": 2024, "metric": "cash", "document": 8277.0},
+        {"fiscal_year": 2024, "metric": "net_debt", "document": 9999.0},
+    ]
+    golden = {
+        "cases": [
+            {"fiscal_year": 2024, "metric": "cash", "value": 8277},
+            {"fiscal_year": 2024, "metric": "net_debt", "value": 5360},
+        ]
+    }
     s = auditor.score_against_golden(rows, golden)
     assert s["correct"] == 1 and s["cases"] == 2
 
 
 def test_label_line_without_number_is_extended_on_the_page(tmp_path):
-    html = ("<div>x</div><div style='page-break-after:always'></div>"
-            "<p>Cash, cash equivalents and short-term</p><p>investments 5,434 8,590</p>")
+    html = (
+        "<div>x</div><div style='page-break-after:always'></div>"
+        "<p>Cash, cash equivalents and short-term</p><p>investments 5,434 8,590</p>"
+    )
     p = tmp_path / "doc.htm"
     p.write_text(html, encoding="utf-8")
     pages = sources.pages(p)

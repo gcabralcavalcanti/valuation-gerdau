@@ -1,4 +1,5 @@
 """Public documents: download (cached) and split into numbered pages of plain text."""
+
 from __future__ import annotations
 
 import html
@@ -26,8 +27,10 @@ def fetch(url: str) -> Path:
     if target.exists() and target.stat().st_size > 0:
         return target
     if not config.SEC_USER_AGENT:
-        raise RuntimeError("SEC requires a User-Agent with a contact: set SEC_USER_AGENT='Your Name you@mail' "
-                           f"in .env, or save {url} as {target}.")
+        raise RuntimeError(
+            "SEC requires a User-Agent with a contact: set SEC_USER_AGENT='Your Name you@mail' "
+            f"in .env, or save {url} as {target}."
+        )
     target.parent.mkdir(parents=True, exist_ok=True)
     req = urllib.request.Request(url, headers={"User-Agent": config.SEC_USER_AGENT})
     with urllib.request.urlopen(req, timeout=60) as r:

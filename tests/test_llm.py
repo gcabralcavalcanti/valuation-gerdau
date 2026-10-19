@@ -1,4 +1,5 @@
 """The API wrapper: schema checks, retry, recording cache, call cap, demo mode. A fake client stands in for the API."""
+
 import json
 from types import SimpleNamespace
 
@@ -18,8 +19,11 @@ class FakeMessages:
     def create(self, **kw):
         self.calls.append(kw)
         text = self.answers.pop(0)
-        return SimpleNamespace(stop_reason="end_turn", content=[SimpleNamespace(type="text", text=text)],
-                               usage=SimpleNamespace(input_tokens=100, output_tokens=10))
+        return SimpleNamespace(
+            stop_reason="end_turn",
+            content=[SimpleNamespace(type="text", text=text)],
+            usage=SimpleNamespace(input_tokens=100, output_tokens=10),
+        )
 
 
 def make(tmp_path, answers, max_calls=5):
@@ -32,7 +36,7 @@ def make(tmp_path, answers, max_calls=5):
 def test_valid_answer_is_recorded_and_reused(tmp_path):
     m = make(tmp_path, ['{"x": 1}'])
     assert m.ask("t", "sys", "p", SCHEMA) == {"x": 1}
-    assert m.ask("t", "sys", "p", SCHEMA) == {"x": 1}          # same request: no second call
+    assert m.ask("t", "sys", "p", SCHEMA) == {"x": 1}  # same request: no second call
     assert len(m._client.messages.calls) == 1 and m.cache_hits == 1
     # the request carries the cost controls
     kw = m._client.messages.calls[0]
@@ -50,7 +54,7 @@ def test_semantic_check_failure_raises_after_retries(tmp_path):
     m = make(tmp_path, ['{"x": 1}', '{"x": 1}'])
     with pytest.raises(ValueError):
         m.ask("t", "sys", "p", SCHEMA, check=lambda a: ["x must be 2"] if a["x"] != 2 else [])
-    assert not list((tmp_path / "rec").glob("*.json"))      # bad answers are never recorded
+    assert not list((tmp_path / "rec").glob("*.json"))  # bad answers are never recorded
 
 
 def test_call_cap(tmp_path):
@@ -74,7 +78,7 @@ def test_demo_mode_replays_or_stops(tmp_path, monkeypatch):
 def test_log_is_json_lines_with_tokens(tmp_path):
     m = make(tmp_path, ['{"x": 1}'])
     m.ask("t", "sys", "p", SCHEMA)
-    lines = [json.loads(l) for l in m.log_path.read_text(encoding="utf-8").splitlines()]
+    lines = [json.loads(line) for line in m.log_path.read_text(encoding="utf-8").splitlines()]
     assert lines[0]["input_tokens"] == 100 and lines[0]["source"] == "api"
     assert m.cost_usd() == pytest.approx((100 * 0.10 + 10 * 0.50) / 1e6)
 

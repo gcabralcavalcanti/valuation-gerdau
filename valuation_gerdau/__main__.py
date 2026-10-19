@@ -1,4 +1,5 @@
 """python -m valuation_gerdau [auditor|analyst|lab|reviewer|all|final] [--demo|--live] [--no-llm] [--max-calls N]"""
+
 from __future__ import annotations
 
 import argparse
@@ -20,9 +21,17 @@ def main(argv=None) -> int:
     args = p.parse_args(argv)
 
     cvm.ALLOW_SNAPSHOT = args.demo
-    llm = None if args.no_llm or args.role == "final" else LLM("demo" if args.demo else "live" if args.live else "auto", args.max_calls)
-    info = lambda: llm.summary() if llm else {"mode": "no-llm", "model": "-", "api_calls": 0,  # noqa: E731
-                                              "recorded_answers_used": 0, "estimated_cost_usd": 0.0}
+    llm = (
+        None
+        if args.no_llm or args.role == "final"
+        else LLM("demo" if args.demo else "live" if args.live else "auto", args.max_calls)
+    )
+
+    def info() -> dict:
+        if llm:
+            return llm.summary()
+        return {"mode": "no-llm", "model": "-", "api_calls": 0, "recorded_answers_used": 0, "estimated_cost_usd": 0.0}
+
     wb = data.load()
     if args.role == "final":
         print(final_report.build(wb))

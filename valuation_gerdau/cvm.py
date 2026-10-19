@@ -1,4 +1,5 @@
 """Raw statements from CVM open data (DFP, consolidated), read independently of the thesis scripts."""
+
 from __future__ import annotations
 
 import json
@@ -11,7 +12,7 @@ import pandas as pd
 from . import config
 
 SNAPSHOT = config.RECORDINGS / "cvm_lines.json"  # lines already extracted from the zips
-ALLOW_SNAPSHOT = False                              # True in --demo
+ALLOW_SNAPSHOT = False  # True in --demo
 GERDAU_CVM = 3980  # Gerdau S.A. (never Metalúrgica Gerdau, CVM 2879)
 URL = "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_{y}.zip"
 
@@ -69,7 +70,11 @@ def _from_zip(year: int) -> dict:
         "Lucro antes do IR": _code(dre, "3.07"),
         "IR e CSLL": _code(dre, "3.08"),
         "Depreciação e amortização": _desc(dfc, "6.01.01", "deprecia"),
-        "Capex": -_desc(dfc, "6.02", r"^adi[çc][õo]es de (?:imobilizado|outros ativos intang)|^aquisi[çc][ãa]o de (?:imobilizado|intang)"),
+        "Capex": -_desc(
+            dfc,
+            "6.02",
+            r"^adi[çc][õo]es de (?:imobilizado|outros ativos intang)|^aquisi[çc][ãa]o de (?:imobilizado|intang)",
+        ),
         "Contas a receber": _code(bpa, "1.01.03"),
         "Estoques": _code(bpa, "1.01.04"),
         "Fornecedores": _code(bpp, "2.01.02"),

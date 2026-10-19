@@ -5,6 +5,7 @@ expected Selic + Baa credit spread; ke = rf + beta x mature US premium + lambda 
 LEGACY reproduces the first version of the notebook (golden/thesis_results_v1.json: Ibovespa − CDI premium and
 book cost of debt). Every other Spec is an alternative the lab or the reviewer can test. All values in R$ million.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
@@ -23,24 +24,26 @@ STATUTORY_TAX = 0.34
 
 @dataclass(frozen=True)
 class Spec:
-    window: int = 5                 # years used to estimate operating assumptions
+    window: int = 5  # years used to estimate operating assumptions
     beta_window: int | None = None  # years of returns in the beta regression (None = window)
-    beta_freq: str = "W"            # "W" weekly or "M" monthly returns
-    beta_adjust: str = "raw"        # "raw" or "blume" (0.67·β + 0.33)
+    beta_freq: str = "W"  # "W" weekly or "M" monthly returns
+    beta_adjust: str = "raw"  # "raw" or "blume" (0.67·β + 0.33)
     erp: float | str = "us_mature"  # "us_mature" (US stocks − 10y bonds, geometric, since 1928),
-                                    # "brazil_historical" (Ibovespa − CDI since 2009) or a fixed number
-    country_risk: bool = True       # add lambda x country premium (EMBI+ Brazil) to the cost of equity
-    kd: str = "rating_spread"       # "rating_spread" (expected Selic + Baa spread) or "book" (financial expense / debt)
-    tax: str = "effective"          # "effective" (clipped to 0–34%) or "statutory" (34%)
+    # "brazil_historical" (Ibovespa − CDI since 2009) or a fixed number
+    country_risk: bool = True  # add lambda x country premium (EMBI+ Brazil) to the cost of equity
+    kd: str = "rating_spread"  # "rating_spread" (expected Selic + Baa spread) or "book" (financial expense / debt)
+    tax: str = "effective"  # "effective" (clipped to 0–34%) or "statutory" (34%)
     overrides: dict = field(default_factory=dict)  # fixed values for named assumptions
 
     def label(self) -> str:
         erp = self.erp if isinstance(self.erp, str) else f"{self.erp:.0%}"
         crp = " + country" if self.country_risk else ""
-        return (f"window {self.window}y · beta {self.beta_window or self.window}y {self.beta_freq} {self.beta_adjust}"
-                f" · ERP {erp}{crp} · kd {self.kd} · tax {self.tax}")
+        return (
+            f"window {self.window}y · beta {self.beta_window or self.window}y {self.beta_freq} {self.beta_adjust}"
+            f" · ERP {erp}{crp} · kd {self.kd} · tax {self.tax}"
+        )
 
-    def with_overrides(self, **kw) -> "Spec":
+    def with_overrides(self, **kw) -> Spec:
         return replace(self, overrides={**self.overrides, **kw})
 
 
@@ -53,7 +56,8 @@ def legacy(**kw) -> Spec:
 
 # Plain definitions sent to the LLM with the numbers, so it does not guess what each column means.
 DEFINITIONS = (
-    "Definições (do código): Cost of debt da tese (desde 19/10) = Selic esperada t+4 + spread de crédito Baa − Treasury "
+    "Definições (do código): Cost of debt da tese (desde 19/10) = Selic esperada t+4 + spread de crédito "
+    "Baa − Treasury "
     "de 10 anos (custo atual de captação). Custo contábil antigo = despesa financeira total da DRE (inclui variação "
     "cambial) / dívida total média. ke = rf + beta × prêmio maduro dos EUA + lambda × EMBI+ Brasil, lambda = fatia da "
     "receita no Brasil. 'Interest on debt (DFC)' = linha 'Despesa de juros sobre dívidas "
@@ -63,8 +67,14 @@ DEFINITIONS = (
     "prêmio-país (1,5%–4%), do spread de crédito (1%–3%) e de g (± 1 p.p.) são faixas de teste, não dados."
 )
 
-ASSUMPTIONS = ["Revenue growth", "EBIT margin", "D&A / revenue", "Capex / revenue",
-               "Working capital / revenue", "Tax rate"]          # operating assumptions, estimated by window
+ASSUMPTIONS = [
+    "Revenue growth",
+    "EBIT margin",
+    "D&A / revenue",
+    "Capex / revenue",
+    "Working capital / revenue",
+    "Tax rate",
+]  # operating assumptions, estimated by window
 
 
 class DCF:
@@ -91,7 +101,7 @@ class DCF:
 
     # ------------------------------------------------------------ assumptions
     def assumptions(self, last_year: int, years: int) -> pd.Series:
-        a = self.ratios.loc[last_year - years + 1: last_year].mean()
+        a = self.ratios.loc[last_year - years + 1 : last_year].mean()
         rev = self.f["Receita líquida"]
         a["Revenue growth"] = (rev[last_year] / rev[last_year - years]) ** (1 / years) - 1
         return a
@@ -101,10 +111,12 @@ class DCF:
         p = self.wb.prices
         last = p.resample(rule).last()
         cdi = self._cdi_daily.resample(rule).prod() - 1
-        return pd.DataFrame({
-            "GGBR4": last["GGBR4 ajustada (R$)"].pct_change() - cdi,
-            "Ibovespa": last["Ibovespa (pontos)"].pct_change() - cdi,
-        }).dropna()
+        return pd.DataFrame(
+            {
+                "GGBR4": last["GGBR4 ajustada (R$)"].pct_change() - cdi,
+                "Ibovespa": last["Ibovespa (pontos)"].pct_change() - cdi,
+            }
+        ).dropna()
 
     def beta_regression(self, date, years: int, freq: str = "W"):
         ret = self.excess_returns(freq)
@@ -115,7 +127,7 @@ class DCF:
         p = self.wb.prices[self.wb.prices.index < date]
         annual = p.resample("YE").last()
         ibov = annual["Ibovespa (pontos)"].pct_change()
-        cdi = ((1 + p["CDI (% ao dia)"] / 100).resample("YE").prod() - 1)
+        cdi = (1 + p["CDI (% ao dia)"] / 100).resample("YE").prod() - 1
         return float((ibov - cdi).dropna().mean())
 
     def us_mature_erp(self, date, start: int = 1927) -> float:
@@ -180,23 +192,47 @@ class DCF:
             growth = a["Revenue growth"] + (g - a["Revenue growth"]) * year / EXPLICIT_YEARS
             revenue *= 1 + growth
             wc = a["Working capital / revenue"] * revenue
-            fcff.append(revenue * (a["EBIT margin"] * (1 - t) + a["D&A / revenue"] - a["Capex / revenue"])
-                        - (wc - wc_prev))
+            fcff.append(
+                revenue * (a["EBIT margin"] * (1 - t) + a["D&A / revenue"] - a["Capex / revenue"]) - (wc - wc_prev)
+            )
             wc_prev = wc
         disc = (1 + wacc) ** -np.arange(1, EXPLICIT_YEARS + 1)
-        terminal = fcff[-1] * (1 + g) / (wacc - g)   # meaningless when wacc <= g: flagged below
+        terminal = fcff[-1] * (1 + g) / (wacc - g)  # meaningless when wacc <= g: flagged below
         firm = float(np.dot(fcff, disc) + terminal * disc[-1])
-        equity = (firm - row["Dívida líquida (R$ mi)"] - self.f.loc[last, "Arrendamentos (IFRS 16)"]
-                  - self.f.loc[last, "PL de não controladores"])
+        equity = (
+            firm
+            - row["Dívida líquida (R$ mi)"]
+            - self.f.loc[last, "Arrendamentos (IFRS 16)"]
+            - self.f.loc[last, "PL de não controladores"]
+        )
         price = float(row["GGBR4 na data (R$)"])
         fair = equity / row["Ações em circulação (mi)"]
-        return {"date": d.date().isoformat(), "last_fy": last, "spec": spec.label(), "window": spec.window,
-                "price": price, "fair_value": fair, "deviation": fair / price - 1,
-                "beta": beta, "beta_se": float(reg.bse["Ibovespa"]), "beta_r2": float(reg.rsquared),
-                "beta_n": int(reg.nobs), "erp": erp, "lambda": lam, "crp": crp, "rf": rf, "ke": ke,
-                "Cost of debt": kd, "Book cost of debt": float(a["Book cost of debt"]), "wacc": wacc, "g": g,
-                "fcff_year1": fcff[0], "firm_value": firm, "valid": bool(wacc > g),
-                **{k: float(a[k]) for k in ASSUMPTIONS}}
+        return {
+            "date": d.date().isoformat(),
+            "last_fy": last,
+            "spec": spec.label(),
+            "window": spec.window,
+            "price": price,
+            "fair_value": fair,
+            "deviation": fair / price - 1,
+            "beta": beta,
+            "beta_se": float(reg.bse["Ibovespa"]),
+            "beta_r2": float(reg.rsquared),
+            "beta_n": int(reg.nobs),
+            "erp": erp,
+            "lambda": lam,
+            "crp": crp,
+            "rf": rf,
+            "ke": ke,
+            "Cost of debt": kd,
+            "Book cost of debt": float(a["Book cost of debt"]),
+            "wacc": wacc,
+            "g": g,
+            "fcff_year1": fcff[0],
+            "firm_value": firm,
+            "valid": bool(wacc > g),
+            **{k: float(a[k]) for k in ASSUMPTIONS},
+        }
 
     def run(self, spec: Spec = Spec()) -> pd.DataFrame:
         return pd.DataFrame([self.value(r, spec) for _, r in self.wb.dates.iterrows()])

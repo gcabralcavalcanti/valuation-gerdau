@@ -1,4 +1,5 @@
 """Steel cycle: US PPI for steel mill products (FRED WPU101), monthly, cached."""
+
 from __future__ import annotations
 
 import io
@@ -29,5 +30,10 @@ def at_date(date, s: pd.Series | None = None) -> dict:
     yoy = s.iloc[-1] / s.iloc[-13] - 1
     vs10y = s.iloc[-1] / s.iloc[-121:-1].mean() - 1
     phase = "rising" if yoy > 0.10 else ("falling" if yoy < -0.10 else "flat")
-    return {"steel_month": s.index[-1].strftime("%Y-%m"), "steel_ppi": float(s.iloc[-1]),
-            "steel_yoy": float(yoy), "steel_vs_10y_avg": float(vs10y), "phase": phase}
+    return {
+        "steel_month": s.index[-1].strftime("%Y-%m"),
+        "steel_ppi": float(s.iloc[-1]),
+        "steel_yoy": float(yoy),
+        "steel_vs_10y_avg": float(vs10y),
+        "phase": phase,
+    }

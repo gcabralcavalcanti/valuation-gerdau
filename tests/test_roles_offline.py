@@ -1,4 +1,5 @@
 """Lab, reviewer and steel cycle on synthetic data, with the LLM off."""
+
 import numpy as np
 import pandas as pd
 
@@ -23,7 +24,7 @@ def test_lab_grid_and_beta_ci(synthetic_wb, monkeypatch):
     out = lab.run(None, synthetic_wb)
     assert set(out["grid"]["dimension"]) == set(lab.specs())
     ci = out["beta_ci"].pivot_table(index="scenario", columns="date", values="fair_value")
-    assert (ci.loc["β − 1.96 se"] > ci.loc["β + 1.96 se"]).all()   # lower beta, lower WACC, higher value
+    assert (ci.loc["β − 1.96 se"] > ci.loc["β + 1.96 se"]).all()  # lower beta, lower WACC, higher value
     assert out["summary"] is None
 
 

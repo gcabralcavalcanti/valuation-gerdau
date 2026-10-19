@@ -1,4 +1,5 @@
 """The independent DCF: economic sanity on synthetic data, and the golden set on the real spreadsheet."""
+
 import json
 
 import pytest

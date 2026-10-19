@@ -1,90 +1,74 @@
 # valuation-gerdau
 
-**An AI review layer for a discounted-cash-flow thesis: four roles that audit the data, rebuild the numbers,
-stress-test the method and prepare the defence, each one checked by code.**
+Four AI-assisted reviewers around my DCF thesis on Gerdau: they audit the data against public filings, rebuild the
+numbers from raw statements, test alternative specifications and prepare the questions an examining board will ask.
+
+![Public data only](https://img.shields.io/badge/data-public%20only-2a78d6)
+![Built with AI assistance](https://img.shields.io/badge/built%20with-AI%20assistance-52514e)
+
+## Results
 
 ![Price vs fair value by estimation window](reports/figures/price_vs_value.png)
 
-My undergraduate thesis (Economics, UFRJ) values Gerdau S.A. (GGBR4) at five dates of the steel cycle, each using
-only information public on that date, and asks whether the **window used to estimate the assumptions** creates
-systematic gaps between fair value and price. The chart shows the pattern: the 3-year window gives the highest
-values at the 2022–2023 peak. The thesis itself (data, notebook, text) is mine and lives in
-[`tcc-valuation-gerdau`](https://github.com/gcabralcavalcanti/tcc-valuation-gerdau); this repository reads its
-spreadsheet through the raw link (single source of truth, no copy).
+| Check | Result | Source |
+|---|---|---|
+| Spreadsheet figures vs Gerdau's 4Q earnings releases (page and quoted line for each) | **20/20** match; extraction 20/20 against hand-checked figures | [reports/auditor.md](reports/auditor.md) |
+| Spreadsheet lines vs raw CVM filings, 2015–2024 | **130/130** match | [reports/second_analyst.md](reports/second_analyst.md) |
+| Independent model vs the thesis notebook | **15/15** current results, **45/45** first version | [golden/](golden/), [tests/test_model.py](tests/test_model.py) |
+| WACC, 5-year window, first thesis version → now | 5.1–7.8% (below terminal growth) → **11.6–14.2%** | [final-report.pdf](final-report.pdf) |
+| API cost of every run while building it | 28 calls, about **US$ 0.03** | `logs/` (tokens per call) |
 
-The AI never writes the thesis or picks a specification. It checks the work and points at what to defend.
+The 3-year estimation window gives the highest fair values at the 2022–2023 steel peak, which is the pattern the
+thesis question is about. Full write-up: [final-report.pdf](final-report.pdf).
 
-## Try it (no API key)
+## Run it
 
 ```bash
 pip install -r requirements.txt
 python demo.py
 ```
 
-Runs the four roles in sequence on recorded model answers (no API call, no cost) and writes
-[`reports/final-report.pdf`](reports/final-report.pdf).
+Runs the four reviewers in sequence on recorded model answers (no API key, no cost), prints what each one found and
+rebuilds `final-report.pdf`. With a key (`cp .env.example .env`), `python -m valuation_gerdau all` calls the API and
+`python -m valuation_gerdau final` rebuilds the PDF. Tests: `python -m pytest -q`.
 
-## The four roles
+## How it works
 
-| Role | Code does | LLM does | Result (19/10/2026) |
-|---|---|---|---|
-| **1. Data auditor** | splits Gerdau's 4Q earnings releases (SEC) into pages, picks the relevant ones, verifies the answer | extracts revenue, gross debt, net debt and cash as JSON with page and quoted line | **20/20** figures match; extraction **20/20** against figures checked by hand · [report](reports/auditor.md) |
-| **2. Second analyst** | rebuilds the inputs from **raw CVM filings**, reconciles line by line, recomputes FCFF and WACC changing one choice at a time | writes the memo from the computed tables | **130/130** lines match · [report](reports/second_analyst.md) |
-| **3. Econometric lab** | runs estimation windows (3/5/7/10 years), beta regression designs, premiums and cost-of-capital methods; betas across the 95% interval | summarises what moves value and lists the options with pros and cons | [report](reports/lab.md) |
-| **4. Assumption reviewer** | places each assumption in Gerdau's own history and in the steel cycle (data public at each date); tornado of fair value | writes the board's likely questions with the numbers for the answer | [report](reports/reviewer.md) |
+1. **Data.** Reads the thesis spreadsheet from [`tcc-valuation-gerdau`](https://github.com/gcabralcavalcanti/tcc-valuation-gerdau)
+   through its raw link, and an independent FCFF/WACC model reproduces the thesis results.
+2. **Data auditor.** Splits each earnings release into pages, picks the pages with the figures, and the LLM extracts
+   them as JSON with page and quote. Code checks that the quote is on that page and contains the number.
+3. **Second analyst.** Rebuilds the inputs from raw CVM filings, reconciles them line by line and recomputes the value
+   changing one choice at a time (cost of debt, tax rate, equity income, country risk). The LLM writes the memo.
+4. **Econometric lab.** Runs estimation windows, beta regression designs, equity premiums and cost-of-capital methods,
+   and the LLM lists the options with pros and cons. It does not pick one.
+5. **Assumption reviewer.** Places each assumption in Gerdau's own history and in the steel cycle, builds a tornado,
+   and the LLM writes the board's likely questions with the numbers for each answer.
+6. **Guards.** JSON Schema on every answer, closed lists for names, every number in the LLM text must exist in the
+   tables it received, one retry with the reasons, call cap per run, recorded answers (never pay twice), JSON log per call.
 
-## What it changed in the thesis
+## Data
 
-The first version of the thesis model estimated the equity premium as Ibovespa minus CDI since 2009, which is
-negative, and the cost of debt as total financial expense over book debt, which includes FX losses. The WACC
-(5–8%) fell below terminal growth and the Gordon value exploded. The review led to the current method, all
-numbers computed from market data:
+All public: CVM open data (financial statements), Gerdau's earnings releases filed with the SEC, Yahoo Finance prices
+(in the thesis spreadsheet), Banco Central (Focus survey, CDI), FRED (steel price index, Baa and Treasury yields),
+Ipeadata (EMBI+ Brazil) and Robert Shiller's long-run US returns. The spreadsheet is not copied here; `recordings/`
+keeps the model answers and the CVM lines already extracted so the demo runs offline from the large files.
 
-| | First version | Now |
-|---|---|---|
-| Cost of debt | financial expense / average debt (10.7–15.4%) | expected Selic + Moody's Baa credit spread (8.2–11.2%) |
-| Cost of equity | rf + β × (Ibovespa − CDI) | rf + β × mature US premium (Shiller, since 1928) + λ × EMBI+ Brazil, λ = revenue share in Brazil |
-| WACC, 5-year window | 5.1–7.8%, below g | 11.6–14.2%, above g at every date |
+## Limits
 
-Both versions are reproduced exactly by the independent model here: 15/15 results of the current notebook and
-45/45 of the first one (`golden/`, `tests/test_model.py`).
+- The number check catches invented figures, not a real figure tied to the wrong date; the reports say so.
+- EMBI+ Brazil was discontinued on 30/07/2024, so the February 2025 date uses that last value.
+- Country risk uses the plain sovereign spread, not the spread scaled by relative volatility.
+- The risk-free rate is the expected Selic from the Focus survey; a long government bond net of the sovereign spread
+  is the next test.
+- Earnings releases are web pages: "page" means the page breaks in the filed document.
 
-## Engineering
+## How AI was used
 
-- **Structured output, checked twice.** JSON constrained by a schema (`schemas/`), validated again locally, plus
-  role checks: the quote must be on the cited page and contain the number; names the model picks come from closed
-  lists (`enum`); **every number the model writes must exist in the tables it received**. A failed check triggers one
-  retry with the reasons; a second failure stops the run. Known limit: a real number paired with the wrong date can
-  still pass, so the reports say so.
-- **Cost limits.** Cheapest model that handles the task (`claude-haiku-5-5`), effort `low`, thinking off, small
-  `max_tokens`, hard cap of calls per run. Every answer is recorded under `recordings/` by a hash of the request, so
-  the same call is never paid twice and the demo replays it. All runs while building this: 28 calls, **US$ 0.03**
-  (from the logged tokens).
-- **Observability.** One JSON line per call in `logs/`: task, request hash, source (api or recording), tokens, failed checks.
-- **Secrets.** `ANTHROPIC_API_KEY` from the environment or a git-ignored `.env`; never in code or logs.
-- **Tests without network or API.** A fake client exercises schema checks, retries, cache, call cap and demo mode;
-  synthetic data tests the model; the golden tests run when the spreadsheet is on disk (`python -m pytest -q`).
+I use Claude (Claude Code and the API) for coding, review and documentation. The questions, modelling choices,
+validation and conclusions are mine. Here the API is also part of the product: it reads documents and drafts text,
+and code checks every answer.
 
-## Run with a key
+## License
 
-```bash
-cp .env.example .env              # ANTHROPIC_API_KEY, SEC_USER_AGENT
-python -m valuation_gerdau all    # live if a key exists, demo otherwise
-python -m valuation_gerdau final  # rebuilds reports/final-report.pdf
-```
-
-## Layout
-
-```
-demo.py              one-command demo (no key)
-valuation_gerdau/
-  data.py            spreadsheet from the thesis repository (raw link, cached)
-  model.py           independent FCFF/WACC model; Spec = one specification, LEGACY = first thesis version
-  llm.py             API wrapper: schema, checks, retry, recordings, call cap, JSON log
-  sources.py         SEC releases -> numbered pages
-  cvm.py             raw CVM statements (DFP, consolidated)
-  steel.py           steel cycle (FRED steel price index)
-  auditor.py · second_analyst.py · lab.py · reviewer.py   the four roles
-  reports.py · final_report.py                            Markdown, JSON and the PDF
-schemas/  golden/  recordings/  reports/  tests/
-```
+MIT. See [LICENSE](LICENSE).

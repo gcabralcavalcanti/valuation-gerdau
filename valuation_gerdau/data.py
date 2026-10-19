@@ -2,6 +2,7 @@
 
 GERDAU_XLSX=<path> reads a local file instead (useful offline or before the thesis repo is published).
 """
+
 from __future__ import annotations
 
 import os
@@ -16,13 +17,13 @@ from . import config
 
 @dataclass
 class Workbook:
-    dates: pd.DataFrame          # one row per valuation date
-    fundamentals: pd.DataFrame   # annual, index = fiscal year, R$ million
-    prices: pd.DataFrame         # daily, index = date
-    macro: pd.DataFrame          # annual, index = year
-    focus: pd.DataFrame          # Focus survey available at each valuation date
+    dates: pd.DataFrame  # one row per valuation date
+    fundamentals: pd.DataFrame  # annual, index = fiscal year, R$ million
+    prices: pd.DataFrame  # daily, index = date
+    macro: pd.DataFrame  # annual, index = year
+    focus: pd.DataFrame  # Focus survey available at each valuation date
     source: str
-    market: pd.DataFrame | None = None      # credit spread, EMBI+ Brazil, revenue in Brazil at each date
+    market: pd.DataFrame | None = None  # credit spread, EMBI+ Brazil, revenue in Brazil at each date
     us_returns: pd.DataFrame | None = None  # US real total-return indexes in December (Shiller), index = year
 
 
