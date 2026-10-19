@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["summary", "findings"],
+  "properties": {
+    "summary": {"type": "string"},
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["topic", "what_differs", "numbers", "likely_cause", "suggested_action"],
+        "properties": {
+          "topic": {"type": "string"},
+          "what_differs": {"type": "string"},
+          "numbers": {"type": "string"},
+          "likely_cause": {"type": "string"},
+          "suggested_action": {"type": "string"}
+        }
+      }
+    }
+  }
+}

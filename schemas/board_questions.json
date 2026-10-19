@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["questions"],
+  "properties": {
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["assumption", "question", "why_it_is_risky", "numbers_for_the_answer", "suggested_answer"],
+        "properties": {
+          "assumption": {"type": "string"},
+          "question": {"type": "string"},
+          "why_it_is_risky": {"type": "string"},
+          "numbers_for_the_answer": {"type": "string"},
+          "suggested_answer": {"type": "string"}
+        }
+      }
+    }
+  }
+}

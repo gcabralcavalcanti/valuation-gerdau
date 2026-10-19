@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["figures"],
+  "properties": {
+    "figures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["metric", "found", "value_rs_million", "page", "quote", "column"],
+        "properties": {
+          "metric": {"type": "string", "enum": ["net_revenue", "gross_debt", "net_debt", "cash"]},
+          "found": {"type": "boolean"},
+          "value_rs_million": {"type": "number"},
+          "page": {"type": "integer"},
+          "quote": {"type": "string"},
+          "column": {"type": "string"}
+        }
+      }
+    }
+  }
+}

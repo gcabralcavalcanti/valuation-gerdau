@@ -1,0 +1,105 @@
+{
+ "what": "Official figures (R$ million) the author checked by hand on 09/10/2026: net revenue from the 20-F, gross debt, net debt and cash from the 4Q earnings releases (SEC exhibit 99). The auditor's extraction must match them within 0.5%.",
+ "cases": [
+  {
+   "fiscal_year": 2020,
+   "metric": "cash",
+   "value": 7658.0
+  },
+  {
+   "fiscal_year": 2021,
+   "metric": "cash",
+   "value": 6787.0
+  },
+  {
+   "fiscal_year": 2022,
+   "metric": "cash",
+   "value": 5434.0
+  },
+  {
+   "fiscal_year": 2023,
+   "metric": "cash",
+   "value": 5344.0
+  },
+  {
+   "fiscal_year": 2024,
+   "metric": "cash",
+   "value": 8277.0
+  },
+  {
+   "fiscal_year": 2020,
+   "metric": "gross_debt",
+   "value": 17516.0
+  },
+  {
+   "fiscal_year": 2021,
+   "metric": "gross_debt",
+   "value": 14040.0
+  },
+  {
+   "fiscal_year": 2022,
+   "metric": "gross_debt",
+   "value": 12607.0
+  },
+  {
+   "fiscal_year": 2023,
+   "metric": "gross_debt",
+   "value": 10893.0
+  },
+  {
+   "fiscal_year": 2024,
+   "metric": "gross_debt",
+   "value": 13637.0
+  },
+  {
+   "fiscal_year": 2020,
+   "metric": "net_debt",
+   "value": 9858.0
+  },
+  {
+   "fiscal_year": 2021,
+   "metric": "net_debt",
+   "value": 7253.0
+  },
+  {
+   "fiscal_year": 2022,
+   "metric": "net_debt",
+   "value": 7173.0
+  },
+  {
+   "fiscal_year": 2023,
+   "metric": "net_debt",
+   "value": 5548.0
+  },
+  {
+   "fiscal_year": 2024,
+   "metric": "net_debt",
+   "value": 5360.0
+  },
+  {
+   "fiscal_year": 2020,
+   "metric": "net_revenue",
+   "value": 43814.7
+  },
+  {
+   "fiscal_year": 2021,
+   "metric": "net_revenue",
+   "value": 78345.1
+  },
+  {
+   "fiscal_year": 2022,
+   "metric": "net_revenue",
+   "value": 82412.2
+  },
+  {
+   "fiscal_year": 2023,
+   "metric": "net_revenue",
+   "value": 68916.4
+  },
+  {
+   "fiscal_year": 2024,
+   "metric": "net_revenue",
+   "value": 67026.7
+  }
+ ]
+}
