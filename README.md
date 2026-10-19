@@ -8,15 +8,15 @@ numbers from raw statements, test alternative specifications and prepare the que
 
 ## Results
 
-![Price vs fair value by estimation window](reports/figures/price_vs_value.png)
+![Price vs fair value by estimation window](docs/price_vs_value.png)
 
 | Check | Result | Source |
 |---|---|---|
-| Spreadsheet figures vs Gerdau's 4Q earnings releases (page and quoted line for each) | **20/20** match; extraction 20/20 against hand-checked figures | [reports/auditor.md](reports/auditor.md) |
-| Spreadsheet lines vs raw CVM filings, 2015–2024 | **130/130** match | [reports/second_analyst.md](reports/second_analyst.md) |
-| Independent model vs the thesis notebook | **15/15** current results, **45/45** first version | [golden/](golden/), [tests/test_model.py](tests/test_model.py) |
+| Spreadsheet figures vs Gerdau's 4Q earnings releases (page and quoted line for each) | **20/20** match; extraction 20/20 against hand-checked figures | [output/auditor.md](output/auditor.md) |
+| Spreadsheet lines vs raw CVM filings, 2015–2024 | **130/130** match | [output/second_analyst.md](output/second_analyst.md) |
+| Independent model vs the thesis notebook | **15/15** current results, **45/45** first version | [tests/golden/](tests/golden/), [tests/test_model.py](tests/test_model.py) |
 | WACC, 5-year window, first thesis version → now | 5.1–7.8% (below terminal growth) → **11.6–14.2%** | [final-report.pdf](final-report.pdf) |
-| API cost of every run while building it | 28 calls, about **US$ 0.03** | `logs/` (tokens per call) |
+| API cost of every run while building it | 28 calls, about **US$ 0.03** | `output/logs/` (tokens per call) |
 
 The 3-year estimation window gives the highest fair values at the 2022–2023 steel peak, which is the pattern the
 thesis question is about. Full write-up: [final-report.pdf](final-report.pdf).
@@ -51,7 +51,7 @@ rebuilds `final-report.pdf`. With a key (`cp .env.example .env`), `python -m val
 
 All public: CVM open data (financial statements), Gerdau's earnings releases filed with the SEC, Yahoo Finance prices
 (in the thesis spreadsheet), Banco Central (Focus survey, CDI), FRED (steel price index, Baa and Treasury yields),
-Ipeadata (EMBI+ Brazil) and Robert Shiller's long-run US returns. The spreadsheet is not copied here; `recordings/`
+Ipeadata (EMBI+ Brazil) and Robert Shiller's long-run US returns. The spreadsheet is not copied here; `data/recorded/`
 keeps the model answers and the CVM lines already extracted so the demo runs offline from the large files.
 
 ## Limits

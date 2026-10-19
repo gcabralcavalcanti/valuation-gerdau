@@ -1,8 +1,8 @@
 """Independent re-implementation of the thesis DCF (FCFF / WACC), parameterised by a `Spec`.
 
-The default Spec reproduces the thesis notebook (golden/thesis_results.json, model of 19/10/2026: cost of debt =
+The default Spec reproduces the thesis notebook (tests/golden/thesis_results.json, model of 19/10/2026: cost of debt =
 expected Selic + Baa credit spread; ke = rf + beta x mature US premium + lambda x Brazil country premium).
-LEGACY reproduces the first version of the notebook (golden/thesis_results_v1.json: Ibovespa − CDI premium and
+LEGACY reproduces the first version of the notebook (tests/golden/thesis_results_v1.json: Ibovespa − CDI premium and
 book cost of debt). Every other Spec is an alternative the lab or the reviewer can test. All values in R$ million.
 """
 

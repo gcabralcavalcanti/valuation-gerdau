@@ -3,7 +3,7 @@
     python demo.py                      # spreadsheet from the thesis repository (raw link)
     python demo.py --workbook <file>    # local copy of the spreadsheet
 
-Uses the answers recorded in recordings/ (no API call, no cost). Needs internet for the thesis spreadsheet
+Uses the answers recorded in data/recorded/ (no API call, no cost). Needs internet for the thesis spreadsheet
 (raw link) and the steel price index; nothing else is downloaded.
 """
 
@@ -13,7 +13,7 @@ from pathlib import Path
 
 from valuation_gerdau.__main__ import main
 
-REPORTS = Path(__file__).resolve().parent / "reports"
+REPORTS = Path(__file__).resolve().parent / "output"
 
 
 def show(name, line):
@@ -48,4 +48,4 @@ if __name__ == "__main__":
         sys.exit(code)
     main(["final", *extra])
     summary()
-    print("\nFull report: final-report.pdf · details: reports/*.md")
+    print("\nFull report: final-report.pdf · details: output/*.md")

@@ -61,7 +61,7 @@ def main(argv=None) -> int:
                 reports.lab(lab.run(llm, wb), info())
             elif role == "reviewer":
                 reports.reviewer(reviewer.run(llm, wb), info())
-            print(f"{role}: reports/{'second_analyst' if role == 'analyst' else role}.md")
+            print(f"{role}: output/{'second_analyst' if role == 'analyst' else role}.md")
     except (NoRecording, BudgetExceeded) as e:
         print(f"stopped: {e}", file=sys.stderr)
         return 2

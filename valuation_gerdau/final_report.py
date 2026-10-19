@@ -109,9 +109,9 @@ def _table(ax, df: pd.DataFrame, fmt):
 def build(wb: Workbook) -> str:
     values, wacc = tables(wb)
     config.REPORTS.mkdir(parents=True, exist_ok=True)
-    (config.REPORTS / "figures").mkdir(exist_ok=True)
+    config.DOCS.mkdir(exist_ok=True)
     fig = chart(values)
-    fig.savefig(config.REPORTS / "figures" / "price_vs_value.png", dpi=160)
+    fig.savefig(config.DOCS / "price_vs_value.png", dpi=160)
     plt.close(fig)
 
     aud, ana, lab, rev = (_load(n) for n in ("auditor", "second_analyst", "lab", "reviewer"))
@@ -221,7 +221,7 @@ def build(wb: Workbook) -> str:
                 "How to read the LLM text",
                 "Every number the model writes is checked against the tables it "
                 "received (no invented figures), but a real number can still be paired with the wrong date: "
-                "check against the tables in reports/*.md. The model never chooses the specification; the author does.",
+                "check against the tables in output/*.md. The model never chooses the specification; the author does.",
             ),
         )
         _text_page(pdf, "What each reviewer found", blocks)

@@ -5,11 +5,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CACHE = ROOT / ".cache"  # downloaded data and documents (not versioned)
-RECORDINGS = ROOT / "recordings"  # recorded LLM answers: response cache + demo mode (versioned)
-REPORTS = ROOT / "reports"  # generated reports (versioned, so the repo shows real output)
-LOGS = ROOT / "logs"  # one JSON line per LLM call (not versioned)
-SCHEMAS = ROOT / "schemas"
-GOLDEN = ROOT / "golden"
+RECORDINGS = ROOT / "data" / "recorded"  # recorded LLM answers: response cache + demo mode (versioned)
+REPORTS = ROOT / "output"  # generated reports; only the Markdown ones are versioned
+LOGS = ROOT / "output" / "logs"  # one JSON line per LLM call (not versioned)
+SCHEMAS = Path(__file__).resolve().parent / "schemas"
+GOLDEN = ROOT / "tests" / "golden"
+DOCS = ROOT / "docs"  # README image
 
 # Single source of truth for the data: the spreadsheet in the thesis repository (no copy here).
 DATA_URL = os.environ.get(

@@ -48,7 +48,7 @@ def _desc(df, prefix, words) -> float:
 
 def year_lines(year: int) -> dict:
     """Lines read from the CVM zip. In demo mode, without the zip on disk, the lines extracted in an
-    earlier run (recordings/cvm_lines.json) stand in, so the demo does not download ~130 MB."""
+    earlier run (data/recorded/cvm_lines.json) stand in, so the demo does not download ~130 MB."""
     snap = json.loads(SNAPSHOT.read_text(encoding="utf-8")) if SNAPSHOT.exists() else {}
     cached = (config.CACHE / "cvm" / f"dfp_cia_aberta_{year}.zip").exists()
     if ALLOW_SNAPSHOT and not cached and str(year) in snap:
