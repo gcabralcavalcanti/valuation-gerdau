@@ -31,3 +31,5 @@ Fontes: [2020](https://www.sec.gov/Archives/edgar/data/1073404/00011046592102911
 
 ---
 Gerado por `python -m valuation_gerdau auditor` · modelo claude-haiku-5-5 · modo demo · chamadas à API 0 · respostas gravadas usadas 5 · custo estimado US$ 0.0000
+
+Texto da IA: todo número foi conferido contra as tabelas que ela recebeu (nenhum inventado), mas um número real ainda pode aparecer ligado à data errada; confira nas tabelas acima.

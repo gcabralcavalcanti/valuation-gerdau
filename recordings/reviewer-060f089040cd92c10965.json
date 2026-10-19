@@ -1,0 +1,62 @@
+{
+ "task": "reviewer",
+ "model": "claude-haiku-5-5",
+ "recorded_at": "2026-10-19T21:44:38.995135+00:00",
+ "request": {
+  "system": "Você prepara um aluno de economia para a banca do TCC (valuation FCFF da Gerdau em 5 datas, custo da dívida = Selic esperada + spread Baa; ke com prêmio maduro dos EUA + lambda × EMBI). Gere de 6 a 8 perguntas que a banca provavelmente fará sobre as PREMISSAS, das mais perigosas para as menos. Para cada uma: a pergunta como a banca falaria, por que ela é perigosa, os números que respondem (copiados das tabelas) e uma resposta curta sugerida. Português; cada campo com no máximo 2 frases. Só use números das tabelas. Não compare com outros TCCs.",
+  "prompt": "Definições (do código): Cost of debt da tese (desde 19/10) = Selic esperada t+4 + spread de crédito Baa − Treasury de 10 anos (custo atual de captação). Custo contábil antigo = despesa financeira total da DRE (inclui variação cambial) / dívida total média. ke = rf + beta × prêmio maduro dos EUA + lambda × EMBI+ Brasil, lambda = fatia da receita no Brasil. 'Interest on debt (DFC)' = linha 'Despesa de juros sobre dívidas financeiras' da DFC / dívida bruta média (despesa de juros, não juros pagos). Tax rate = IR e CSLL / lucro antes do IR, limitado a 0–34%. EBIT margin exclui impairment e ganhos não recorrentes identificados no 20-F. Percentis e faixas p10–p90 vêm do histórico anual da própria Gerdau. As faixas do prêmio maduro (4%–7%), do prêmio-país (1,5%–4%), do spread de crédito (1%–3%) e de g (± 1 p.p.) são faixas de teste, não dados.\n\nPremissas usadas (janela de 5 anos) por data:\ndate                       2021-02-25  2022-02-24  2023-03-02  2024-02-21  2025-02-20\nassumption                                                                           \nCapex / revenue                 0.035       0.036       0.042       0.052       0.060\nD&A / revenue                   0.055       0.048       0.044       0.044       0.043\nEBIT margin                     0.074       0.117       0.148       0.159       0.165\nRevenue growth                  0.001       0.158       0.174       0.083       0.111\nTax rate                        0.118       0.165       0.220       0.259       0.235\nWorking capital / revenue       0.181       0.176       0.179       0.184       0.199\n\nPercentil de cada premissa no histórico da própria Gerdau até a data (0 = mínimo, 1 = máximo):\ndate                       2021-02-25  2022-02-24  2023-03-02  2024-02-21  2025-02-20\nassumption                                                                           \nCapex / revenue                  0.18        0.17        0.38        0.50        0.73\nD&A / revenue                    0.55        0.25        0.23        0.29        0.20\nEBIT margin                      0.45        0.92        0.85        0.86        0.87\nRevenue growth                   0.27        0.75        0.77        0.64        0.73\nTax rate                         0.64        0.58        0.62        0.79        0.73\nWorking capital / revenue        0.27        0.17        0.15        0.36        0.40\n\nHistórico da Gerdau até o último exercício:\n                           hist_min  hist_p10  hist_median  hist_p90  hist_max      years\nassumption                                                                               \nRevenue growth               -0.164    -0.139        0.052     0.223     0.788  2010–2024\nEBIT margin                   0.034     0.049        0.081     0.186     0.251  2010–2024\nD&A / revenue                 0.034     0.037        0.051     0.060     0.067  2010–2024\nCapex / revenue               0.025     0.031        0.054     0.083     0.089  2010–2024\nWorking capital / revenue     0.166     0.174        0.208     0.255     0.268  2010–2024\nTax rate                      0.000     0.000        0.158     0.275     0.317  2010–2024\n\nTornado na última data (2025-02-20; valor base R$ 42.30, preço R$ 16.43):\n               assumption    low  high                   range_source  value_at_low  value_at_high  swing\n              EBIT margin  0.049 0.186                 Gerdau p10–p90         1.302         49.767 48.465\n          Capex / revenue  0.031 0.083                 Gerdau p10–p90        55.885         31.983 23.902\n           Revenue growth -0.139 0.223                 Gerdau p10–p90        28.051         50.296 22.245\n                 Tax rate  0.000 0.275                 Gerdau p10–p90        54.517         40.003 14.514\n      Equity risk premium  0.040 0.070               test range 4%–7%        48.221         35.699 12.522\n            D&A / revenue  0.037 0.060                 Gerdau p10–p90        39.503         50.047 10.544\n          Terminal growth  0.049 0.069            test range ± 1 p.p.        38.365         47.315  8.950\n                     Beta  0.966 1.304 95% interval of the regression        45.918         39.178  6.740\nWorking capital / revenue  0.174 0.255                 Gerdau p10–p90        43.723         39.067  4.656\n     Country risk premium  0.015 0.040             test range 1.5%–4%        43.634         39.607  4.027\n            Credit spread  0.010 0.030               test range 1%–3%        42.889         40.377  2.511\n\nCiclo do aço em cada data (PPI de produtos de usina siderúrgica, EUA):\n      date steel_month  steel_yoy  steel_vs_10y_avg   phase\n2021-02-25     2020-12      0.113             0.041  rising\n2022-02-24     2021-12      0.878             0.881  rising\n2023-03-02     2023-01     -0.236             0.316 falling\n2024-02-21     2023-12      0.009             0.273    flat\n2025-02-20     2024-12     -0.115             0.093 falling"
+ },
+ "answer": {
+  "questions": [
+   {
+    "assumption": "EBIT margin",
+    "question": "Por que a margem EBIT de 16,5% em 2025 é sustentável se está no percentil 87 do histórico da própria Gerdau, muito acima da mediana de 8,1%?",
+    "why_it_is_risky": "A margem atual está perto do topo do ciclo; se ela reverter à mediana, o valor cai drasticamente, e o tornado mostra que essa é a premissa de maior impacto (swing de R$ 48,47).",
+    "numbers_for_the_answer": "Margem 2025 = 0,165 (percentil 0,87); mediana 2010–2024 = 0,081; p90 = 0,186; faixa testada p10–p90 = 0,049–0,186; valor com 0,049 = R$ 1,30 vs R$ 49,77 com 0,186.",
+    "suggested_answer": "Reconheço que a margem está alta e é a premissa mais sensível; por isso mostro o cenário de reversão ao p10 (R$ 1,30) e o valor base de R$ 42,30 deve ser lido como condicional ao ciclo atual."
+   },
+   {
+    "assumption": "Capex / revenue",
+    "question": "Se o capex/receita subiu de 3,5% para 6,0% e já está no percentil 73, você está assumindo que esse investimento gera crescimento ou apenas que a empresa precisa gastar mais?",
+    "why_it_is_risky": "Capex elevado reduz o FCFF; se não houver contrapartida em crescimento ou margem, o valor estará subestimado, e a sensibilidade é a segunda maior do tornado.",
+    "numbers_for_the_answer": "Capex/receita 2025 = 0,060 (percentil 0,73); mediana histórica = 0,054; p10–p90 = 0,031–0,083; valor com 0,031 = R$ 55,89 e com 0,083 = R$ 31,98 (swing R$ 23,90).",
+    "suggested_answer": "O capex atual está acima da mediana, mas dentro da faixa histórica; mantenho a premissa e mostro que, se o investimento for de manutenção/expansão já capitalizada, o valor pode estar conservador, como indica o cenário p10."
+   },
+   {
+    "assumption": "Revenue growth",
+    "question": "Como você justifica crescimento de receita de 11,1% em 2025 se a própria fase do aço é de queda (steel_yoy = -11,5%)?",
+    "why_it_is_risky": "Crescer acima do ciclo de preços do aço sem base operacional explícita pode superestimar o fluxo; o crescimento aparece como terceiro maior swing.",
+    "numbers_for_the_answer": "Crescimento 2025 = 0,111 (percentil 0,73); p10 = -0,139; mediana = 0,052; p90 = 0,223; steel_yoy 2025 = -0,115; fase = falling; valor com -0,139 = R$ 28,05 e com 0,223 = R$ 50,30.",
+    "suggested_answer": "A premissa reflete a média de longo prazo da fase de expansão recente, não o ciclo de preços de 2024; reconheço o risco e mostro que o valor cai para R$ 28,05 no cenário de contração."
+   },
+   {
+    "assumption": "Tax rate",
+    "question": "Por que usar 23,5% de alíquota efetiva quando o histórico da Gerdau tem mediana de 15,8% e mínimo zero?",
+    "why_it_is_risky": "Alíquota efetiva muito volátil (incentivos, prejuízos fiscais, JCP) pode distorcer o FCFF; a premissa atual está acima da mediana e o swing é relevante.",
+    "numbers_for_the_answer": "Tax rate 2025 = 0,235 (percentil 0,73); mediana = 0,158; p10 = 0,000; p90 = 0,275; valor com 0,000 = R$ 54,52 e com 0,275 = R$ 40,00 (swing R$ 14,51).",
+    "suggested_answer": "Uso a alíquota efetiva recente por refletir a carga atual, e o limite de 0–34% evita valores absurdos; a faixa p10–p90 mostra que o efeito é moderado."
+   },
+   {
+    "assumption": "Equity risk premium",
+    "question": "Por que o prêmio maduro de 5% (ou 4%–7%) é adequado, e como a escolha afeta o ke?",
+    "why_it_is_risky": "A faixa é de teste, não dado observado; combinada com beta e prêmio-país, eleva ou reduz o ke de forma direta e pode mudar a conclusão do valuation.",
+    "numbers_for_the_answer": "Faixa testada 4%–7%; valor com 0,040 = R$ 48,22 e com 0,070 = R$ 35,70 (swing R$ 12,52); preço de mercado R$ 16,43.",
+    "suggested_answer": "Trato o prêmio como premissa de teste; mesmo no extremo de 4% o valor fica acima do preço de mercado, o que indica que a conclusão de subvalorização é robusta a essa escolha."
+   },
+   {
+    "assumption": "Janela de estimação",
+    "question": "Por que a janela de 5 anos é suficiente para estimar as premissas, dado que o ciclo do aço dura mais de 5 anos?",
+    "why_it_is_risky": "Janela curta captura apenas parte do ciclo; as premissas de 2021 a 2025 podem refletir um período atípico (pico de 2021–2022), enviesando margens e crescimento.",
+    "numbers_for_the_answer": "Datas de 2021 a 2025; steel_vs_10y_avg em 2022 = 0,881 (fase rising); em 2025 = 0,093; histórico completo 2010–2024 usado para percentis.",
+    "suggested_answer": "A janela de 5 anos é a que o modelo usa para premissas operacionais, mas os percentis são calculados sobre 2010–2024, o que ancora as premissas no ciclo completo; reconheço o risco de viés do período recente."
+   },
+   {
+    "assumption": "Cost of debt",
+    "question": "Por que o custo da dívida usa Selic futura + spread Baa menos Treasury, e não a despesa financeira contábil?",
+    "why_it_is_risky": "O custo contábil inclui variação cambial e não reflete o custo marginal atual; a escolha altera o WACC, mas o swing associado ao spread de crédito é pequeno (R$ 2,51), o que precisa ser explicado.",
+    "numbers_for_the_answer": "Credit spread faixa testada 1%–3%; valor com 0,010 = R$ 42,89 e com 0,030 = R$ 40,38 (swing R$ 2,51); valor base R$ 42,30.",
+    "suggested_answer": "O custo marginal de captação é a referência correta para o WACC; o spread tem impacto pequeno no valor, então a escolha do custo contábil não mudaria a conclusão de forma relevante."
+   }
+  ]
+ }
+}

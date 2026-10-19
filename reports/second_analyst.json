@@ -1044,11 +1044,11 @@
  "alternatives": [
   {
    "date": "2021-02-25",
-   "variant": "Thesis choices (ERP 5%)",
-   "fair_value": 24.623511763343892,
+   "variant": "Thesis model (19/10)",
+   "fair_value": 25.425639451854703,
    "price": 26.029999,
-   "wacc": 0.11762310697535706,
-   "Cost of debt": 0.10656172927541704,
+   "wacc": 0.116112956377868,
+   "Cost of debt": 0.0816,
    "Tax rate": 0.11804682089425611,
    "EBIT margin": 0.0738210228474894,
    "fcff_year1": 3179.846782336734,
@@ -1057,58 +1057,70 @@
   {
    "date": "2021-02-25",
    "variant": "Cost of debt = interest on debt (DFC)",
-   "fair_value": 31.084237883565702,
+   "fair_value": 27.67949892143098,
    "price": 26.029999,
-   "wacc": 0.10730742399653254,
+   "wacc": 0.11225277872485326,
    "Cost of debt": 0.06667371543102532,
    "Tax rate": 0.11804682089425611,
    "EBIT margin": 0.0738210228474894,
    "fcff_year1": 3179.846782336734,
-   "fair_value_change": 0.2623803697180047
+   "fair_value_change": 0.08864514396360113
+  },
+  {
+   "date": "2021-02-25",
+   "variant": "No country risk (lambda = 0)",
+   "fair_value": 30.84644985048284,
+   "price": 26.029999,
+   "wacc": 0.1076232484765274,
+   "Cost of debt": 0.0816,
+   "Tax rate": 0.11804682089425611,
+   "EBIT margin": 0.0738210228474894,
+   "fcff_year1": 3179.846782336734,
+   "fair_value_change": 0.21320251979867955
   },
   {
    "date": "2021-02-25",
    "variant": "Statutory tax 34%",
-   "fair_value": 21.02340433130251,
+   "fair_value": 20.964247863354558,
    "price": 26.029999,
-   "wacc": 0.11068768844406679,
-   "Cost of debt": 0.10656172927541704,
+   "wacc": 0.11080213648031739,
+   "Cost of debt": 0.0816,
    "Tax rate": 0.34,
    "EBIT margin": 0.0738210228474894,
    "fcff_year1": 2452.9802324965167,
-   "fair_value_change": -0.14620609223582515
+   "fair_value_change": -0.1754682157334967
   },
   {
    "date": "2021-02-25",
    "variant": "EBIT without equity income",
-   "fair_value": 24.477997019783228,
+   "fair_value": 25.276349793527924,
    "price": 26.029999,
-   "wacc": 0.11762310697535706,
-   "Cost of debt": 0.10656172927541704,
+   "wacc": 0.116112956377868,
+   "Cost of debt": 0.0816,
    "Tax rate": 0.11804682089425611,
    "EBIT margin": 0.07342193616069444,
    "fcff_year1": 3164.2323562851484,
-   "fair_value_change": -0.005909585316635768
+   "fair_value_change": -0.005871618631636433
   },
   {
    "date": "2021-02-25",
    "variant": "All three",
-   "fair_value": 25.566763532877303,
+   "fair_value": 22.410573355574623,
    "price": 26.029999,
-   "wacc": 0.10296806009267573,
+   "wacc": 0.10791341482099645,
    "Cost of debt": 0.06667371543102532,
    "Tax rate": 0.34,
    "EBIT margin": 0.07342193616069444,
    "fcff_year1": 2441.295347813074,
-   "fair_value_change": 0.03830695550654939
+   "fair_value_change": -0.1185836880126192
   },
   {
    "date": "2022-02-24",
-   "variant": "Thesis choices (ERP 5%)",
-   "fair_value": 80.60016172929365,
+   "variant": "Thesis model (19/10)",
+   "fair_value": 73.3542146022755,
    "price": 24.279999,
-   "wacc": 0.11861484428172811,
-   "Cost of debt": 0.11081633503579776,
+   "wacc": 0.12475777700213109,
+   "Cost of debt": 0.0882,
    "Tax rate": 0.16454936561380026,
    "EBIT margin": 0.11712950052864306,
    "fcff_year1": 8362.241290218675,
@@ -1117,58 +1129,70 @@
   {
    "date": "2022-02-24",
    "variant": "Cost of debt = interest on debt (DFC)",
-   "fair_value": 95.1792121319279,
+   "fair_value": 78.77999084328395,
    "price": 24.279999,
-   "wacc": 0.10890347604976067,
+   "wacc": 0.12005992638017568,
    "Cost of debt": 0.06700766123128875,
    "Tax rate": 0.16454936561380026,
    "EBIT margin": 0.11712950052864306,
    "fcff_year1": 8362.241290218675,
-   "fair_value_change": 0.1808811556929617
+   "fair_value_change": 0.07396679618787894
+  },
+  {
+   "date": "2022-02-24",
+   "variant": "No country risk (lambda = 0)",
+   "fair_value": 88.90763562973046,
+   "price": 24.279999,
+   "wacc": 0.11271813685898431,
+   "Cost of debt": 0.0882,
+   "Tax rate": 0.16454936561380026,
+   "EBIT margin": 0.11712950052864306,
+   "fcff_year1": 8362.241290218675,
+   "fair_value_change": 0.21203173003467035
   },
   {
    "date": "2022-02-24",
    "variant": "Statutory tax 34%",
-   "fair_value": 68.75050405942642,
+   "fair_value": 60.99791911664347,
    "price": 24.279999,
-   "wacc": 0.11345593075602053,
-   "Cost of debt": 0.11081633503579776,
+   "wacc": 0.1206517381873623,
+   "Cost of debt": 0.0882,
    "Tax rate": 0.34,
    "EBIT margin": 0.11712950052864306,
    "fcff_year1": 6532.630745747077,
-   "fair_value_change": -0.1470177902330504
+   "fair_value_change": -0.1684469740781429
   },
   {
    "date": "2022-02-24",
    "variant": "EBIT without equity income",
-   "fair_value": 79.23940198071523,
+   "fair_value": 72.10733367261521,
    "price": 24.279999,
-   "wacc": 0.11861484428172811,
-   "Cost of debt": 0.11081633503579776,
+   "wacc": 0.12475777700213109,
+   "Cost of debt": 0.0882,
    "Tax rate": 0.16454936561380026,
    "EBIT margin": 0.11522494159759492,
    "fcff_year1": 8220.579531682153,
-   "fair_value_change": -0.01688284141598506
+   "fair_value_change": -0.016998081656532604
   },
   {
    "date": "2022-02-24",
    "variant": "All three",
-   "fair_value": 77.92199910274628,
+   "fair_value": 63.68331060988656,
    "price": 24.279999,
-   "wacc": 0.10578401961095624,
+   "wacc": 0.11694046994137125,
    "Cost of debt": 0.06700766123128875,
    "Tax rate": 0.34,
    "EBIT margin": 0.11522494159759492,
    "fcff_year1": 6420.718974080526,
-   "fair_value_change": -0.0332277574769928
+   "fair_value_change": -0.13183842325658202
   },
   {
    "date": "2023-03-02",
-   "variant": "Thesis choices (ERP 5%)",
-   "fair_value": 91.37663756789627,
+   "variant": "Thesis model (19/10)",
+   "fair_value": 87.34815050960792,
    "price": 29.569998,
-   "wacc": 0.13113485894603713,
-   "Cost of debt": 0.12755444056390947,
+   "wacc": 0.134142844114282,
+   "Cost of debt": 0.1034,
    "Tax rate": 0.2197794248097396,
    "EBIT margin": 0.14821032961159397,
    "fcff_year1": 10381.1697133873,
@@ -1177,58 +1201,70 @@
   {
    "date": "2023-03-02",
    "variant": "Cost of debt = interest on debt (DFC)",
-   "fair_value": 108.08135109148289,
+   "fair_value": 95.93725684112232,
    "price": 29.569998,
-   "wacc": 0.1209160087945667,
+   "wacc": 0.12801473939306451,
    "Cost of debt": 0.06721565565938736,
    "Tax rate": 0.2197794248097396,
    "EBIT margin": 0.14821032961159397,
    "fcff_year1": 10381.1697133873,
-   "fair_value_change": 0.1828116460421778
+   "fair_value_change": 0.09833186256839666
+  },
+  {
+   "date": "2023-03-02",
+   "variant": "No country risk (lambda = 0)",
+   "fair_value": 99.77689931847512,
+   "price": 29.569998,
+   "wacc": 0.1255952201004027,
+   "Cost of debt": 0.1034,
+   "Tax rate": 0.2197794248097396,
+   "EBIT margin": 0.14821032961159397,
+   "fcff_year1": 10381.1697133873,
+   "fair_value_change": 0.14228977644466645
   },
   {
    "date": "2023-03-02",
    "variant": "Statutory tax 34%",
-   "fair_value": 79.26181426593325,
+   "fair_value": 74.83515532909584,
    "price": 29.569998,
-   "wacc": 0.12780625245680877,
-   "Cost of debt": 0.12755444056390947,
+   "wacc": 0.13144456164395302,
+   "Cost of debt": 0.1034,
    "Tax rate": 0.34,
    "EBIT margin": 0.14821032961159397,
    "fcff_year1": 8690.230211870123,
-   "fair_value_change": -0.13258118950767084
+   "fair_value_change": -0.14325426591757895
   },
   {
    "date": "2023-03-02",
    "variant": "EBIT without equity income",
-   "fair_value": 87.91347053389605,
+   "fair_value": 84.02858004700182,
    "price": 29.569998,
-   "wacc": 0.13113485894603713,
-   "Cost of debt": 0.12755444056390947,
+   "wacc": 0.134142844114282,
+   "Cost of debt": 0.1034,
    "Tax rate": 0.2197794248097396,
    "EBIT margin": 0.14332306016040688,
    "fcff_year1": 10019.298132480484,
-   "fair_value_change": -0.03789991759575262
+   "fair_value_change": -0.038003900978314964
   },
   {
    "date": "2023-03-02",
    "variant": "All three",
-   "fair_value": 88.46123445491986,
+   "fair_value": 78.14145538541638,
    "price": 29.569998,
-   "wacc": 0.11916197760116831,
+   "wacc": 0.12626070819966612,
    "Cost of debt": 0.06721565565938736,
    "Tax rate": 0.34,
    "EBIT margin": 0.14332306016040688,
    "fcff_year1": 8384.117747019707,
-   "fair_value_change": -0.03190534463264916
+   "fair_value_change": -0.10540229038025073
   },
   {
    "date": "2024-02-21",
-   "variant": "Thesis choices (ERP 5%)",
-   "fair_value": 55.14360985312446,
+   "variant": "Thesis model (19/10)",
+   "fair_value": 55.08516437677895,
    "price": 21.840001,
-   "wacc": 0.13051528344695015,
-   "Cost of debt": 0.13554695842934436,
+   "wacc": 0.13058960611523757,
+   "Cost of debt": 0.10120000000000001,
    "Tax rate": 0.2585019770091746,
    "EBIT margin": 0.15900866985296064,
    "fcff_year1": 8715.178359871345,
@@ -1237,58 +1273,70 @@
   {
    "date": "2024-02-21",
    "variant": "Cost of debt = interest on debt (DFC)",
-   "fair_value": 66.80409197748922,
+   "fair_value": 60.407040229071804,
    "price": 21.840001,
-   "wacc": 0.1181503604082569,
+   "wacc": 0.12437728790421068,
    "Cost of debt": 0.0665196912006243,
    "Tax rate": 0.2585019770091746,
    "EBIT margin": 0.15900866985296064,
    "fcff_year1": 8715.178359871345,
-   "fair_value_change": 0.21145663396760872
+   "fair_value_change": 0.09661178127547321
+  },
+  {
+   "date": "2024-02-21",
+   "variant": "No country risk (lambda = 0)",
+   "fair_value": 60.49946783187958,
+   "price": 21.840001,
+   "wacc": 0.12427848883064412,
+   "Cost of debt": 0.10120000000000001,
+   "Tax rate": 0.2585019770091746,
+   "EBIT margin": 0.15900866985296064,
+   "fcff_year1": 8715.178359871345,
+   "fair_value_change": 0.09828968500605972
   },
   {
    "date": "2024-02-21",
    "variant": "Statutory tax 34%",
-   "fair_value": 49.47751609889358,
+   "fair_value": 48.92973510041317,
    "price": 21.840001,
-   "wacc": 0.12784659675200674,
-   "Cost of debt": 0.13554695842934436,
+   "wacc": 0.12859715201182031,
+   "Cost of debt": 0.10120000000000001,
    "Tax rate": 0.34,
    "EBIT margin": 0.15900866985296064,
    "fcff_year1": 7752.52027368676,
-   "fair_value_change": -0.10275159296467129
+   "fair_value_change": -0.1117438669014954
   },
   {
    "date": "2024-02-21",
    "variant": "EBIT without equity income",
-   "fair_value": 52.00794676610617,
+   "fair_value": 51.95262253583591,
    "price": 21.840001,
-   "wacc": 0.13051528344695015,
-   "Cost of debt": 0.13554695842934436,
+   "wacc": 0.13058960611523757,
+   "Cost of debt": 0.10120000000000001,
    "Tax rate": 0.2585019770091746,
    "EBIT margin": 0.15176357307237115,
    "fcff_year1": 8316.09982089173,
-   "fair_value_change": -0.056863580301872774
+   "fair_value_change": -0.05686725049083374
   },
   {
    "date": "2024-02-21",
    "variant": "All three",
-   "fair_value": 55.637509759161844,
+   "fair_value": 50.151168889326975,
    "price": 21.840001,
-   "wacc": 0.11684070199234058,
+   "wacc": 0.12306762948829436,
    "Cost of debt": 0.0665196912006243,
    "Tax rate": 0.34,
    "EBIT margin": 0.15176357307237115,
    "fcff_year1": 7397.304443624046,
-   "fair_value_change": 0.008956611787891422
+   "fair_value_change": -0.08957031431736795
   },
   {
    "date": "2025-02-20",
-   "variant": "Thesis choices (ERP 5%)",
-   "fair_value": 41.541766486949776,
+   "variant": "Thesis model (19/10)",
+   "fair_value": 42.298500348532805,
    "price": 16.43,
-   "wacc": 0.14308888119851818,
-   "Cost of debt": 0.1543315543160133,
+   "wacc": 0.14168962791960943,
+   "Cost of debt": 0.112,
    "Tax rate": 0.23547694612272368,
    "EBIT margin": 0.16473486925074038,
    "fcff_year1": 9334.508244113094,
@@ -1297,89 +1345,108 @@
   {
    "date": "2025-02-20",
    "variant": "Cost of debt = interest on debt (DFC)",
-   "fair_value": 55.93868942807638,
+   "fair_value": 48.915968579762435,
    "price": 16.43,
-   "wacc": 0.12262709761101961,
+   "wacc": 0.13119099563543693,
    "Cost of debt": 0.06739328780112631,
    "Tax rate": 0.23547694612272368,
    "EBIT margin": 0.16473486925074038,
    "fcff_year1": 9334.508244113094,
-   "fair_value_change": 0.3465650153719235
+   "fair_value_change": 0.15644687581599248
+  },
+  {
+   "date": "2025-02-20",
+   "variant": "No country risk (lambda = 0)",
+   "fair_value": 46.43793232566958,
+   "price": 16.43,
+   "wacc": 0.13479334172075844,
+   "Cost of debt": 0.112,
+   "Tax rate": 0.23547694612272368,
+   "EBIT margin": 0.16473486925074038,
+   "fcff_year1": 9334.508244113094,
+   "fair_value_change": 0.0978623814799231
   },
   {
    "date": "2025-02-20",
    "variant": "Statutory tax 34%",
-   "fair_value": 36.04300730770678,
+   "fair_value": 36.06139123289935,
    "price": 16.43,
-   "wacc": 0.1381228579889795,
-   "Cost of debt": 0.1543315543160133,
+   "wacc": 0.1380857336807848,
+   "Cost of debt": 0.112,
    "Tax rate": 0.34,
    "EBIT margin": 0.16473486925074038,
    "fcff_year1": 8064.47469639006,
-   "fair_value_change": -0.1323670042045616
+   "fair_value_change": -0.14745461574856522
   },
   {
    "date": "2025-02-20",
    "variant": "EBIT without equity income",
-   "fair_value": 38.51852195491055,
+   "fair_value": 39.22362251193729,
    "price": 16.43,
-   "wacc": 0.14308888119851818,
-   "Cost of debt": 0.1543315543160133,
+   "wacc": 0.14168962791960943,
+   "Cost of debt": 0.112,
    "Tax rate": 0.23547694612272368,
    "EBIT margin": 0.1560178396850602,
    "fcff_year1": 8842.948089499097,
-   "fair_value_change": -0.07277602248784898
+   "fair_value_change": -0.0726947246653904
   },
   {
    "date": "2025-02-20",
    "variant": "All three",
-   "fair_value": 43.73010758136874,
+   "fair_value": 37.99584963140452,
    "price": 16.43,
-   "wacc": 0.12045854152493096,
+   "wacc": 0.12902243954934828,
    "Cost of debt": 0.06739328780112631,
    "Tax rate": 0.34,
    "EBIT margin": 0.1560178396850602,
    "fcff_year1": 7640.11901424301,
-   "fair_value_change": 0.05267809434888693
+   "fair_value_change": -0.10172111733690659
   }
  ],
  "memo": {
-  "summary": "Reconciliação CVM bate em 130 de 130 linhas. O valor justo é muito sensível à escolha do custo da dívida e da alíquota de imposto. As variantes 'All three' e 'EBIT without equity income' têm efeitos pequenos e variáveis.",
+  "summary": "Revisão do valuation FCFF/WACC da Gerdau. Reconciliação com a CVM sem divergências (130 de 130 linhas). O valor justo do modelo da tese varia bastante entre datas e as variantes mudam o resultado em sentidos diferentes.",
   "findings": [
    {
-    "topic": "Cost of debt = interest on debt (DFC)",
-    "what_differs": "Usar a despesa de juros da DFC gera custo da dívida fixo em 6,7% em todas as datas, contra 10,7% a 15,4% na tese. O valor justo sobe em todas as datas.",
-    "numbers": "Custo da dívida: 0,067 vs 0,107 (2021) até 0,154 (2025). Variação do valor justo: +26,2% (2021), +18,1% (2022), +18,3% (2023), +21,1% (2024), +34,7% (2025).",
-    "likely_cause": "A tese inclui variação cambial e perdas com derivativos na despesa financeira da DRE; a DFC captura só a despesa de juros sobre dívidas.",
-    "suggested_action": "Justificar no TCC por que a despesa financeira total da DRE é o custo da dívida adotado e mostrar a sensibilidade com a variante da DFC."
+    "topic": "Reconciliação com a CVM",
+    "what_differs": "Nenhuma divergência entre planilha e CVM.",
+    "numbers": "130 de 130 linhas batem, tolerância 0,5%.",
+    "likely_cause": "Não há divergência identificada.",
+    "suggested_action": "Manter a reconciliação como está e registrá-la no TCC."
    },
    {
-    "topic": "Statutory tax 34%",
-    "what_differs": "Trocar a alíquota efetiva pela alíquota estatutária de 34% reduz o valor justo em todas as datas.",
-    "numbers": "Alíquota efetiva na tese: 0,118 (2021), 0,165 (2022), 0,220 (2023), 0,259 (2024), 0,235 (2025). Variação do valor justo: -14,6%, -14,7%, -13,3%, -10,3%, -13,2%.",
-    "likely_cause": "A alíquota efetiva está abaixo de 34% em todos os anos, o que eleva o NOPAT e o FCFF na tese.",
-    "suggested_action": "Explicar a origem da alíquota efetiva (benefícios fiscais, lucro no exterior) e reportar o resultado com 34% como cenário conservador."
+    "topic": "Thesis model (19/10)",
+    "what_differs": "Custo da dívida sobe de 8,2% para 11,2% entre 2021 e 2025, enquanto o valor justo cai de 73,4 para 42,3 em 2022-2025.",
+    "numbers": "Custo da dívida: 0,082 a 0,112. Valor justo: 25,4 (2021), 73,4 (2022), 87,3 (2023), 55,1 (2024), 42,3 (2025). Preço: 26,03 a 16,43.",
+    "likely_cause": "Custo da dívida pela fórmula Selic t+4 + spread Baa − Treasury muda com o cenário de juros, o que move o WACC de 11,6% para 14,2%.",
+    "suggested_action": "Explicar no texto a sensibilidade do valor justo ao custo da dívida e mostrar o intervalo de WACC."
+   },
+   {
+    "topic": "Cost of debt = interest on debt (DFC)",
+    "what_differs": "Custo da dívida fica em 6,7% em todas as datas, abaixo do modelo da tese, e o valor justo sobe em todas as datas.",
+    "numbers": "Custo da dívida: 0,067 fixo. Variação do valor justo: +8,9% (2021), +7,4% (2022), +9,8% (2023), +9,7% (2024), +15,6% (2025).",
+    "likely_cause": "A linha de despesa de juros da DFC não acompanha a variação da taxa de captação usada na tese.",
+    "suggested_action": "Justificar a escolha de usar a despesa da DFC ou manter a fórmula da tese, e apresentar as duas como robustez."
    },
    {
     "topic": "EBIT without equity income",
-    "what_differs": "Excluir o resultado de equivalência patrimonial do EBIT reduz o valor justo em todas as datas, com efeito crescente no tempo.",
-    "numbers": "Variação do valor justo: -0,6% (2021), -1,7% (2022), -3,8% (2023), -5,7% (2024), -7,3% (2025).",
-    "likely_cause": "O resultado de equivalência patrimonial passa a pesar mais no EBIT dos anos recentes.",
-    "suggested_action": "Manter a escolha da tese, mas documentar o peso da equivalência no EBIT de cada ano."
+    "what_differs": "Excluir resultado de equivalência patrimonial reduz o valor justo, com efeito crescente ao longo do tempo.",
+    "numbers": "Variação do valor justo: −0,6% (2021), −1,7% (2022), −3,8% (2023), −5,7% (2024), −7,3% (2025).",
+    "likely_cause": "O peso da equivalência patrimonial no EBIT cresce nos anos mais recentes.",
+    "suggested_action": "Reportar o efeito separadamente e discutir se o resultado de coligadas deve entrar no fluxo operacional."
    },
    {
-    "topic": "All three",
-    "what_differs": "Combinar as três mudanças produz efeito de sinal alternado: pequena alta em 2021, 2024 e 2025 e pequena queda em 2022 e 2023.",
-    "numbers": "Variação do valor justo: +3,8% (2021), -3,3% (2022), -3,2% (2023), +0,9% (2024), +5,3% (2025). Custo da dívida fixo em 6,7%.",
-    "likely_cause": "Os efeitos do custo da dívida, da alíquota e do EBIT se compensam em graus diferentes ao longo dos anos.",
-    "suggested_action": "Apresentar a combinação como teste de robustez e não como cenário central, pois o resultado depende de compensações entre escolhas."
+    "topic": "No country risk (lambda = 0)",
+    "what_differs": "Zerar o prêmio-país aumenta o valor justo, com efeito que diminui de 2021 a 2025.",
+    "numbers": "Variação do valor justo: +21,3% (2021), +21,2% (2022), +14,2% (2023), +9,8% (2024), +9,8% (2025).",
+    "likely_cause": "O prêmio-país pesa mais quando a fatia da receita no Brasil e o EMBI+ estavam mais altos no início da série.",
+    "suggested_action": "Apresentar o cálculo com lambda e sem lambda, deixando claro o efeito do risco Brasil no ke."
    },
    {
-    "topic": "Reconciliação com a CVM",
-    "what_differs": "Não há divergência entre a planilha e os dados da CVM.",
-    "numbers": "130 de 130 linhas batem, com tolerância de 0,5%.",
-    "likely_cause": "Não se aplica; a base reconcilia integralmente.",
-    "suggested_action": "Registrar a reconciliação completa como evidência de consistência da base no TCC."
+    "topic": "Statutory tax 34%",
+    "what_differs": "Usar a alíquota estatutária de 34% reduz o valor justo em todas as datas, em relação à alíquota efetiva.",
+    "numbers": "Alíquota efetiva: 11,8% (2021), 16,5% (2022), 22,0% (2023), 25,9% (2024), 23,5% (2025). Variação do valor justo: −17,5%, −16,8%, −14,3%, −11,2%, −14,7%.",
+    "likely_cause": "A alíquota efetiva abaixo de 34% gera benefício fiscal que eleva o FCFF.",
+    "suggested_action": "Justificar o uso da alíquota efetiva e documentar a fonte dos benefícios fiscais."
    }
   ]
  }

@@ -1,6 +1,7 @@
 """Raw statements from CVM open data (DFP, consolidated), read independently of the thesis scripts."""
 from __future__ import annotations
 
+import json
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -9,6 +10,8 @@ import pandas as pd
 
 from . import config
 
+SNAPSHOT = config.RECORDINGS / "cvm_lines.json"  # lines already extracted from the zips
+ALLOW_SNAPSHOT = False                              # True in --demo
 GERDAU_CVM = 3980  # Gerdau S.A. (never Metalúrgica Gerdau, CVM 2879)
 URL = "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_{y}.zip"
 
@@ -43,6 +46,21 @@ def _desc(df, prefix, words) -> float:
 
 
 def year_lines(year: int) -> dict:
+    """Lines read from the CVM zip. In demo mode, without the zip on disk, the lines extracted in an
+    earlier run (recordings/cvm_lines.json) stand in, so the demo does not download ~130 MB."""
+    snap = json.loads(SNAPSHOT.read_text(encoding="utf-8")) if SNAPSHOT.exists() else {}
+    cached = (config.CACHE / "cvm" / f"dfp_cia_aberta_{year}.zip").exists()
+    if ALLOW_SNAPSHOT and not cached and str(year) in snap:
+        return snap[str(year)]
+    lines = _from_zip(year)
+    if snap.get(str(year)) != lines:
+        snap[str(year)] = lines
+        SNAPSHOT.parent.mkdir(parents=True, exist_ok=True)
+        SNAPSHOT.write_text(json.dumps(snap, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+    return lines
+
+
+def _from_zip(year: int) -> dict:
     dre, bpa, bpp, dfc = (statement(year, k) for k in ("DRE", "BPA", "BPP", "DFC_MI"))
     return {
         "Receita líquida": _code(dre, "3.01"),

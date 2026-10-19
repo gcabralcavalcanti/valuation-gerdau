@@ -27,7 +27,9 @@ def _write(name: str, text: str, data: dict, run_info: dict):
     config.REPORTS.mkdir(parents=True, exist_ok=True)
     footer = (f"\n\n---\nGerado por `python -m valuation_gerdau {name}` · modelo {run_info['model']} · "
               f"modo {run_info['mode']} · chamadas à API {run_info['api_calls']} · respostas gravadas usadas "
-              f"{run_info['recorded_answers_used']} · custo estimado US$ {run_info['estimated_cost_usd']:.4f}\n")
+              f"{run_info['recorded_answers_used']} · custo estimado US$ {run_info['estimated_cost_usd']:.4f}\n"
+              f"\nTexto da IA: todo número foi conferido contra as tabelas que ela recebeu (nenhum inventado), mas um "
+              f"número real ainda pode aparecer ligado à data errada; confira nas tabelas acima.\n")
     (config.REPORTS / f"{name}.md").write_text(text + footer, encoding="utf-8")
     (config.REPORTS / f"{name}.json").write_text(
         json.dumps(data, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
@@ -55,7 +57,8 @@ def analyst(res, run_info):
     text = (f"# Segunda analista\n\n**Reconciliação planilha × CVM (dados abertos, DFP consolidada):** "
             f"{ok} de {len(recon)} linhas batem (tolerância 0,5%), exercícios {recon['year'].min()}–{recon['year'].max()}.\n\n"
             f"## Valor justo por ação (R$) com uma escolha diferente por vez\n"
-            f"Prêmio de mercado fixo em 5% (o histórico sai negativo, ponto em aberto no TCC).\n\n{_md(fv)}\n\n"
+            f"Base: modelo do TCC desde 19/10 (custo da dívida = Selic esperada + spread Baa; ke com prêmio maduro + "
+            f"λ × EMBI). Cada linha muda uma escolha.\n\n{_md(fv)}\n\n"
             f"## Custo da dívida usado\n\n{_md(kd, '{:.3f}')}\n")
     if memo:
         text += f"\n## Parecer\n\n{memo['summary']}\n\n" + "\n".join(
@@ -68,8 +71,8 @@ def analyst(res, run_info):
 def lab(res, run_info):
     grid, ci, hyp, summ = res["grid"], res["beta_ci"], res["hypothesis"], res["summary"]
     by = grid.pivot_table(index=["dimension", "spec"], columns="date", values="fair_value").round(1).reset_index()
-    text = (f"# Laboratório econométrico\n\nValor justo por ação (R$) em cada especificação. Prêmio fixo em 5% "
-            f"quando a dimensão testada não é o prêmio.\n\n{_md(by, '{:,.1f}')}\n\n"
+    text = (f"# Laboratório econométrico\n\nValor justo por ação (R$) em cada especificação; o resto fica como no "
+            f"modelo do TCC.\n\n{_md(by, '{:,.1f}')}\n\n"
             f"## A pergunta do TCC: desvio médio (valor/preço − 1) por janela e fase do ciclo do aço\n\n"
             f"{_md(hyp.round(3).reset_index(), '{:+.0%}')}\n\n"
             f"## Beta no intervalo de 95% da regressão (cenários do manual do orientador)\n\n"

@@ -77,3 +77,9 @@ def test_log_is_json_lines_with_tokens(tmp_path):
     lines = [json.loads(l) for l in m.log_path.read_text(encoding="utf-8").splitlines()]
     assert lines[0]["input_tokens"] == 100 and lines[0]["source"] == "api"
     assert m.cost_usd() == pytest.approx((100 * 0.10 + 10 * 0.50) / 1e6)
+
+
+def test_unsupported_numbers_catches_invented_figures():
+    source = "| 2023 | 80.2 | 95.8 |\n| 2025 | 39.2 | 45.9 |\nCost of debt 0.082 0.112"
+    assert llm_mod.unsupported_numbers({"t": "2023: 80,2 a 95,8; kd de 8,2% a 11,2%"}, source) == []
+    assert llm_mod.unsupported_numbers({"t": "2023: 80,2 a 97,0"}, source) == ["number 97 is not in the tables"]

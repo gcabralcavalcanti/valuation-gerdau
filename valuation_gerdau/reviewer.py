@@ -12,13 +12,14 @@ import pandas as pd
 
 from . import steel
 from .data import Workbook
-from .llm import LLM, load_schema
+from .llm import LLM, load_schema, unsupported_numbers
 from .model import ASSUMPTIONS, DEFINITIONS, DCF, Spec
 
-BASE = Spec(window=5, erp=0.05)
+BASE = Spec(window=5)
 HISTORY_FROM = 2010
 # Ranges that do not come from Gerdau's statements: stated as test ranges, not as data.
-TEST_RANGES = {"Equity risk premium": (0.04, 0.07), "Terminal growth": (-0.01, +0.01)}  # g: ± 1 p.p.
+TEST_RANGES = {"Equity risk premium": (0.04, 0.07), "Country risk premium": (0.015, 0.04),
+               "Credit spread": (0.01, 0.03), "Terminal growth": (-0.01, +0.01)}  # g: ± 1 p.p. around the base
 
 
 def history_table(wb: Workbook) -> pd.DataFrame:
@@ -46,8 +47,9 @@ def tornado(wb: Workbook, date_index: int = -1) -> pd.DataFrame:
     cases = {a: (hist.loc[a, "hist_p10"], hist.loc[a, "hist_p90"], "Gerdau p10–p90") for a in ASSUMPTIONS}
     se = base["beta_se"]
     cases["Beta"] = (base["beta"] - 1.96 * se, base["beta"] + 1.96 * se, "95% interval of the regression")
-    lo, hi = TEST_RANGES["Equity risk premium"]
-    cases["Equity risk premium"] = (lo, hi, "test range 4%–7%")
+    for k, label in (("Equity risk premium", "test range 4%–7%"), ("Country risk premium", "test range 1.5%–4%"),
+                     ("Credit spread", "test range 1%–3%")):
+        cases[k] = (*TEST_RANGES[k], label)
     d = TEST_RANGES["Terminal growth"][1]
     cases["Terminal growth"] = (base["g"] - d, base["g"] + d, "test range ± 1 p.p.")
     rows = []
@@ -68,7 +70,7 @@ def cycle_table(wb: Workbook, steel_series=None) -> pd.DataFrame:
 
 SYSTEM = (
     "Você prepara um aluno de economia para a banca do TCC (valuation FCFF da Gerdau em 5 datas, "
-    "prêmio de mercado ainda em aberto; aqui testado em 5%). Gere de 6 a 8 perguntas que a banca "
+    "custo da dívida = Selic esperada + spread Baa; ke com prêmio maduro dos EUA + lambda × EMBI). Gere de 6 a 8 perguntas que a banca "
     "provavelmente fará sobre as PREMISSAS, das mais perigosas para as menos. Para cada uma: a pergunta como "
     "a banca falaria, por que ela é perigosa, os números que respondem (copiados das tabelas) e uma resposta "
     "curta sugerida. Português; cada campo com no máximo 2 frases. Só use números das tabelas. Não compare com outros TCCs."
@@ -90,12 +92,14 @@ def questions(llm: LLM, hist: pd.DataFrame, torn: pd.DataFrame, cyc: pd.DataFram
         f"Ciclo do aço em cada data (PPI de produtos de usina siderúrgica, EUA):\n"
         f"{cyc[['date', 'steel_month', 'steel_yoy', 'steel_vs_10y_avg', 'phase']].round(3).to_string(index=False)}"
     )
-    allowed = set(ASSUMPTIONS) | {"Beta", "Equity risk premium", "Terminal growth", "Janela de estimação"}
+    allowed = set(ASSUMPTIONS) | {"Beta", "Equity risk premium", "Country risk premium", "Credit spread",
+                                  "Cost of debt", "Terminal growth", "Janela de estimação"}
 
     def check(a):
         p = [f"unknown assumption: {q['assumption']}" for q in a["questions"] if q["assumption"] not in allowed]
         p += [f"question without numbers: {q['question'][:40]}" for q in a["questions"]
               if not any(ch.isdigit() for ch in q["numbers_for_the_answer"])]
+        p += unsupported_numbers(a, prompt)
         if not 6 <= len(a["questions"]) <= 8:
             p.append(f"expected 6 to 8 questions, got {len(a['questions'])}")
         return p

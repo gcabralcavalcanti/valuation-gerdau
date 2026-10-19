@@ -10,20 +10,20 @@ import pandas as pd
 
 from . import steel
 from .data import Workbook
-from .llm import LLM, load_schema
-from .model import DCF, Spec
+from .llm import LLM, load_schema, unsupported_numbers
+from .model import DCF, Spec, legacy
 
-ERP_TEST = 0.05  # fixed premium for comparisons while the thesis premium method is open
 
 
 def specs() -> dict[str, list[Spec]]:
     return {
-        "Estimation window (assumptions and beta)": [Spec(window=w, erp=ERP_TEST) for w in (3, 5, 7, 10)],
-        "Beta: regression window": [Spec(window=5, beta_window=b, erp=ERP_TEST) for b in (2, 3, 5, 10)],
-        "Beta: return frequency and adjustment": [Spec(window=5, erp=ERP_TEST),
-                                                   Spec(window=5, beta_freq="M", erp=ERP_TEST),
-                                                   Spec(window=5, beta_adjust="blume", erp=ERP_TEST)],
-        "Equity risk premium": [Spec(window=5, erp=e) for e in ("historical", 0.04, 0.05, 0.06, 0.07)],
+        "Estimation window (assumptions and beta)": [Spec(window=w) for w in (3, 5, 7, 10)],
+        "Beta: regression window": [Spec(window=5, beta_window=b) for b in (2, 3, 5, 10)],
+        "Beta: return frequency and adjustment": [Spec(window=5), Spec(window=5, beta_freq="M"),
+                                                   Spec(window=5, beta_adjust="blume")],
+        "Equity risk premium": [Spec(window=5, erp=e) for e in ("us_mature", 0.04, 0.05, 0.06, 0.07)],
+        "Cost of capital method": [Spec(window=5), Spec(window=5, country_risk=False), Spec(window=5, kd="book"),
+                                   legacy(window=5, erp=0.05), legacy(window=5)],
     }
 
 
@@ -46,7 +46,7 @@ def run_grid(wb: Workbook) -> pd.DataFrame:
     return out
 
 
-def beta_ci_scenarios(wb: Workbook, spec: Spec = Spec(window=5, erp=ERP_TEST)) -> pd.DataFrame:
+def beta_ci_scenarios(wb: Workbook, spec: Spec = Spec(window=5)) -> pd.DataFrame:
     """The scenario the advisor's manual suggests: betas across the regression's 95% interval."""
     m = DCF(wb)
     rows = []
@@ -70,7 +70,8 @@ SYSTEM = (
     "Você é uma assistente de pesquisa num TCC de economia (valuation FCFF da Gerdau em 5 datas). "
     "Recebe tabelas de especificações alternativas já calculadas. Em português e frases curtas: diga que "
     "dimensão mais move o valor, onde o resultado da pergunta do TCC muda de sinal ou de tamanho, e as "
-    "opções do autor com prós e contras (no máximo 5 achados e 4 opções). Use só números das tabelas. NÃO escolha a especificação: o autor decide."
+    "opções do autor com prós e contras (no máximo 5 achados e 4 opções). Use só números das tabelas; "
+    "um intervalo cita os dois extremos da MESMA data, e diga a data. NÃO escolha a especificação: o autor decide."
 )
 
 
@@ -89,11 +90,12 @@ def summary(llm: LLM, grid: pd.DataFrame, ci: pd.DataFrame) -> dict:
     dims = list(specs()) + ["Beta confidence interval", "Thesis question"]
 
     def check(a):
-        return [f"unknown dimension: {f['dimension']}" for f in a["findings"] if f["dimension"] not in dims]
+        return ([f"unknown dimension: {f['dimension']}" for f in a["findings"] if f["dimension"] not in dims]
+                + unsupported_numbers(a, prompt))
 
     schema = load_schema("lab_summary")
     schema["properties"]["findings"]["items"]["properties"]["dimension"]["enum"] = dims  # closed list
-    return llm.ask("lab", SYSTEM, prompt, schema, check=check, max_tokens=1500)
+    return llm.ask("lab", SYSTEM, prompt, schema, check=check, max_tokens=2500)
 
 
 def run(llm: LLM | None, wb: Workbook) -> dict:

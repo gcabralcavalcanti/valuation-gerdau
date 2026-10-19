@@ -1,7 +1,9 @@
 """Independent re-implementation of the thesis DCF (FCFF / WACC), parameterised by a `Spec`.
 
-The default Spec reproduces the thesis notebook (checked against golden/thesis_results.json).
-Every other Spec is an alternative the lab or the reviewer can test. All values in R$ million.
+The default Spec reproduces the thesis notebook (golden/thesis_results.json, model of 19/10/2026: cost of debt =
+expected Selic + Baa credit spread; ke = rf + beta x mature US premium + lambda x Brazil country premium).
+LEGACY reproduces the first version of the notebook (golden/thesis_results_v1.json: Ibovespa − CDI premium and
+book cost of debt). Every other Spec is an alternative the lab or the reviewer can test. All values in R$ million.
 """
 from __future__ import annotations
 
@@ -25,31 +27,44 @@ class Spec:
     beta_window: int | None = None  # years of returns in the beta regression (None = window)
     beta_freq: str = "W"            # "W" weekly or "M" monthly returns
     beta_adjust: str = "raw"        # "raw" or "blume" (0.67·β + 0.33)
-    erp: float | str = "historical" # "historical" (Ibovespa − CDI since 2009) or a fixed number
+    erp: float | str = "us_mature"  # "us_mature" (US stocks − 10y bonds, geometric, since 1928),
+                                    # "brazil_historical" (Ibovespa − CDI since 2009) or a fixed number
+    country_risk: bool = True       # add lambda x country premium (EMBI+ Brazil) to the cost of equity
+    kd: str = "rating_spread"       # "rating_spread" (expected Selic + Baa spread) or "book" (financial expense / debt)
     tax: str = "effective"          # "effective" (clipped to 0–34%) or "statutory" (34%)
     overrides: dict = field(default_factory=dict)  # fixed values for named assumptions
 
     def label(self) -> str:
         erp = self.erp if isinstance(self.erp, str) else f"{self.erp:.0%}"
+        crp = " + country" if self.country_risk else ""
         return (f"window {self.window}y · beta {self.beta_window or self.window}y {self.beta_freq} {self.beta_adjust}"
-                f" · ERP {erp} · tax {self.tax}")
+                f" · ERP {erp}{crp} · kd {self.kd} · tax {self.tax}")
 
     def with_overrides(self, **kw) -> "Spec":
         return replace(self, overrides={**self.overrides, **kw})
 
 
+LEGACY = Spec(erp="brazil_historical", country_risk=False, kd="book")  # thesis notebook v1 (16/10/2026)
+
+
+def legacy(**kw) -> Spec:
+    return replace(LEGACY, **kw)
+
+
 # Plain definitions sent to the LLM with the numbers, so it does not guess what each column means.
 DEFINITIONS = (
-    "Definições (do código): Cost of debt da tese = despesa financeira total da DRE (inclui variação cambial e "
-    "perdas com derivativos) / dívida total média. 'Interest on debt (DFC)' = linha 'Despesa de juros sobre dívidas "
+    "Definições (do código): Cost of debt da tese (desde 19/10) = Selic esperada t+4 + spread de crédito Baa − Treasury "
+    "de 10 anos (custo atual de captação). Custo contábil antigo = despesa financeira total da DRE (inclui variação "
+    "cambial) / dívida total média. ke = rf + beta × prêmio maduro dos EUA + lambda × EMBI+ Brasil, lambda = fatia da "
+    "receita no Brasil. 'Interest on debt (DFC)' = linha 'Despesa de juros sobre dívidas "
     "financeiras' da DFC / dívida bruta média (despesa de juros, não juros pagos). Tax rate = IR e CSLL / lucro antes "
     "do IR, limitado a 0–34%. EBIT margin exclui impairment e ganhos não recorrentes identificados no 20-F. "
-    "Percentis e faixas p10–p90 vêm do histórico anual da própria Gerdau. A faixa do prêmio (4%–7%) e de g (± 1 p.p.) "
-    "são faixas de teste, não dados."
+    "Percentis e faixas p10–p90 vêm do histórico anual da própria Gerdau. As faixas do prêmio maduro (4%–7%), do "
+    "prêmio-país (1,5%–4%), do spread de crédito (1%–3%) e de g (± 1 p.p.) são faixas de teste, não dados."
 )
 
 ASSUMPTIONS = ["Revenue growth", "EBIT margin", "D&A / revenue", "Capex / revenue",
-               "Working capital / revenue", "Tax rate", "Cost of debt"]
+               "Working capital / revenue", "Tax rate"]          # operating assumptions, estimated by window
 
 
 class DCF:
@@ -69,7 +84,7 @@ class DCF:
         r["Capex / revenue"] = f["Capex"] / rev
         r["Working capital / revenue"] = f["Working capital"] / rev
         r["Tax rate"] = (-f["IR e CSLL"] / f["Lucro antes do IR"]).clip(0, STATUTORY_TAX)
-        r["Cost of debt"] = -f["Despesas financeiras"] / f["Total debt"].rolling(2, min_periods=1).mean()
+        r["Book cost of debt"] = -f["Despesas financeiras"] / f["Total debt"].rolling(2, min_periods=1).mean()
         self.ratios = r
         p = wb.prices
         self._cdi_daily = 1 + p["CDI (% ao dia)"] / 100
@@ -103,6 +118,17 @@ class DCF:
         cdi = ((1 + p["CDI (% ao dia)"] / 100).resample("YE").prod() - 1)
         return float((ibov - cdi).dropna().mean())
 
+    def us_mature_erp(self, date, start: int = 1927) -> float:
+        """Geometric annual real return of US stocks minus 10-year bonds, Dec/start to Dec of the year before date."""
+        u, end = self.wb.us_returns, date.year - 1
+        n = end - start
+        stocks = (u.loc[end].iloc[0] / u.loc[start].iloc[0]) ** (1 / n) - 1
+        bonds = (u.loc[end].iloc[1] / u.loc[start].iloc[1]) ** (1 / n) - 1
+        return float(stocks - bonds)
+
+    def market_at(self, date) -> pd.Series:
+        return self.wb.market.loc[self.wb.market["Data-base"] == date].iloc[0]
+
     # -------------------------------------------------------------- valuation
     def value(self, row: pd.Series, spec: Spec = Spec()) -> dict:
         d, last = row["Data-base"], int(row["Último exercício publicado"])
@@ -117,20 +143,37 @@ class DCF:
         if spec.beta_adjust == "blume":
             beta = 0.67 * beta + 0.33
         beta = ov.get("Beta", beta)
-        erp = self.historical_erp(d) if spec.erp == "historical" else float(spec.erp)
+        if spec.erp == "us_mature":
+            erp = self.us_mature_erp(d)
+        elif spec.erp in ("brazil_historical", "historical"):
+            erp = self.historical_erp(d)
+        else:
+            erp = float(spec.erp)
         erp = ov.get("Equity risk premium", erp)
         rf = ov.get("Risk-free rate", fo["Selic ano t+4 (%)"] / 100)
+        lam = crp = 0.0
+        if spec.country_risk or spec.kd == "rating_spread":
+            me = self.market_at(d)
+        if spec.country_risk:
+            lam = me["Receita no Brasil, último exercício (%)"] / 100
+            crp = me["EMBI+ Brasil, véspera (%)"] / 100
+        lam, crp = ov.get("Lambda", lam), ov.get("Country risk premium", crp)
+        if spec.kd == "rating_spread":
+            kd = rf + ov.get("Credit spread", me["Spread Baa − Treasury 10 anos, mês anterior (%)"] / 100)
+        else:
+            kd = float(a["Book cost of debt"])
+        kd = ov.get("Cost of debt", kd)
         g = (1 + fo["IPCA ano t+4 (%)"] / 100) * (1 + fo["PIB ano t+3 (%)"] / 100) - 1
         g = ov.get("Terminal growth", g)
         for k in ASSUMPTIONS:
             if k in ov:
                 a[k] = ov[k]
 
-        ke = rf + beta * erp
+        ke = rf + beta * erp + lam * crp
         E = row["Valor de mercado (R$ mi)"]
         D = self.f.loc[last, "Total debt"]
         t = a["Tax rate"]
-        wacc = E / (D + E) * ke + D / (D + E) * a["Cost of debt"] * (1 - t)
+        wacc = E / (D + E) * ke + D / (D + E) * kd * (1 - t)
 
         revenue, wc_prev, fcff = self.f.loc[last, "Receita líquida"], self.f.loc[last, "Working capital"], []
         for year in range(1, EXPLICIT_YEARS + 1):
@@ -150,7 +193,8 @@ class DCF:
         return {"date": d.date().isoformat(), "last_fy": last, "spec": spec.label(), "window": spec.window,
                 "price": price, "fair_value": fair, "deviation": fair / price - 1,
                 "beta": beta, "beta_se": float(reg.bse["Ibovespa"]), "beta_r2": float(reg.rsquared),
-                "beta_n": int(reg.nobs), "erp": erp, "rf": rf, "ke": ke, "wacc": wacc, "g": g,
+                "beta_n": int(reg.nobs), "erp": erp, "lambda": lam, "crp": crp, "rf": rf, "ke": ke,
+                "Cost of debt": kd, "Book cost of debt": float(a["Book cost of debt"]), "wacc": wacc, "g": g,
                 "fcff_year1": fcff[0], "firm_value": firm, "valid": bool(wacc > g),
                 **{k: float(a[k]) for k in ASSUMPTIONS}}
 

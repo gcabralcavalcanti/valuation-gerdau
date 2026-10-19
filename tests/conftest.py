@@ -42,4 +42,10 @@ def synthetic_wb(monkeypatch) -> Workbook:
                           "Dívida líquida (R$ mi)": [300.0, 320.0]})
     focus = pd.DataFrame({"Data-base": dates["Data-base"], "Selic ano t+4 (%)": [9.0, 10.0],
                           "IPCA ano t+4 (%)": [3.5, 3.5], "PIB ano t+3 (%)": [2.0, 2.0]})
-    return Workbook(dates=dates, fundamentals=f, prices=prices, macro=pd.DataFrame(), focus=focus, source="synthetic")
+    market = pd.DataFrame({"Data-base": dates["Data-base"], "Spread Baa − Treasury 10 anos, mês anterior (%)": [2.0, 1.5],
+                           "EMBI+ Brasil, véspera (%)": [2.5, 2.3], "Receita no Brasil, último exercício (%)": [45.0, 44.0]})
+    years_us = range(1900, 2025)
+    us = pd.DataFrame({"stocks": [1.065 ** (y - 1900) for y in years_us], "bonds": [1.02 ** (y - 1900) for y in years_us]},
+                      index=pd.Index(years_us, name="Ano"))
+    return Workbook(dates=dates, fundamentals=f, prices=prices, macro=pd.DataFrame(), focus=focus, source="synthetic",
+                    market=market, us_returns=us)

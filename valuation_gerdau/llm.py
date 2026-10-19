@@ -11,6 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 from datetime import datetime, timezone
 from typing import Callable
 
@@ -44,6 +45,44 @@ def _load_key() -> str | None:
         except OSError:
             return None
     return None
+
+
+_NUM = re.compile(r"-?\d[\d.,]*\d|-?\d")
+
+
+def _floats(text: str) -> list[float]:
+    """Numbers written either way (1,234.5 / 1.234,5 / 8,2 / 0.082)."""
+    out = []
+    for tok in _NUM.findall(text.replace("−", "-")):
+        t = tok
+        if "," in t and "." in t:
+            t = t.replace(".", "").replace(",", ".") if t.rfind(",") > t.rfind(".") else t.replace(",", "")
+        elif "," in t:
+            whole, frac = t.rsplit(",", 1)
+            decimal = len(frac) != 3 or whole.lstrip("-") == "0"   # 0,165 is a decimal; 1,253 is not
+            t = t.replace(",", ".") if decimal else t.replace(",", "")
+        try:
+            out.append(float(t))
+        except ValueError:
+            pass
+    return out
+
+
+def unsupported_numbers(answer, source: str, limit: int = 5) -> list[str]:
+    """Numbers in the answer that appear nowhere in the source tables (also as % or fraction).
+    Years and small integers are ignored. Catches invented figures, not wrong pairings."""
+    known = set()
+    for x in _floats(source):
+        for v in (x, x * 100, x / 100):
+            known.update({round(v, 1), round(v, 2), float(int(v)), float(round(v))})
+    text = json.dumps(answer, ensure_ascii=False)
+    bad = []
+    for x in _floats(text):
+        if float(x).is_integer() and (abs(x) <= 12 or 1900 <= abs(x) <= 2100):
+            continue
+        if not any(round(x, d) in known or round(-x, d) in known for d in (1, 2)):
+            bad.append(f"number {x:g} is not in the tables")
+    return bad[:limit]
 
 
 def load_schema(name: str) -> dict:
@@ -108,6 +147,15 @@ class LLM:
             user = (prompt + "\n\nYour previous answer was rejected by the checker:\n- "
                     + "\n- ".join(problems) + "\nAnswer again, fixing these points.")
         raise ValueError(f"{task}: answer failed checks after retries: {problems}")
+
+    def recorded(self, task: str) -> dict | None:
+        """The single recorded answer of a task, for demo mode when its inputs cannot be rebuilt offline."""
+        found = sorted(self.recordings.glob(f"{task}-*.json"))
+        if len(found) != 1:
+            return None
+        self.cache_hits += 1
+        self._log(task, found[0].stem.rsplit("-", 1)[-1], "recording-by-task", 0, 0, [])
+        return json.loads(found[0].read_text(encoding="utf-8"))
 
     def cost_usd(self) -> float:
         p_in, p_out = config.PRICE_PER_MTOK.get(config.MODEL, (0.0, 0.0))

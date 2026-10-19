@@ -69,3 +69,8 @@ def test_label_line_without_number_is_extended_on_the_page(tmp_path):
             f["found"] = False
     assert auditor.make_check(pages, [1])(answer) == []
     assert "5,434" in [f for f in answer["figures"] if f["metric"] == "cash"][0]["quote"]
+
+
+def test_recorded_prompt_rebuilds_the_pages():
+    pages = auditor.recorded_pages("Fiscal year: 2024.\n\n[page 2]\nNet Sales 1\n\n[page 5]\nGross Debt 2")
+    assert len(pages) == 5 and pages[1] == "Net Sales 1" and pages[4] == "Gross Debt 2" and pages[0] == ""

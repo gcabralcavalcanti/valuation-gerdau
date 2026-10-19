@@ -13,11 +13,11 @@ import pandas as pd
 
 from . import cvm
 from .data import Workbook
-from .llm import LLM, load_schema
+from .llm import LLM, load_schema, unsupported_numbers
 from .model import DEFINITIONS, DCF, Spec
 
 TOL = 0.005
-BASE = Spec(window=5, erp=0.05)  # historical ERP is negative (open thesis issue), so compare at 5%
+BASE = Spec(window=5)  # thesis model since 19/10: Selic + Baa spread for debt, mature premium + country risk
 
 
 def reconcile(wb: Workbook, years) -> pd.DataFrame:
@@ -61,7 +61,11 @@ def alternative_specs(wb: Workbook, raw: dict[int, dict]) -> dict[str, callable]
         s = kd_interest(row, s)
         return ebit_ex_equity(row, s)
 
+    def no_country(row, spec):
+        return Spec(**{**spec.__dict__, "country_risk": False})
+
     return {"Cost of debt = interest on debt (DFC)": kd_interest,
+            "No country risk (lambda = 0)": no_country,
             "Statutory tax 34%": statutory,
             "EBIT without equity income": ebit_ex_equity,
             "All three": all_three}
@@ -72,7 +76,7 @@ def recompute(wb: Workbook, raw: dict[int, dict]) -> pd.DataFrame:
     rows = []
     for _, row in wb.dates.iterrows():
         base = m.value(row, BASE)
-        rows.append({"date": base["date"], "variant": "Thesis choices (ERP 5%)", **_pick(base)})
+        rows.append({"date": base["date"], "variant": "Thesis model (19/10)", **_pick(base)})
         for name, build in alternative_specs(wb, raw).items():
             v = m.value(row, build(row, BASE))
             rows.append({"date": v["date"], "variant": name, **_pick(v),
@@ -95,13 +99,13 @@ SYSTEM = (
 def memo(llm: LLM, recon: pd.DataFrame, alt: pd.DataFrame) -> dict:
     topics = sorted(alt["variant"].unique().tolist() + ["Reconciliação com a CVM"])
     differs = recon[recon["status"] != "match"]
-    summary_alt = (alt[alt["variant"] != "Thesis choices (ERP 5%)"]
+    summary_alt = (alt[alt["variant"] != "Thesis model (19/10)"]
                    .pivot_table(index="variant", columns="date", values="fair_value_change").round(3))
-    base = alt[alt["variant"] == "Thesis choices (ERP 5%)"].set_index("date")[["fair_value", "price", "wacc", "Cost of debt", "Tax rate"]].round(3)
+    base = alt[alt["variant"] == "Thesis model (19/10)"].set_index("date")[["fair_value", "price", "wacc", "Cost of debt", "Tax rate"]].round(3)
     prompt = DEFINITIONS + "\n\n" + (
         f"Reconciliação planilha × CVM: {len(recon) - len(differs)} de {len(recon)} linhas batem "
         f"(tolerância 0,5%). Divergências:\n{differs.to_string(index=False) if len(differs) else 'nenhuma'}\n\n"
-        f"Valuation com as escolhas do TCC (prêmio de mercado fixo em 5%):\n{base.to_string()}\n\n"
+        f"Valuation com o modelo do TCC (desde 19/10):\n{base.to_string()}\n\n"
         f"Variação do valor justo por ação quando a segunda analista muda UMA escolha (fração; 0.10 = +10%):\n"
         f"{summary_alt.to_string()}\n\n"
         f"Custo da dívida por variante e data:\n"
@@ -111,7 +115,7 @@ def memo(llm: LLM, recon: pd.DataFrame, alt: pd.DataFrame) -> dict:
 
     def check(a):
         bad = [f["topic"] for f in a["findings"] if f["topic"] not in topics]
-        return [f"unknown topic: {t}" for t in bad]
+        return [f"unknown topic: {t}" for t in bad] + unsupported_numbers(a, prompt)
 
     return llm.ask("second-analyst", SYSTEM, prompt, load_schema("analyst_memo"), check=check, max_tokens=1500)
 

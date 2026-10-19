@@ -73,18 +73,6 @@
    "years": "2010–2020"
   },
   {
-   "date": "2021-02-25",
-   "assumption": "Cost of debt",
-   "used": 0.10656172927541704,
-   "hist_min": 0.0684540683004366,
-   "hist_p10": 0.07520375349723595,
-   "hist_median": 0.1018342117835892,
-   "hist_p90": 0.13533656957290133,
-   "hist_max": 0.1454637956457285,
-   "percentile_of_used": 0.6363636363636364,
-   "years": "2010–2020"
-  },
-  {
    "date": "2022-02-24",
    "assumption": "Revenue growth",
    "used": 0.15783188431434603,
@@ -154,18 +142,6 @@
    "hist_p90": 0.2706277844859808,
    "hist_max": 0.31685527099463967,
    "percentile_of_used": 0.5833333333333334,
-   "years": "2010–2021"
-  },
-  {
-   "date": "2022-02-24",
-   "assumption": "Cost of debt",
-   "used": 0.11081633503579776,
-   "hist_min": 0.0684540683004366,
-   "hist_p10": 0.07548071705908369,
-   "hist_median": 0.1026375583783341,
-   "hist_p90": 0.13271211057473384,
-   "hist_max": 0.1454637956457285,
-   "percentile_of_used": 0.8333333333333334,
    "years": "2010–2021"
   },
   {
@@ -241,18 +217,6 @@
    "years": "2010–2022"
   },
   {
-   "date": "2023-03-02",
-   "assumption": "Cost of debt",
-   "used": 0.12755444056390947,
-   "hist_min": 0.0684540683004366,
-   "hist_p10": 0.07575768062093141,
-   "hist_median": 0.10344090497307902,
-   "hist_p90": 0.14343835043116307,
-   "hist_max": 0.17749747684045347,
-   "percentile_of_used": 0.7692307692307693,
-   "years": "2010–2022"
-  },
-  {
    "date": "2024-02-21",
    "assumption": "Revenue growth",
    "used": 0.08345879185285443,
@@ -321,18 +285,6 @@
    "hist_median": 0.13863012709109834,
    "hist_p90": 0.2753188572287799,
    "hist_max": 0.31685527099463967,
-   "percentile_of_used": 0.7857142857142857,
-   "years": "2010–2023"
-  },
-  {
-   "date": "2024-02-21",
-   "assumption": "Cost of debt",
-   "used": 0.13554695842934436,
-   "hist_min": 0.0684540683004366,
-   "hist_p10": 0.07603464418277915,
-   "hist_median": 0.10545352168513428,
-   "hist_p90": 0.16634854992377168,
-   "hist_max": 0.17749747684045347,
    "percentile_of_used": 0.7857142857142857,
    "years": "2010–2023"
   },
@@ -407,18 +359,6 @@
    "hist_max": 0.31685527099463967,
    "percentile_of_used": 0.7333333333333333,
    "years": "2010–2024"
-  },
-  {
-   "date": "2025-02-20",
-   "assumption": "Cost of debt",
-   "used": 0.1543315543160133,
-   "hist_min": 0.0684540683004366,
-   "hist_p10": 0.07631160774462689,
-   "hist_median": 0.10746613839718952,
-   "hist_p90": 0.17661814966430242,
-   "hist_max": 0.20301495902457106,
-   "percentile_of_used": 0.8,
-   "years": "2010–2024"
   }
  ],
  "tornado": [
@@ -427,10 +367,10 @@
    "low": 0.048514049113651536,
    "high": 0.18590795163209758,
    "range_source": "Gerdau p10–p90",
-   "value_at_low": 1.2340038091766994,
-   "value_at_high": 48.8850254553343,
-   "swing": 47.6510216461576,
-   "base_value": 41.541766486949776,
+   "value_at_low": 1.3023305755784809,
+   "value_at_high": 49.76717316377361,
+   "swing": 48.46484258819513,
+   "base_value": 42.298500348532805,
    "price": 16.43,
    "date": "2025-02-20"
   },
@@ -439,10 +379,10 @@
    "low": 0.031046951339952666,
    "high": 0.08285133313322539,
    "range_source": "Gerdau p10–p90",
-   "value_at_low": 54.900126551340705,
-   "value_at_high": 31.399433690459617,
-   "swing": 23.500692860881088,
-   "base_value": 41.541766486949776,
+   "value_at_low": 55.8850048009372,
+   "value_at_high": 31.98294896100824,
+   "swing": 23.902055839928963,
+   "base_value": 42.298500348532805,
    "price": 16.43,
    "date": "2025-02-20"
   },
@@ -451,22 +391,10 @@
    "low": -0.1391139269171015,
    "high": 0.22334709659069077,
    "range_source": "Gerdau p10–p90",
-   "value_at_low": 27.582291382959898,
-   "value_at_high": 49.37601564147469,
-   "swing": 21.79372425851479,
-   "base_value": 41.541766486949776,
-   "price": 16.43,
-   "date": "2025-02-20"
-  },
-  {
-   "assumption": "Cost of debt",
-   "low": 0.07631160774462689,
-   "high": 0.17661814966430242,
-   "range_source": "Gerdau p10–p90",
-   "value_at_low": 54.04735876955195,
-   "value_at_high": 38.916723736670846,
-   "swing": 15.130635032881102,
-   "base_value": 41.541766486949776,
+   "value_at_low": 28.051322004859117,
+   "value_at_high": 50.29620470012961,
+   "swing": 22.24488269527049,
+   "base_value": 42.298500348532805,
    "price": 16.43,
    "date": "2025-02-20"
   },
@@ -475,10 +403,10 @@
    "low": 0.0,
    "high": 0.27504171097847435,
    "range_source": "Gerdau p10–p90",
-   "value_at_low": 51.80612644958336,
-   "value_at_high": 39.53939200792455,
-   "swing": 12.266734441658812,
-   "base_value": 41.541766486949776,
+   "value_at_low": 54.51716845958766,
+   "value_at_high": 40.003309273090714,
+   "swing": 14.513859186496944,
+   "base_value": 42.298500348532805,
    "price": 16.43,
    "date": "2025-02-20"
   },
@@ -487,10 +415,10 @@
    "low": 0.04,
    "high": 0.07,
    "range_source": "test range 4%–7%",
-   "value_at_low": 46.15179650036417,
-   "value_at_high": 34.50576642771067,
-   "swing": 11.646030072653502,
-   "base_value": 41.541766486949776,
+   "value_at_low": 48.22121281955813,
+   "value_at_high": 35.69899677245519,
+   "swing": 12.522216047102944,
+   "base_value": 42.298500348532805,
    "price": 16.43,
    "date": "2025-02-20"
   },
@@ -499,10 +427,10 @@
    "low": 0.0372646501153381,
    "high": 0.06011728277754137,
    "range_source": "Gerdau p10–p90",
-   "value_at_low": 38.793454404993675,
-   "value_at_high": 49.16039022521265,
-   "swing": 10.366935820218977,
-   "base_value": 41.541766486949776,
+   "value_at_low": 39.50325047069566,
+   "value_at_high": 50.04724082581847,
+   "swing": 10.543990355122808,
+   "base_value": 42.298500348532805,
    "price": 16.43,
    "date": "2025-02-20"
   },
@@ -511,10 +439,10 @@
    "low": 0.04926999999999993,
    "high": 0.06926999999999993,
    "range_source": "test range ± 1 p.p.",
-   "value_at_low": 37.745342572092255,
-   "value_at_high": 46.363085039770276,
-   "swing": 8.61774246767802,
-   "base_value": 41.541766486949776,
+   "value_at_low": 38.36494387396552,
+   "value_at_high": 47.314606037747524,
+   "swing": 8.949662163782001,
+   "base_value": 42.298500348532805,
    "price": 16.43,
    "date": "2025-02-20"
   },
@@ -523,10 +451,10 @@
    "low": 0.9661296536498859,
    "high": 1.303961870347968,
    "range_source": "95% interval of the regression",
-   "value_at_low": 44.88358045694065,
-   "value_at_high": 38.63586253420733,
-   "swing": 6.247717922733322,
-   "base_value": 41.541766486949776,
+   "value_at_low": 45.91785182546223,
+   "value_at_high": 39.177700047743315,
+   "swing": 6.740151777718914,
+   "base_value": 42.298500348532805,
    "price": 16.43,
    "date": "2025-02-20"
   },
@@ -535,10 +463,34 @@
    "low": 0.1737709619117092,
    "high": 0.2550905366479519,
    "range_source": "Gerdau p10–p90",
-   "value_at_low": 42.95451476485765,
-   "value_at_high": 38.3367143593147,
-   "swing": 4.617800405542951,
-   "base_value": 41.541766486949776,
+   "value_at_low": 43.72306936132543,
+   "value_at_high": 39.066630937107696,
+   "swing": 4.656438424217733,
+   "base_value": 42.298500348532805,
+   "price": 16.43,
+   "date": "2025-02-20"
+  },
+  {
+   "assumption": "Country risk premium",
+   "low": 0.015,
+   "high": 0.04,
+   "range_source": "test range 1.5%–4%",
+   "value_at_low": 43.634339380951786,
+   "value_at_high": 39.607113714075474,
+   "swing": 4.027225666876312,
+   "base_value": 42.298500348532805,
+   "price": 16.43,
+   "date": "2025-02-20"
+  },
+  {
+   "assumption": "Credit spread",
+   "low": 0.01,
+   "high": 0.03,
+   "range_source": "test range 1%–3%",
+   "value_at_low": 42.88859988998334,
+   "value_at_high": 40.37714369632337,
+   "swing": 2.511456193659967,
+   "base_value": 42.298500348532805,
    "price": 16.43,
    "date": "2025-02-20"
   }
@@ -589,52 +541,52 @@
   "questions": [
    {
     "assumption": "EBIT margin",
-    "question": "Por que a margem EBIT de 16,5% em 2025 está no percentil 87 da própria Gerdau, e não é um pico de ciclo que vai reverter?",
-    "why_it_is_risky": "A margem atual está acima da mediana histórica de 8,1% e perto do p90 de 18,6%, e o valor do modelo é muito sensível a ela (swing de R$ 47,65 no tornado).",
-    "numbers_for_the_answer": "EBIT margin 2025 = 0,165; mediana 2010–2024 = 0,081; p90 = 0,186; percentil 0,87; ciclo do aço 2025 = falling, steel_vs_10y_avg 0,093.",
-    "suggested_answer": "A margem está alta em relação ao histórico, por isso usei o intervalo p10–p90 para testar. Reconheço que um ciclo em queda pode reduzir a margem, e isso aparece como cenário de baixa no tornado."
+    "question": "Por que a margem EBIT de 16,5% em 2025 é sustentável se está no percentil 87 do histórico da própria Gerdau, muito acima da mediana de 8,1%?",
+    "why_it_is_risky": "A margem atual está perto do topo do ciclo; se ela reverter à mediana, o valor cai drasticamente, e o tornado mostra que essa é a premissa de maior impacto (swing de R$ 48,47).",
+    "numbers_for_the_answer": "Margem 2025 = 0,165 (percentil 0,87); mediana 2010–2024 = 0,081; p90 = 0,186; faixa testada p10–p90 = 0,049–0,186; valor com 0,049 = R$ 1,30 vs R$ 49,77 com 0,186.",
+    "suggested_answer": "Reconheço que a margem está alta e é a premissa mais sensível; por isso mostro o cenário de reversão ao p10 (R$ 1,30) e o valor base de R$ 42,30 deve ser lido como condicional ao ciclo atual."
    },
    {
     "assumption": "Capex / revenue",
-    "question": "Por que o capex/receita de 6,0% está no percentil 73, acima da mediana de 5,4%, e isso é sustentável na perpetuidade?",
-    "why_it_is_risky": "O swing é de R$ 23,50, e um capex elevado persistente reduz o FCFF; além disso, a premissa interage com o crescimento terminal.",
-    "numbers_for_the_answer": "Capex/revenue 2025 = 0,060; mediana histórica = 0,054; p90 = 0,083; percentil 0,73; valor com baixo capex = R$ 54,90; com alto capex = R$ 31,40.",
-    "suggested_answer": "O capex subiu de 3,5% para 6,0% no período, então usei a mediana histórica como referência e o p10–p90 para o teste. Justifico que o investimento recente em expansão ainda pesa, mas reconheço a incerteza."
+    "question": "Se o capex/receita subiu de 3,5% para 6,0% e já está no percentil 73, você está assumindo que esse investimento gera crescimento ou apenas que a empresa precisa gastar mais?",
+    "why_it_is_risky": "Capex elevado reduz o FCFF; se não houver contrapartida em crescimento ou margem, o valor estará subestimado, e a sensibilidade é a segunda maior do tornado.",
+    "numbers_for_the_answer": "Capex/receita 2025 = 0,060 (percentil 0,73); mediana histórica = 0,054; p10–p90 = 0,031–0,083; valor com 0,031 = R$ 55,89 e com 0,083 = R$ 31,98 (swing R$ 23,90).",
+    "suggested_answer": "O capex atual está acima da mediana, mas dentro da faixa histórica; mantenho a premissa e mostro que, se o investimento for de manutenção/expansão já capitalizada, o valor pode estar conservador, como indica o cenário p10."
    },
    {
     "assumption": "Revenue growth",
-    "question": "Com crescimento de receita de 11,1% no último ano, por que assumir que a janela de 5 anos mantém esse ritmo?",
-    "why_it_is_risky": "O crescimento recente está no percentil 73 e o swing é de R$ 21,79; uma média de 5 anos pode estar inflada pelo ciclo de recuperação.",
-    "numbers_for_the_answer": "Revenue growth 2025 = 0,111; mediana histórica = 0,052; p90 = 0,223; p10 = -0,139; swing = R$ 21,79; ciclo do aço em queda (steel_yoy -0,115).",
-    "suggested_answer": "O crescimento usado vem da janela de 5 anos, que inclui 2021–2022 de alta. O teste p10–p90 mostra que o valor depende fortemente disso, e cenários de queda estão cobertos pela faixa."
-   },
-   {
-    "assumption": "Cost of debt",
-    "question": "O custo da dívida de 15,4% inclui variação cambial e derivativos; isso não distorce o WACC?",
-    "why_it_is_risky": "Cost of debt de 15,4% está acima da mediana de 10,7% e no percentil 80; a definição usa despesa financeira total, não só juros, e o swing é de R$ 15,13.",
-    "numbers_for_the_answer": "Cost of debt 2025 = 0,154; mediana histórica = 0,107; p90 = 0,177; percentil 0,80; despesa de juros (DFC) não está nesta tabela, então não é comparável diretamente.",
-    "suggested_answer": "Uso a despesa financeira total da DRE por ser o custo econômico efetivo, mas reconheço que variação cambial infla o número. Por isso o teste p10–p90 cobre valores menores."
+    "question": "Como você justifica crescimento de receita de 11,1% em 2025 se a própria fase do aço é de queda (steel_yoy = -11,5%)?",
+    "why_it_is_risky": "Crescer acima do ciclo de preços do aço sem base operacional explícita pode superestimar o fluxo; o crescimento aparece como terceiro maior swing.",
+    "numbers_for_the_answer": "Crescimento 2025 = 0,111 (percentil 0,73); p10 = -0,139; mediana = 0,052; p90 = 0,223; steel_yoy 2025 = -0,115; fase = falling; valor com -0,139 = R$ 28,05 e com 0,223 = R$ 50,30.",
+    "suggested_answer": "A premissa reflete a média de longo prazo da fase de expansão recente, não o ciclo de preços de 2024; reconheço o risco e mostro que o valor cai para R$ 28,05 no cenário de contração."
    },
    {
     "assumption": "Tax rate",
-    "question": "Por que a alíquota efetiva de 23,5% é usada, sendo que o limite legal é 34%?",
-    "why_it_is_risky": "A alíquota efetiva oscila (0,118 em 2021, 0,259 em 2024) e o percentil atual é 0,73; a faixa do histórico vai de 0,000 a 0,317.",
-    "numbers_for_the_answer": "Tax rate 2025 = 0,235; mediana histórica = 0,158; p90 = 0,275; limite do modelo 0–34%; swing = R$ 12,27.",
-    "suggested_answer": "A alíquota efetiva reflete benefícios e prejuízos fiscais, então uso o valor observado e o intervalo histórico. Mantenho o limite de 34% como teto metodológico."
+    "question": "Por que usar 23,5% de alíquota efetiva quando o histórico da Gerdau tem mediana de 15,8% e mínimo zero?",
+    "why_it_is_risky": "Alíquota efetiva muito volátil (incentivos, prejuízos fiscais, JCP) pode distorcer o FCFF; a premissa atual está acima da mediana e o swing é relevante.",
+    "numbers_for_the_answer": "Tax rate 2025 = 0,235 (percentil 0,73); mediana = 0,158; p10 = 0,000; p90 = 0,275; valor com 0,000 = R$ 54,52 e com 0,275 = R$ 40,00 (swing R$ 14,51).",
+    "suggested_answer": "Uso a alíquota efetiva recente por refletir a carga atual, e o limite de 0–34% evita valores absurdos; a faixa p10–p90 mostra que o efeito é moderado."
    },
    {
     "assumption": "Equity risk premium",
-    "question": "Por que o prêmio de mercado está em 5% se a faixa de teste é 4%–7%, sem dado observado?",
-    "why_it_is_risky": "O prêmio é um julgamento não observado; o swing é de R$ 11,65 e o valor muda de R$ 46,15 para R$ 34,51 na faixa.",
-    "numbers_for_the_answer": "Prêmio testado = 5%; faixa 4%–7%; valor em 4% = R$ 46,15; valor em 7% = R$ 34,51; preço de mercado = R$ 16,43.",
-    "suggested_answer": "5% é o ponto central da faixa de teste, não um dado. Mostro o valor em toda a faixa e deixo explícito que a conclusão depende dessa escolha."
+    "question": "Por que o prêmio maduro de 5% (ou 4%–7%) é adequado, e como a escolha afeta o ke?",
+    "why_it_is_risky": "A faixa é de teste, não dado observado; combinada com beta e prêmio-país, eleva ou reduz o ke de forma direta e pode mudar a conclusão do valuation.",
+    "numbers_for_the_answer": "Faixa testada 4%–7%; valor com 0,040 = R$ 48,22 e com 0,070 = R$ 35,70 (swing R$ 12,52); preço de mercado R$ 16,43.",
+    "suggested_answer": "Trato o prêmio como premissa de teste; mesmo no extremo de 4% o valor fica acima do preço de mercado, o que indica que a conclusão de subvalorização é robusta a essa escolha."
    },
    {
-    "assumption": "Beta",
-    "question": "O beta de 1,0 a 1,3 vem de uma regressão com janela curta; ela representa o risco atual da Gerdau?",
-    "why_it_is_risky": "A estimativa tem intervalo de confiança de 95% e a janela de estimação pode não refletir mudanças de alavancagem; o swing é de R$ 6,25.",
-    "numbers_for_the_answer": "Beta intervalo 95% = 0,966 a 1,304; valor em beta 0,966 = R$ 44,88; em beta 1,304 = R$ 38,64; valor base = R$ 41,54.",
-    "suggested_answer": "Uso o intervalo de confiança da regressão para medir a incerteza do beta. O impacto no valor é menor que o do prêmio e do crescimento, o que indica robustez relativa."
+    "assumption": "Janela de estimação",
+    "question": "Por que a janela de 5 anos é suficiente para estimar as premissas, dado que o ciclo do aço dura mais de 5 anos?",
+    "why_it_is_risky": "Janela curta captura apenas parte do ciclo; as premissas de 2021 a 2025 podem refletir um período atípico (pico de 2021–2022), enviesando margens e crescimento.",
+    "numbers_for_the_answer": "Datas de 2021 a 2025; steel_vs_10y_avg em 2022 = 0,881 (fase rising); em 2025 = 0,093; histórico completo 2010–2024 usado para percentis.",
+    "suggested_answer": "A janela de 5 anos é a que o modelo usa para premissas operacionais, mas os percentis são calculados sobre 2010–2024, o que ancora as premissas no ciclo completo; reconheço o risco de viés do período recente."
+   },
+   {
+    "assumption": "Cost of debt",
+    "question": "Por que o custo da dívida usa Selic futura + spread Baa menos Treasury, e não a despesa financeira contábil?",
+    "why_it_is_risky": "O custo contábil inclui variação cambial e não reflete o custo marginal atual; a escolha altera o WACC, mas o swing associado ao spread de crédito é pequeno (R$ 2,51), o que precisa ser explicado.",
+    "numbers_for_the_answer": "Credit spread faixa testada 1%–3%; valor com 0,010 = R$ 42,89 e com 0,030 = R$ 40,38 (swing R$ 2,51); valor base R$ 42,30.",
+    "suggested_answer": "O custo marginal de captação é a referência correta para o WACC; o spread tem impacto pequeno no valor, então a escolha do custo contábil não mudaria a conclusão de forma relevante."
    }
   ]
  }

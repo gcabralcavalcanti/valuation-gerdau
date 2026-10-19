@@ -22,6 +22,8 @@ class Workbook:
     macro: pd.DataFrame          # annual, index = year
     focus: pd.DataFrame          # Focus survey available at each valuation date
     source: str
+    market: pd.DataFrame | None = None      # credit spread, EMBI+ Brazil, revenue in Brazil at each date
+    us_returns: pd.DataFrame | None = None  # US real total-return indexes in December (Shiller), index = year
 
 
 def workbook_path(refresh: bool = False) -> Path:
@@ -49,4 +51,6 @@ def load(path: Path | None = None) -> Workbook:
         macro=sheets["Macro anual"].set_index("Ano"),
         focus=sheets["Expectativas Focus"].assign(**{"Data-base": lambda d: pd.to_datetime(d["Data-base"])}),
         source=str(path),
+        market=sheets["Mercado nas datas"].assign(**{"Data-base": lambda d: pd.to_datetime(d["Data-base"])}),
+        us_returns=sheets["Retornos EUA (anual)"].set_index("Ano"),
     )

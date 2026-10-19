@@ -82,15 +82,34 @@ def make_check(pages: list[str], shown: list[int]):
     return check
 
 
+def recorded_pages(prompt: str) -> list[str]:
+    """Rebuild the page list ('' for pages not shown) from a recorded prompt."""
+    parts = re.split(r"\[page (\d+)\]\n", prompt)[1:]
+    found = {int(n): text.strip() for n, text in zip(parts[::2], parts[1::2])}
+    return [found.get(i + 1, "") for i in range(max(found))]
+
+
 def audit_year(llm: LLM, wb: Workbook, year: int) -> list[dict]:
     url = sources.RELEASES[year]
-    pages = sources.pages(sources.fetch(url))
-    shown = select_pages(pages)
-    body = "\n\n".join(f"[page {i + 1}]\n{pages[i]}" for i in shown)
-    prompt = (f"Fiscal year: {year}. Extract net_revenue, gross_debt, net_debt and cash "
-              f"(one entry each).\n\n{body}")
-    answer = llm.ask(f"auditor-{year}", SYSTEM, prompt, load_schema("release_figures"),
-                     check=make_check(pages, shown))
+    try:
+        pages = sources.pages(sources.fetch(url))
+    except (RuntimeError, OSError):
+        rec = llm.recorded(f"auditor-{year}") if llm.mode == "demo" else None
+        if rec is None:
+            raise
+        # demo without the documents: the recorded prompt carries the pages that were read
+        pages = recorded_pages(rec["request"]["prompt"])
+        answer = rec["answer"]
+        problems = make_check(pages, [i for i, t in enumerate(pages) if t])(answer)
+        if problems:
+            raise ValueError(f"recorded answer for {year} fails the checks: {problems}")
+    else:
+        shown = select_pages(pages)
+        body = "\n\n".join(f"[page {i + 1}]\n{pages[i]}" for i in shown)
+        prompt = (f"Fiscal year: {year}. Extract net_revenue, gross_debt, net_debt and cash "
+                  f"(one entry each).\n\n{body}")
+        answer = llm.ask(f"auditor-{year}", SYSTEM, prompt, load_schema("release_figures"),
+                         check=make_check(pages, shown))
     rows = []
     for f in sorted(answer["figures"], key=lambda f: list(METRICS).index(f["metric"])):
         column = METRICS[f["metric"]][0]
