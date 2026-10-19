@@ -1,9 +1,11 @@
-"""python -m valuation_gerdau [auditor|analyst|lab|reviewer|all|final] [--demo|--live] [--no-llm] [--max-calls N]"""
+"""python -m valuation_gerdau [auditor|analyst|lab|reviewer|all|final] [--demo|--live] [--no-llm] [--max-calls N]
+[--workbook PATH]"""
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 
 from . import auditor, config, cvm, data, final_report, lab, reports, reviewer, second_analyst
@@ -18,6 +20,7 @@ def main(argv=None) -> int:
     mode.add_argument("--live", action="store_true", help="require an API key")
     p.add_argument("--no-llm", action="store_true", help="numbers only, no LLM text")
     p.add_argument("--max-calls", type=int, default=config.MAX_CALLS_PER_RUN)
+    p.add_argument("--workbook", help="local copy of the thesis spreadsheet instead of the raw link")
     args = p.parse_args(argv)
 
     cvm.ALLOW_SNAPSHOT = args.demo
@@ -32,7 +35,13 @@ def main(argv=None) -> int:
             return llm.summary()
         return {"mode": "no-llm", "model": "-", "api_calls": 0, "recorded_answers_used": 0, "estimated_cost_usd": 0.0}
 
-    wb = data.load()
+    if args.workbook:
+        os.environ["GERDAU_XLSX"] = args.workbook
+    try:
+        wb = data.load()
+    except data.WorkbookUnavailable as err:
+        print(err, file=sys.stderr)
+        return 2
     if args.role == "final":
         print(final_report.build(wb))
         return 0

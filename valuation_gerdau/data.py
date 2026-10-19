@@ -1,6 +1,6 @@
 """Loads the thesis spreadsheet from the thesis repository (raw link), with a local cache.
 
-GERDAU_XLSX=<path> reads a local file instead (useful offline or before the thesis repo is published).
+--workbook <path> (or GERDAU_XLSX=<path>) reads a local file instead: offline, or before the thesis repo is published.
 """
 
 from __future__ import annotations
@@ -27,16 +27,28 @@ class Workbook:
     us_returns: pd.DataFrame | None = None  # US real total-return indexes in December (Shiller), index = year
 
 
+class WorkbookUnavailable(RuntimeError):
+    pass
+
+
 def workbook_path(refresh: bool = False) -> Path:
     local = os.environ.get("GERDAU_XLSX")
     if local:
+        if not Path(local).exists():
+            raise WorkbookUnavailable(f"Spreadsheet not found: {local}")
         return Path(local)
     target = config.CACHE / "Database Valuation Gerdau.xlsx"
     if refresh or not target.exists():
         target.parent.mkdir(parents=True, exist_ok=True)
         req = urllib.request.Request(config.DATA_URL, headers={"User-Agent": "valuation-gerdau"})
-        with urllib.request.urlopen(req, timeout=60) as r:
-            target.write_bytes(r.read())
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                target.write_bytes(r.read())
+        except OSError as err:  # URLError and HTTPError (e.g. 404) are OSErrors
+            raise WorkbookUnavailable(
+                f"The thesis spreadsheet comes from {config.DATA_URL} and could not be downloaded ({err}). "
+                "Check the connection, or run with --workbook <path to Database Valuation Gerdau.xlsx>."
+            ) from None
     return target
 
 

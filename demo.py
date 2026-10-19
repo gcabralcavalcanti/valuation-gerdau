@@ -1,6 +1,7 @@
 """One-command demo: the four review roles in sequence, without an API key, then final-report.pdf.
 
-    python demo.py
+    python demo.py                      # spreadsheet from the thesis repository (raw link)
+    python demo.py --workbook <file>    # local copy of the spreadsheet
 
 Uses the answers recorded in recordings/ (no API call, no cost). Needs internet for the thesis spreadsheet
 (raw link) and the steel price index; nothing else is downloaded.
@@ -41,9 +42,10 @@ def summary():
 
 
 if __name__ == "__main__":
-    code = main(["all", "--demo"])
+    extra = sys.argv[1:3] if sys.argv[1:2] == ["--workbook"] else []
+    code = main(["all", "--demo", *extra])
     if code:
         sys.exit(code)
-    main(["final"])
+    main(["final", *extra])
     summary()
     print("\nFull report: final-report.pdf · details: reports/*.md")
