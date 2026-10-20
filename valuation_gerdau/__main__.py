@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
 
 from . import auditor, config, cvm, data, final_report, lab, reports, reviewer, second_analyst
@@ -35,10 +34,8 @@ def main(argv=None) -> int:
             return llm.summary()
         return {"mode": "no-llm", "model": "-", "api_calls": 0, "recorded_answers_used": 0, "estimated_cost_usd": 0.0}
 
-    if args.workbook:
-        os.environ["GERDAU_XLSX"] = args.workbook
     try:
-        wb = data.load()
+        wb = data.load(data.local_workbook(args.workbook) if args.workbook else None)
     except data.WorkbookUnavailable as err:
         print(err, file=sys.stderr)
         return 2

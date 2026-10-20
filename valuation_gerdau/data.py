@@ -31,12 +31,16 @@ class WorkbookUnavailable(RuntimeError):
     pass
 
 
+def local_workbook(path: str) -> Path:
+    if not Path(path).exists():
+        raise WorkbookUnavailable(f"Spreadsheet not found: {path}")
+    return Path(path)
+
+
 def workbook_path(refresh: bool = False) -> Path:
     local = os.environ.get("GERDAU_XLSX")
     if local:
-        if not Path(local).exists():
-            raise WorkbookUnavailable(f"Spreadsheet not found: {local}")
-        return Path(local)
+        return local_workbook(local)
     target = config.CACHE / "Database Valuation Gerdau.xlsx"
     if refresh or not target.exists():
         target.parent.mkdir(parents=True, exist_ok=True)
