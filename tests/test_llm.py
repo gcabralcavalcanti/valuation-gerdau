@@ -87,3 +87,9 @@ def test_unsupported_numbers_catches_invented_figures():
     source = "| 2023 | 80.2 | 95.8 |\n| 2025 | 39.2 | 45.9 |\nCost of debt 0.082 0.112"
     assert llm_mod.unsupported_numbers({"t": "2023: 80,2 a 95,8; kd de 8,2% a 11,2%"}, source) == []
     assert llm_mod.unsupported_numbers({"t": "2023: 80,2 a 97,0"}, source) == ["number 97 is not in the tables"]
+
+
+def test_empty_key_variable_means_demo(tmp_path, monkeypatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "")
+    assert llm_mod._load_key() is None
+    assert LLM(mode="auto", recordings=tmp_path / "rec", log_dir=tmp_path / "logs").mode == "demo"
