@@ -156,9 +156,9 @@ def build(wb: Workbook) -> str:
         fig.text(
             0.07,
             0.1,
-            "v1: the Ibovespa − CDI premium since 2009 is negative, so the WACC fell below terminal growth "
-            "and the\nGordon value became meaningless (negative or exploding). "
-            "Now the WACC sits above g at every date.",
+            "v1: the Ibovespa − CDI premium since 2009 is negative, so the WACC fell below g (2021, 2023) or only\n"
+            "0.4 to 1.9 points above it, and the Gordon value became meaningless (negative or exploding).\n"
+            "Now the WACC sits well above g at every date.",
             fontsize=8.4,
             color=MUTED,
             va="top",

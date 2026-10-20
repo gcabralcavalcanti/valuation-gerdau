@@ -20,7 +20,7 @@ the steel cycle, which is exactly what the thesis studies.
 | Every company figure in the thesis spreadsheet that I checked against Gerdau's published results | all match, each with the page it came from | [output/auditor.md](output/auditor.md) |
 | The same spreadsheet against the raw filings with the Brazilian securities regulator (CVM), 2015–2024 | all lines match | [output/second_analyst.md](output/second_analyst.md) |
 | My thesis model, rebuilt from scratch here | gives the same values as the thesis | [answer key: the values I had already calculated](tests/golden/) |
-| The discount rate (the return investors require) | fixed: it was below the long-run growth rate, which breaks the formula; now it is 11.6% to 14.2% | [final-report.pdf](final-report.pdf) |
+| The discount rate (the return investors require) | fixed: it was below or barely above the long-run growth rate (5.1% to 7.8% against 5.1% to 6.1%), which makes the value explode; now it is 11.6% to 14.2% | [final-report.pdf](final-report.pdf) |
 | API cost of building and testing all of this | about US$ 0.03 | [RUNBOOK.md](RUNBOOK.md) |
 
 Full write-up: [final-report.pdf](final-report.pdf).
