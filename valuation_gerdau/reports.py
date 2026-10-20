@@ -33,7 +33,8 @@ def _write(name: str, text: str, data: dict, run_info: dict):
         f"\nTexto da IA: todo número foi conferido contra as tabelas que ela recebeu (nenhum inventado), mas um "
         f"número real ainda pode aparecer ligado à data errada; confira nas tabelas acima.\n"
     )
-    (config.REPORTS / f"{name}.md").write_text(text + footer, encoding="utf-8")
+    md = (text + footer).replace(" — ", ": ").replace("—", "-")  # no em dashes in the reports
+    (config.REPORTS / f"{name}.md").write_text(md, encoding="utf-8")
     (config.REPORTS / f"{name}.json").write_text(
         json.dumps(data, ensure_ascii=False, indent=1, default=str), encoding="utf-8"
     )
@@ -72,7 +73,7 @@ def analyst(res, run_info):
     )
     if memo:
         text += f"\n## Parecer\n\n{memo['summary']}\n\n" + "\n".join(
-            f"- **{f['topic']}** — {f['what_differs']} Números: {f['numbers']}. Causa provável: "
+            f"- **{f['topic']}**: {f['what_differs']} Números: {f['numbers']}. Causa provável: "
             f"{f['likely_cause']} Ação sugerida: {f['suggested_action']}"
             for f in memo["findings"]
         )
@@ -99,10 +100,10 @@ def lab(res, run_info):
     if summ:
         text += (
             f"\n## Leitura\n\n**O que mais move o valor:** {summ['what_moves_value_most']}\n\n"
-            + "\n".join(f"- **{f['dimension']}** — {f['finding']} ({f['numbers']})" for f in summ["findings"])
+            + "\n".join(f"- **{f['dimension']}**: {f['finding']} ({f['numbers']})" for f in summ["findings"])
             + "\n\n**Opções do autor (ele decide):**\n\n"
             + "\n".join(
-                f"- {o['option']} — prós: {o['pros']} · contras: {o['cons']}" for o in summ["options_for_the_author"]
+                f"- {o['option']}. Prós: {o['pros']} · contras: {o['cons']}" for o in summ["options_for_the_author"]
             )
         )
     _write(
@@ -126,7 +127,7 @@ def reviewer(res, run_info):
     text = (
         f"# Revisora de premissas\n\n## Premissas usadas (janela de 5 anos)\n\n{_md(used, '{:.3f}')}\n\n"
         f"## Onde cada premissa está no histórico da própria Gerdau (percentil; 0 = mínimo, 1 = máximo)\n\n"
-        f"{_md(pct)}\n\n## Tornado — {torn['date'].iloc[0]} (valor base R$ {torn['base_value'].iloc[0]:.2f}, "
+        f"{_md(pct)}\n\n## Tornado em {torn['date'].iloc[0]} (valor base R$ {torn['base_value'].iloc[0]:.2f}, "
         f"preço R$ {torn['price'].iloc[0]:.2f})\n\n{_md(t, '{:,.3f}')}\n\n"
         f"## Ciclo do aço em cada data (FRED WPU101, só o que era público na data)\n\n"
         f"{_md(cyc.round(3), '{:,.3f}')}\n"

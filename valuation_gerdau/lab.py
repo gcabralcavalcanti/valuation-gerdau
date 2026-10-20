@@ -1,4 +1,4 @@
-"""Role 3 — Econometric lab.
+"""Role 3: Econometric lab.
 
 Runs alternative specifications of the thesis question (estimation window of the assumptions,
 beta regression design, equity risk premium) and shows the effect on fair value and on the

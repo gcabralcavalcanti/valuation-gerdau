@@ -1,4 +1,4 @@
-"""Role 2 — Second analyst.
+"""Role 2: Second analyst.
 
 Own code rebuilds the inputs from CVM raw filings (not from the spreadsheet), reconciles them line by
 line, then recomputes FCFF and WACC with the choices the raw data allow and the thesis did not make

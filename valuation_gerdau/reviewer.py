@@ -1,4 +1,4 @@
-"""Role 4 — Assumption reviewer.
+"""Role 4: Assumption reviewer.
 
 For each assumption at each date: the value used, where it sits in Gerdau's own history and the steel
 cycle at that date. A tornado measures how much each assumption moves fair value when it goes to the

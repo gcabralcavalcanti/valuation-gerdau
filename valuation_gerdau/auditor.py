@@ -1,16 +1,16 @@
-"""Role 1 — Data auditor.
+"""Role 1: data auditor (retrieval-augmented extraction with citations).
 
-Reads Gerdau's public 4Q earnings releases and checks the spreadsheet figures against them,
-citing document, page and the exact line. Retrieval is plain keyword scoring (no embeddings needed
-for ~25 pages); the LLM only reads the selected pages and extracts. Code then verifies that the quote
-really is on the cited page and that the number is in the quote, and compares with the spreadsheet.
+Ingests Gerdau's public 4Q earnings releases, one chunk per page, and indexes them with BM25. For each figure a
+query retrieves the best pages of that year's release; the model reads only those pages and returns the figure
+with document page and the exact line. Code then checks that the line is on the cited page and contains the
+number, and compares the figure with the spreadsheet.
 """
 
 from __future__ import annotations
 
 import re
 
-from . import sources
+from . import retrieval, sources
 from .data import Workbook
 from .llm import LLM, load_schema
 
@@ -32,20 +32,18 @@ SYSTEM = (
 )
 
 
-def select_pages(pages: list[str], max_pages: int = 4) -> list[int]:
-    """Indices of the pages with most table lines mentioning a metric next to a number."""
+QUERIES = {  # one BM25 query per figure; the two best pages of each go to the model
+    "net_revenue": "net sales consolidated 12M",
+    "gross_debt": "gross debt debt breakdown short term long term",
+    "net_debt": "net debt",
+    "cash": "cash cash equivalents short-term investments",
+}
 
-    def score(text: str) -> int:
-        s = 0
-        for line in text.lower().splitlines():
-            if any(w in line for _, ws in METRICS.values() for w in ws) and re.search(r"\d{1,3},\d{3}", line):
-                s += 3
-            elif any(w in line for _, ws in METRICS.values() for w in ws):
-                s += 1
-        return s
 
-    ranked = sorted(range(len(pages)), key=lambda i: score(pages[i]), reverse=True)
-    return sorted(ranked[:max_pages])
+def retrieve(index: retrieval.BM25Index, doc: str, per_query: int = 2) -> list[int]:
+    """Page numbers (1-based) retrieved for the four figures in one document."""
+    pages = {c.page for q in QUERIES.values() for c, _ in index.search(q, k=per_query, doc=doc)}
+    return sorted(pages)
 
 
 def _number_in_quote(value: float, quote: str) -> bool:
@@ -95,14 +93,18 @@ def recorded_pages(prompt: str) -> list[str]:
     return [found.get(i + 1, "") for i in range(max(found))]
 
 
-def audit_year(llm: LLM, wb: Workbook, year: int) -> list[dict]:
+def build_index(years) -> retrieval.BM25Index:
+    """Ingest the releases (downloaded once) and index every page."""
+    return retrieval.BM25Index([c for y in years for c in retrieval.ingest(sources.fetch(sources.RELEASES[y]))])
+
+
+def audit_year(llm: LLM, wb: Workbook, year: int, index: retrieval.BM25Index | None) -> list[dict]:
     url = sources.RELEASES[year]
-    try:
-        pages = sources.pages(sources.fetch(url))
-    except (RuntimeError, OSError) as err:
+    doc_name = url.rsplit("/", 1)[-1]
+    if index is None:
         rec = llm.recorded(f"auditor-{year}") if llm.mode == "demo" else None
         if rec is None:
-            raise err
+            raise RuntimeError("Earnings releases unavailable: set SEC_USER_AGENT in .env (see RUNBOOK.md)")
         # demo without the documents: the recorded prompt carries the pages that were read
         pages = recorded_pages(rec["request"]["prompt"])
         answer = rec["answer"]
@@ -110,7 +112,9 @@ def audit_year(llm: LLM, wb: Workbook, year: int) -> list[dict]:
         if problems:
             raise ValueError(f"recorded answer for {year} fails the checks: {problems}") from None
     else:
-        shown = select_pages(pages)
+        by_page = {c.page: c.text for c in index.chunks if c.doc == doc_name}
+        pages = [by_page.get(i + 1, "") for i in range(max(by_page))]
+        shown = [p - 1 for p in retrieve(index, doc_name)]
         body = "\n\n".join(f"[page {i + 1}]\n{pages[i]}" for i in shown)
         prompt = f"Fiscal year: {year}. Extract net_revenue, gross_debt, net_debt and cash (one entry each).\n\n{body}"
         answer = llm.ask(
@@ -142,7 +146,13 @@ def audit_year(llm: LLM, wb: Workbook, year: int) -> list[dict]:
 
 def run(llm: LLM, wb: Workbook, years=None) -> list[dict]:
     years = years or [y for y in sources.RELEASES if y in wb.fundamentals.index]
-    return [row for y in years for row in audit_year(llm, wb, y)]
+    try:
+        index = build_index(years)
+    except (RuntimeError, OSError):
+        if llm.mode != "demo":
+            raise
+        index = None  # demo without the documents: recorded answers carry the pages they used
+    return [row for y in years for row in audit_year(llm, wb, y, index)]
 
 
 def score_against_golden(rows: list[dict], golden: dict) -> dict:

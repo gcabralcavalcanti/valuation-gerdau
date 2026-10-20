@@ -1,6 +1,6 @@
 """Auditor plumbing: page split, page selection and the anti-hallucination checks."""
 
-from valuation_gerdau import auditor, sources
+from valuation_gerdau import auditor, retrieval, sources
 
 HTML = (
     "<div>Cover</div><div style='page-break-after:always'></div>"
@@ -17,7 +17,6 @@ def test_pages_split_and_rows_stay_on_one_line(tmp_path):
     pages = sources.pages(p)
     assert len(pages) == 3
     assert "Net Sales 16,822 67,026" in pages[1]
-    assert {1, 2} <= set(auditor.select_pages(pages))
 
 
 def _answer(**over):
@@ -90,3 +89,33 @@ def test_label_line_without_number_is_extended_on_the_page(tmp_path):
 def test_recorded_prompt_rebuilds_the_pages():
     pages = auditor.recorded_pages("Fiscal year: 2024.\n\n[page 2]\nNet Sales 1\n\n[page 5]\nGross Debt 2")
     assert len(pages) == 5 and pages[1] == "Net Sales 1" and pages[4] == "Gross Debt 2" and pages[0] == ""
+
+
+def test_bm25_retrieves_the_page_of_each_figure_and_respects_the_document(tmp_path):
+    p = tmp_path / "rel.htm"
+    p.write_text(HTML, encoding="utf-8")
+    other = tmp_path / "other.htm"
+    other.write_text("<p>Net Sales 1,000 Gross Debt 2,000</p>", encoding="utf-8")
+    index = retrieval.BM25Index(retrieval.ingest(p) + retrieval.ingest(other))
+    top = index.search("gross debt", k=1, doc="rel.htm")[0][0]
+    assert (top.doc, top.page) == ("rel.htm", 3)
+    assert auditor.retrieve(index, "rel.htm") == [2, 3]
+
+
+def test_pdf_ingestion_keeps_page_numbers(tmp_path):
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.backends.backend_pdf import PdfPages
+
+    path = tmp_path / "doc.pdf"
+    with PdfPages(path) as pdf:
+        for text in ("Cover page", "Net Debt 5,360"):
+            fig = plt.figure()
+            fig.text(0.1, 0.5, text)
+            pdf.savefig(fig)
+            plt.close(fig)
+    chunks = retrieval.ingest(path)
+    assert [c.page for c in chunks] == [1, 2]
+    assert retrieval.BM25Index(chunks).search("net debt", k=1)[0][0].page == 2

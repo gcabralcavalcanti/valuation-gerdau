@@ -1,25 +1,29 @@
 # valuation-gerdau
 
-Four AI-assisted reviewers around my DCF thesis on Gerdau: they audit the data against public filings, rebuild the
-numbers from raw statements, test alternative specifications and prepare the questions an examining board will ask.
+Four AI reviewers that check my undergraduate thesis, which values the steelmaker Gerdau from the cash it is
+expected to generate: one checks the data, one redoes the math, one tests other ways of doing it, and one prepares
+the questions the examining board is likely to ask.
 
 ![Public data only](https://img.shields.io/badge/data-public%20only-2a78d6)
 ![Built with AI assistance](https://img.shields.io/badge/built%20with-AI%20assistance-52514e)
 
 ## Results
 
-![Price vs fair value by estimation window](docs/price_vs_value.png)
+![Share price vs estimated value](docs/price_vs_value.png)
 
-| Check | Result | Source |
+The chart compares Gerdau's share price with the value the thesis estimates at five dates, using 3, 5 or 10 years
+of history to set the assumptions. With only 3 years of history the estimate jumps highest at the 2022–2023 peak of
+the steel cycle, which is exactly what the thesis studies.
+
+| What was checked | Result | Where to see it |
 |---|---|---|
-| Spreadsheet figures vs Gerdau's 4Q earnings releases (page and quoted line for each) | **20/20** match; extraction 20/20 against hand-checked figures | [output/auditor.md](output/auditor.md) |
-| Spreadsheet lines vs raw CVM filings, 2015–2024 | **130/130** match | [output/second_analyst.md](output/second_analyst.md) |
-| Independent model vs the thesis notebook | **15/15** current results, **45/45** first version | [tests/golden/](tests/golden/), [tests/test_model.py](tests/test_model.py) |
-| WACC, 5-year window, first thesis version → now | 5.1–7.8% (below terminal growth) → **11.6–14.2%** | [final-report.pdf](final-report.pdf) |
-| API cost of every run while building it | 28 calls, about **US$ 0.03** | `output/logs/` (tokens per call) |
+| Every company figure in the thesis spreadsheet that I checked against Gerdau's published results | all match, each with the page it came from | [output/auditor.md](output/auditor.md) |
+| The same spreadsheet against the raw filings with the Brazilian securities regulator (CVM), 2015–2024 | all lines match | [output/second_analyst.md](output/second_analyst.md) |
+| My thesis model, rebuilt from scratch here | gives the same values as the thesis | [tests/golden/](tests/golden/) |
+| The discount rate (the return investors require) | fixed: it was below the long-run growth rate, which breaks the formula; now it is 11.6% to 14.2% | [final-report.pdf](final-report.pdf) |
+| API cost of building and testing all of this | about US$ 0.03 | [RUNBOOK.md](RUNBOOK.md) |
 
-The 3-year estimation window gives the highest fair values at the 2022–2023 steel peak, which is the pattern the
-thesis question is about. Full write-up: [final-report.pdf](final-report.pdf).
+Full write-up: [final-report.pdf](final-report.pdf).
 
 ## Run it
 
@@ -28,46 +32,45 @@ pip install -r requirements.txt
 python demo.py
 ```
 
-Runs the four reviewers in sequence on recorded model answers (no API key, no cost), prints what each one found and
-rebuilds `final-report.pdf`. With a key (`cp .env.example .env`), `python -m valuation_gerdau all` calls the API and
-`python -m valuation_gerdau final` rebuilds the PDF. Tests: `python -m pytest -q`.
+Runs without an API key, replaying recorded answers. Set `ANTHROPIC_API_KEY` to call Claude live.
+The demo runs the four reviewers one after the other, prints what each one found and rebuilds `final-report.pdf`.
+How to update it, and what to do when a source is down: [RUNBOOK.md](RUNBOOK.md).
 
 ## How it works
 
-1. **Data.** Reads the thesis spreadsheet from [`tcc-valuation-gerdau`](https://github.com/gcabralcavalcanti/tcc-valuation-gerdau)
-   through its raw link, and an independent FCFF/WACC model reproduces the thesis results.
-2. **Data auditor.** Splits each earnings release into pages, picks the pages with the figures, and the LLM extracts
-   them as JSON with page and quote. Code checks that the quote is on that page and contains the number.
-3. **Second analyst.** Rebuilds the inputs from raw CVM filings, reconciles them line by line and recomputes the value
-   changing one choice at a time (cost of debt, tax rate, equity income, country risk). The LLM writes the memo.
-4. **Econometric lab.** Runs estimation windows, beta regression designs, equity premiums and cost-of-capital methods,
-   and the LLM lists the options with pros and cons. It does not pick one.
-5. **Assumption reviewer.** Places each assumption in Gerdau's own history and in the steel cycle, builds a tornado,
-   and the LLM writes the board's likely questions with the numbers for each answer.
-6. **Guards.** JSON Schema on every answer, closed lists for names, every number in the LLM text must exist in the
-   tables it received, one retry with the reasons, call cap per run, recorded answers (never pay twice), JSON log per call.
+1. **Data.** The thesis spreadsheet is read straight from the thesis repository,
+   [`tcc-valuation-gerdau`](https://github.com/gcabralcavalcanti/tcc-valuation-gerdau), so there is one copy only.
+2. **Data checker (search, then answer).** Gerdau's results reports are split into pages and indexed for keyword
+   search. For each figure the code finds the best pages, and the AI answers using only those pages, citing the page
+   and the exact line. The code then confirms that the line is really on that page and contains the number.
+3. **Second analyst.** Rebuilds the inputs from the regulator's raw files and redoes the valuation changing one
+   choice at a time. The AI writes a short memo from those tables.
+4. **Method lab.** Tries other reasonable ways to set the assumptions and shows how much each moves the value. The
+   AI lists the options with pros and cons; the choice stays with me.
+5. **Board questions.** Compares each assumption with Gerdau's own history and the steel cycle, and the AI drafts the
+   questions an examiner would ask, with the numbers for the answer.
+6. **Safety checks.** Answers must follow a fixed format, every number the AI writes must exist in the tables it was
+   given, and the same question is never paid for twice.
 
 ## Data
 
-All public: CVM open data (financial statements), Gerdau's earnings releases filed with the SEC, Yahoo Finance prices
-(in the thesis spreadsheet), Banco Central (Focus survey, CDI), FRED (steel price index, Baa and Treasury yields),
-Ipeadata (EMBI+ Brazil) and Robert Shiller's long-run US returns. The spreadsheet is not copied here; `data/recorded/`
-keeps the model answers and the CVM lines already extracted so the demo runs offline from the large files.
+All public: financial statements from the CVM, Gerdau's results reports filed with the US SEC, share prices,
+Brazilian central bank data, the US Federal Reserve database (steel prices, corporate bond yields), the Brazil
+sovereign risk index and long-run US stock and bond returns. `data/recorded/` keeps the AI answers and the figures
+already extracted from the large CVM files, so the demo does not need to download them.
 
 ## Limits
 
-- The number check catches invented figures, not a real figure tied to the wrong date; the reports say so.
-- EMBI+ Brazil was discontinued on 30/07/2024, so the February 2025 date uses that last value.
-- Country risk uses the plain sovereign spread, not the spread scaled by relative volatility.
-- The risk-free rate is the expected Selic from the Focus survey; a long government bond net of the sovereign spread
-  is the next test.
-- Earnings releases are web pages: "page" means the page breaks in the filed document.
+- The number check catches made-up figures, not a real figure attached to the wrong year; the reports warn about it.
+- The Brazil risk index stopped being published in July 2024, so the February 2025 date uses its last value.
+- The safe interest rate is the expected Brazilian policy rate; a long government bond is the next thing to test.
+- The results reports are web pages, so "page" means the page breaks of the filed document.
 
 ## How AI was used
 
 I use Claude (Claude Code and the API) for coding, review and documentation. The questions, modelling choices,
-validation and conclusions are mine. Here the API is also part of the product: it reads documents and drafts text,
-and code checks every answer.
+validation and conclusions are mine. Here the API is also part of the tool: it reads documents and drafts text, and
+code checks every answer.
 
 ## License
 

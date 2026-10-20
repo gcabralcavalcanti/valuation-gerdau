@@ -14,7 +14,7 @@ Acerto da extração contra os números conferidos à mão pelo autor (golden se
 | 2021 | gross_debt | 14,039.7 | 14040 | -0.0% | match | 6 | Gross Debt 14,040 17,121 17,516 |
 | 2021 | net_debt | 7,252.8 | 7253 | -0.0% | match | 6 | Net Debt 7,253 8,690 9,858 |
 | 2021 | cash | 6,786.9 | 6787 | -0.0% | match | 6 | Cash, cash equivalents and short-term investments 6,787 8,431 7,658 |
-| 2022 | net_revenue | 82,412.2 | 82412 | +0.0% | match | 5 | Net Sales 17,964 21,149 -15,0% 21,555 -16,7% 82,412 78,345 5,2% |
+| 2022 | net_revenue | 82,412.2 | 82412 | +0.0% | match | 2 | Net Sales1 (R$ million) 17,964 21,149 -15,1% 21,555 -16,7% 82,412 78,3 |
 | 2022 | gross_debt | 12,607.4 | 12607 | +0.0% | match | 9 | Gross Debt 12,607 12,856 -1,9% 14,040 -10,2% |
 | 2022 | net_debt | 7,172.4 | 7173 | -0.0% | match | 9 | Net Debt 7,173 4,266 68,1% 7,253 -1,1% |
 | 2022 | cash | 5,435.0 | 5434 | +0.0% | match | 9 | cash, cash equivalents and short-term investments 5,434 8,590 -36,7% 6 |

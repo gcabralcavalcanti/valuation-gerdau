@@ -213,7 +213,10 @@ def build(wb: Workbook) -> str:
             if rev.get("questions"):
                 for i, q in enumerate(rev["questions"]["questions"][:2], 1):
                     blocks.append(
-                        (f"   Board question {i} (LLM, Portuguese)", q["question"] + " — " + q["suggested_answer"])
+                        (
+                            f"   Board question {i} (LLM, Portuguese)",
+                            q["question"] + " Resposta: " + q["suggested_answer"],
+                        )
                     )
         blocks.insert(
             0,

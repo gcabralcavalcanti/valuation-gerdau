@@ -22,7 +22,7 @@
 | Tax rate | 0.64 | 0.58 | 0.62 | 0.79 | 0.73 |
 | Working capital / revenue | 0.27 | 0.17 | 0.15 | 0.36 | 0.40 |
 
-## Tornado — 2025-02-20 (valor base R$ 42.30, preço R$ 16.43)
+## Tornado em 2025-02-20 (valor base R$ 42.30, preço R$ 16.43)
 
 | assumption | range_source | low | high | value_at_low | value_at_high | swing |
 |---|---|---|---|---|---|---|
