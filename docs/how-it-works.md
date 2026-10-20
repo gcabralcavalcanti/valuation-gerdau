@@ -2,14 +2,12 @@
 
 ## How I use it
 
-I run it by hand, not on a schedule: after I update the thesis spreadsheet, before a meeting with my advisor and
-before the defence. One live run costs a few cents; nothing in the thesis changes on its own.
-The data checker tells me whether a new spreadsheet still matches Gerdau's published numbers. The second analyst and
-the method lab show which of my choices move the value most, and the board questions go into my defence notes.
-Every finding is a suggestion that I verify. The main one so far: the second analyst showed that my cost of debt
-included currency losses, and the method lab showed that the historical market premium made the value explode.
-I checked the valuation manuals, chose a new method, compared the values before and after, and only then
-changed the thesis model.
+I ran the four reviewers on my thesis once, live, in October 2026; the run cost a few cents and changed nothing on its
+own. Their findings led to the change in the cost of debt and the risk premium: the second analyst showed that my cost
+of debt included currency losses, and the method lab showed that the historical market premium made the value
+explode. I checked the valuation manuals, chose a new method, compared the values before and after, and only then
+changed the thesis model. I plan to rerun them by hand whenever the spreadsheet changes and before the defence, when
+the data checker confirms the new figures and the board questions help me prepare.
 
 ## The four reviewers
 
