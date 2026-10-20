@@ -1,5 +1,15 @@
 # How it works
 
+## How I use it
+
+I run it by hand, not on a schedule: after I update the thesis spreadsheet, before a meeting with my advisor and
+before the defence. One live run costs a few cents; nothing in the thesis changes on its own.
+The data checker tells me whether a new spreadsheet still matches Gerdau's published numbers. The second analyst and
+the method lab show which of my choices move the value most, and the board questions go into my defence notes.
+Every finding is a suggestion that I verify. The main one so far: the second analyst showed that my cost of debt
+included currency losses and that the discount rate sat too close to the growth rate. I checked the valuation
+manuals, chose a new method, compared the values before and after, and only then changed the thesis model.
+
 ## The four reviewers
 
 1. **Data.** The thesis spreadsheet is read straight from the thesis repository,

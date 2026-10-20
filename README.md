@@ -29,6 +29,7 @@ Runs without an API key, replaying recorded answers. Set `ANTHROPIC_API_KEY` to 
 
 ## More
 
+- [How I use it](docs/how-it-works.md#how-i-use-it): when I run it on the thesis and what I did with the findings.
 - [How it works](docs/how-it-works.md): the four reviewers, what was checked, recorded answers, data and commands.
 - [Runbook](RUNBOOK.md): run, update with a new thesis spreadsheet, and what to do when a source is down.
 
