@@ -116,7 +116,8 @@ def build(wb: Workbook) -> str:
 
     aud, ana, lab, rev = (_load(n) for n in ("auditor", "second_analyst", "lab", "reviewer"))
     path = config.ROOT / "final-report.pdf"
-    with PdfPages(path) as pdf:
+    # no creation date in the metadata: the same run gives the same file, byte for byte
+    with PdfPages(path, metadata={"Creator": "valuation-gerdau", "CreationDate": None}) as pdf:
         fig = plt.figure(figsize=A4)
         fig.text(
             0.07,

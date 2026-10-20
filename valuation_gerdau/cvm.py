@@ -57,7 +57,8 @@ def year_lines(year: int) -> dict:
     if snap.get(str(year)) != lines:
         snap[str(year)] = lines
         SNAPSHOT.parent.mkdir(parents=True, exist_ok=True)
-        SNAPSHOT.write_text(json.dumps(dict(sorted(snap.items())), ensure_ascii=False, indent=1), encoding="utf-8")
+        text = json.dumps(dict(sorted(snap.items())), ensure_ascii=False, indent=1)
+        SNAPSHOT.write_text(text, encoding="utf-8", newline="\n")
     return lines
 
 

@@ -34,7 +34,7 @@ def _write(name: str, text: str, data: dict, run_info: dict):
         f"número real ainda pode aparecer ligado à data errada; confira nas tabelas acima.\n"
     )
     md = (text + footer).replace(" — ", ": ").replace("—", "-")  # no em dashes in the reports
-    (config.REPORTS / f"{name}.md").write_text(md, encoding="utf-8")
+    (config.REPORTS / f"{name}.md").write_text(md, encoding="utf-8", newline="\n")
     (config.REPORTS / f"{name}.json").write_text(
         json.dumps(data, ensure_ascii=False, indent=1, default=str), encoding="utf-8"
     )
