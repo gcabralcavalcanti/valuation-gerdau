@@ -16,8 +16,9 @@ and testing the project cost about US$ 0.03 in total.
 ## Update after the thesis spreadsheet changes
 
 1. Delete the cached copy: `.cache/Database Valuation Gerdau.xlsx`. The next run downloads the new one.
-2. `python -m pytest -q`. If the thesis model changed, the golden test fails: copy the new values printed by the
-   thesis notebook into `tests/golden/thesis_results.json` and run the tests again.
+2. `python -m pytest -q`. If the thesis model changed, the test that compares with the values I had already calculated
+   (the answer key in `tests/golden/`) fails: copy the new values printed by the thesis notebook into
+   `tests/golden/thesis_results.json` and run the tests again.
 3. `python -m valuation_gerdau all --live`. Only questions whose tables changed are sent to the API; the rest come
    from `data/recorded/`.
 4. `python -m valuation_gerdau final`, check `final-report.pdf`, commit.
