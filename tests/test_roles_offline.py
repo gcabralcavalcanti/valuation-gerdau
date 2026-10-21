@@ -35,3 +35,22 @@ def test_reviewer_tornado_sorted_and_history_bounded(synthetic_wb, monkeypatch):
     assert swings == sorted(swings, reverse=True)
     h = out["history"]
     assert ((h["percentile_of_used"] >= 0) & (h["percentile_of_used"] <= 1)).all()
+
+
+def test_steel_ignores_an_html_page_and_uses_the_saved_copy(tmp_path, monkeypatch):
+    class Page:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def read(self):
+            return b"<!doctype html><title>Site Maintenance</title>"
+
+    monkeypatch.setattr(steel.config, "CACHE", tmp_path)
+    monkeypatch.setattr(steel.urllib.request, "urlopen", lambda *a, **k: Page())
+    (tmp_path / "fred_WPU101.csv").write_text("<!doctype html>", encoding="utf-8")  # bad file left by a past run
+    s = steel.series()
+    assert len(s) > 100 and s.index[0].year == 1926  # the saved copy in data/
+    assert (tmp_path / "fred_WPU101.csv").read_text(encoding="utf-8") == "<!doctype html>"  # HTML never cached
