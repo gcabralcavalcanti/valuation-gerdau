@@ -2,12 +2,14 @@
 
 ## How I use it
 
-I ran the four reviewers on my thesis once, live, in October 2026; the run cost a few cents and changed nothing on its
-own. Their findings led to the change in the cost of debt and the risk premium: the second analyst showed that my cost
-of debt included currency losses, and the method lab showed that the historical market premium made the value
-explode. I checked the valuation manuals, chose a new method, compared the values before and after, and only then
-changed the thesis model. I plan to rerun them by hand whenever the spreadsheet changes and before the defence, when
-the data checker confirms the new figures and the board questions help me prepare.
+I ran the four reviewers on my thesis live in October 2026, and again after the next change to the model; each run
+cost a few cents and changed nothing on its own. Their findings led to the change in the cost of debt and the risk
+premium: the second analyst showed that my cost of debt included currency losses, and the method lab showed that the
+historical market premium made the value explode. I checked the valuation manuals, chose a new method, compared the
+values before and after, and only then changed the thesis model. Next I switched the risk-free rate from the expected
+policy rate to the long fixed-rate government bond minus the Brazil risk index, so that country risk is not counted
+twice, and reran the reviewers on the new numbers. I plan to rerun them by hand whenever the spreadsheet changes and
+before the defence, when the data checker confirms the new figures and the board questions help me prepare.
 
 ## The four reviewers
 
@@ -32,8 +34,8 @@ the data checker confirms the new figures and the board questions help me prepar
 | Every company figure in the thesis spreadsheet that I checked against Gerdau's published results | all match, each with the page it came from | [output/auditor.md](../output/auditor.md) |
 | The same spreadsheet against the raw filings with the Brazilian securities regulator (CVM), 2015 to 2024 | all lines match | [output/second_analyst.md](../output/second_analyst.md) |
 | My thesis model, rebuilt from scratch here | gives the same values as the thesis | [answer key: the values I had already calculated](../tests/golden/) |
-| The discount rate (the return investors require) | fixed: it was below or barely above the long-run growth rate (5.1% to 7.8% against 5.1% to 6.1%), which makes the value explode; now it is 11.6% to 14.2% | [final-report.pdf](../final-report.pdf) |
-| API cost of building and testing all of this | about US$ 0.03 | [RUNBOOK.md](../RUNBOOK.md) |
+| The discount rate (the return investors require) | fixed: it was below or barely above the long-run growth rate (5.1% to 7.8% against 5.1% to 6.1%), which makes the value explode; now it is 11.7% to 16.9% | [final-report.pdf](../final-report.pdf) |
+| API cost of building and testing all of this | about US$ 0.04 | [RUNBOOK.md](../RUNBOOK.md) |
 
 ## Recorded answers
 

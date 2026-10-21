@@ -102,7 +102,7 @@ def cycle_table(wb: Workbook, steel_series=None) -> pd.DataFrame:
 
 SYSTEM = (
     "Você prepara um aluno de economia para a banca do TCC (valuation FCFF da Gerdau em 5 datas, "
-    "custo da dívida = Selic esperada + spread Baa; ke com prêmio maduro dos EUA + lambda × EMBI). "
+    "rf = NTN-F − EMBI; custo da dívida = NTN-F + spread Baa; ke com prêmio maduro dos EUA + lambda × EMBI). "
     "Gere de 6 a 8 perguntas que a banca "
     "provavelmente fará sobre as PREMISSAS, das mais perigosas para as menos. Para cada uma: a pergunta como "
     "a banca falaria, por que ela é perigosa, os números que respondem (copiados das tabelas) e uma resposta "
@@ -158,7 +158,7 @@ def questions(llm: LLM, hist: pd.DataFrame, torn: pd.DataFrame, cyc: pd.DataFram
 
     schema = load_schema("board_questions")
     schema["properties"]["questions"]["items"]["properties"]["assumption"]["enum"] = sorted(allowed)  # closed list
-    return llm.ask("reviewer", SYSTEM, prompt, schema, check=check, max_tokens=2500)
+    return llm.ask("reviewer", SYSTEM, prompt, schema, check=check, max_tokens=3500)
 
 
 def run(llm: LLM | None, wb: Workbook) -> dict:

@@ -74,6 +74,7 @@ def synthetic_wb(monkeypatch) -> Workbook:
     market = pd.DataFrame(
         {
             "Data-base": dates["Data-base"],
+            "NTN-F mais longa, véspera (% a.a.)": [12.0, 13.0],
             "Spread Baa − Treasury 10 anos, mês anterior (%)": [2.0, 1.5],
             "EMBI+ Brasil, véspera (%)": [2.5, 2.3],
             "Receita no Brasil, último exercício (%)": [45.0, 44.0],

@@ -67,8 +67,8 @@ def analyst(res, run_info):
         f"{ok} de {len(recon)} linhas batem (tolerância 0,5%), "
         f"exercícios {recon['year'].min()}–{recon['year'].max()}.\n\n"
         f"## Valor justo por ação (R$) com uma escolha diferente por vez\n"
-        f"Base: modelo do TCC desde 19/10 (custo da dívida = Selic esperada + spread Baa; ke com prêmio maduro + "
-        f"λ × EMBI). Cada linha muda uma escolha.\n\n{_md(fv)}\n\n"
+        f"Base: modelo do TCC desde 21/10 (rf = NTN-F − EMBI; custo da dívida = NTN-F + spread Baa; ke com prêmio "
+        f"maduro + λ × EMBI). Cada linha muda uma escolha.\n\n{_md(fv)}\n\n"
         f"## Custo da dívida usado\n\n{_md(kd, '{:.3f}')}\n"
     )
     if memo:

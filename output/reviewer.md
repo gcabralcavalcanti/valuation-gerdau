@@ -22,21 +22,21 @@
 | Tax rate | 0.64 | 0.58 | 0.62 | 0.79 | 0.73 |
 | Working capital / revenue | 0.27 | 0.17 | 0.15 | 0.36 | 0.40 |
 
-## Tornado em 2025-02-20 (valor base R$ 42.30, preço R$ 16.43)
+## Tornado em 2025-02-20 (valor base R$ 31.01, preço R$ 16.43)
 
 | assumption | range_source | low | high | value_at_low | value_at_high | swing |
 |---|---|---|---|---|---|---|
-| EBIT margin | Gerdau p10–p90 | 0.049 | 0.186 | 1.302 | 49.767 | 48.465 |
-| Capex / revenue | Gerdau p10–p90 | 0.031 | 0.083 | 55.885 | 31.983 | 23.902 |
-| Revenue growth | Gerdau p10–p90 | -0.139 | 0.223 | 28.051 | 50.296 | 22.245 |
-| Tax rate | Gerdau p10–p90 | 0.000 | 0.275 | 54.517 | 40.003 | 14.514 |
-| Equity risk premium | test range 4%–7% | 0.040 | 0.070 | 48.221 | 35.699 | 12.522 |
-| D&A / revenue | Gerdau p10–p90 | 0.037 | 0.060 | 39.503 | 50.047 | 10.544 |
-| Terminal growth | test range ± 1 p.p. | 0.049 | 0.069 | 38.365 | 47.315 | 8.950 |
-| Beta | 95% interval of the regression | 0.966 | 1.304 | 45.918 | 39.178 | 6.740 |
-| Working capital / revenue | Gerdau p10–p90 | 0.174 | 0.255 | 43.723 | 39.067 | 4.656 |
-| Country risk premium | test range 1.5%–4% | 0.015 | 0.040 | 43.634 | 39.607 | 4.027 |
-| Credit spread | test range 1%–3% | 0.010 | 0.030 | 42.889 | 40.377 | 2.511 |
+| EBIT margin | Gerdau p10–p90 | 0.049 | 0.186 | 0.282 | 36.603 | 36.321 |
+| Capex / revenue | Gerdau p10–p90 | 0.031 | 0.083 | 41.188 | 23.275 | 17.913 |
+| Revenue growth | Gerdau p10–p90 | -0.139 | 0.223 | 21.024 | 36.582 | 15.558 |
+| Tax rate | Gerdau p10–p90 | 0.000 | 0.275 | 39.915 | 29.321 | 10.594 |
+| D&A / revenue | Gerdau p10–p90 | 0.037 | 0.060 | 28.911 | 36.813 | 7.902 |
+| Equity risk premium | test range 4%–7% | 0.040 | 0.070 | 34.239 | 27.146 | 7.093 |
+| Terminal growth | test range ± 1 p.p. | 0.049 | 0.069 | 28.881 | 33.554 | 4.673 |
+| Working capital / revenue | Gerdau p10–p90 | 0.174 | 0.255 | 32.250 | 28.184 | 4.066 |
+| Beta | 95% interval of the regression | 0.966 | 1.304 | 33.006 | 29.216 | 3.790 |
+| Country risk premium | test range 1.5%–4% | 0.015 | 0.040 | 31.753 | 29.466 | 2.287 |
+| Credit spread | test range 1%–3% | 0.010 | 0.030 | 31.337 | 29.911 | 1.426 |
 
 ## Ciclo do aço em cada data (FRED WPU101, só o que era público na data)
 
@@ -50,40 +50,40 @@
 
 ## Perguntas prováveis da banca
 
-**1. Por que a margem EBIT de 16,5% em 2025 é sustentável se está no percentil 87 do histórico da própria Gerdau, muito acima da mediana de 8,1%?** (EBIT margin)
-- Por que é perigosa: A margem atual está perto do topo do ciclo; se ela reverter à mediana, o valor cai drasticamente, e o tornado mostra que essa é a premissa de maior impacto (swing de R$ 48,47).
-- Números: Margem 2025 = 0,165 (percentil 0,87); mediana 2010–2024 = 0,081; p90 = 0,186; faixa testada p10–p90 = 0,049–0,186; valor com 0,049 = R$ 1,30 vs R$ 49,77 com 0,186.
-- Resposta curta: Reconheço que a margem está alta e é a premissa mais sensível; por isso mostro o cenário de reversão ao p10 (R$ 1,30) e o valor base de R$ 42,30 deve ser lido como condicional ao ciclo atual.
+**1. Por que a margem EBIT vai de 7,4% em 2021 a 16,5% em 2025, quando o histórico da Gerdau tem mediana de 8,1% e p90 de 18,6%? Você está assumindo que o pico do ciclo é o novo normal?** (EBIT margin)
+- Por que é perigosa: A margem é a premissa de maior peso no tornado (swing de R$ 36,3), e a data de 2025 está no percentil 0,87, em região de ciclo alto. Se a margem reverter à mediana, o valor cai drasticamente.
+- Números: Margem 2025 = 16,5% (percentil 0,87); mediana histórica 8,1%; p10–p90 = 4,9%–18,6%; valor em 4,9% = R$ 0,28 vs base R$ 31,01 e em 18,6% = R$ 36,60.
+- Resposta curta: A margem foi limitada ao p10–p90 histórico, mas a base usa 16,5%, acima da mediana. Reconheço que o resultado é muito sensível a essa premissa e apresento o cenário com margem mediana como teste de robustez.
 
-**2. Se o capex/receita subiu de 3,5% para 6,0% e já está no percentil 73, você está assumindo que esse investimento gera crescimento ou apenas que a empresa precisa gastar mais?** (Capex / revenue)
-- Por que é perigosa: Capex elevado reduz o FCFF; se não houver contrapartida em crescimento ou margem, o valor estará subestimado, e a sensibilidade é a segunda maior do tornado.
-- Números: Capex/receita 2025 = 0,060 (percentil 0,73); mediana histórica = 0,054; p10–p90 = 0,031–0,083; valor com 0,031 = R$ 55,89 e com 0,083 = R$ 31,98 (swing R$ 23,90).
-- Resposta curta: O capex atual está acima da mediana, mas dentro da faixa histórica; mantenho a premissa e mostro que, se o investimento for de manutenção/expansão já capitalizada, o valor pode estar conservador, como indica o cenário p10.
+**2. Como você justifica crescimento de receita de 11,1% em 2025 se o ciclo do aço está em queda (steel_yoy -11,5%, fase falling)?** (Revenue growth)
+- Por que é perigosa: O crescimento usado fica no percentil 0,73 e acima da mediana histórica de 5,2%, o que descola a projeção do ciclo setorial observado.
+- Números: Crescimento 2025 = 11,1% (percentil 0,73); mediana histórica 5,2%; p90 22,3%; steel_yoy 2024-12 = -11,5%; valor em -13,9% = R$ 21,02 vs R$ 36,58 em 22,3%.
+- Resposta curta: O crescimento de 11,1% reflete a média recente da própria empresa, mas admito que o ciclo indica desaceleração. O tornado mostra que o intervalo p10–p90 move o valor em cerca de R$ 15, o que deve ser comunicado como incerteza.
 
-**3. Como você justifica crescimento de receita de 11,1% em 2025 se a própria fase do aço é de queda (steel_yoy = -11,5%)?** (Revenue growth)
-- Por que é perigosa: Crescer acima do ciclo de preços do aço sem base operacional explícita pode superestimar o fluxo; o crescimento aparece como terceiro maior swing.
-- Números: Crescimento 2025 = 0,111 (percentil 0,73); p10 = -0,139; mediana = 0,052; p90 = 0,223; steel_yoy 2025 = -0,115; fase = falling; valor com -0,139 = R$ 28,05 e com 0,223 = R$ 50,30.
-- Resposta curta: A premissa reflete a média de longo prazo da fase de expansão recente, não o ciclo de preços de 2024; reconheço o risco e mostro que o valor cai para R$ 28,05 no cenário de contração.
+**3. Por que a alíquota efetiva sobe de 11,8% para 23,5% e por que não usar 34%, a alíquota nominal brasileira?** (Tax rate)
+- Por que é perigosa: A alíquota efetiva oscila muito e a escolha afeta o valor. Além disso, a série histórica tem mínimo zero, o que pode refletir benefícios fiscais temporários.
+- Números: Tax rate 2025 = 23,5% (percentil 0,73); mediana histórica 15,8%; p90 27,5%; valor em 0% = R$ 39,92 e em 27,5% = R$ 29,32; limite do cálculo 0–34%.
+- Resposta curta: Usei a alíquota efetiva observada, limitada a 0–34%, pois reflete benefícios e juros sobre capital próprio. Mostro que o valor varia cerca de R$ 10 entre os extremos do p10–p90 e que o uso de 34% reduziria o valor.
 
-**4. Por que usar 23,5% de alíquota efetiva quando o histórico da Gerdau tem mediana de 15,8% e mínimo zero?** (Tax rate)
-- Por que é perigosa: Alíquota efetiva muito volátil (incentivos, prejuízos fiscais, JCP) pode distorcer o FCFF; a premissa atual está acima da mediana e o swing é relevante.
-- Números: Tax rate 2025 = 0,235 (percentil 0,73); mediana = 0,158; p10 = 0,000; p90 = 0,275; valor com 0,000 = R$ 54,52 e com 0,275 = R$ 40,00 (swing R$ 14,51).
-- Resposta curta: Uso a alíquota efetiva recente por refletir a carga atual, e o limite de 0–34% evita valores absurdos; a faixa p10–p90 mostra que o efeito é moderado.
+**4. Capex de 6,0% da receita em 2025, no percentil 0,73, é investimento de expansão ou manutenção? Como isso afeta o FCFF?** (Capex / revenue)
+- Por que é perigosa: Capex alto reduz o FCFF, mas também pode gerar crescimento; a banca pode questionar se a premissa é coerente com o crescimento e a margem assumidos.
+- Números: Capex 2025 = 6,0% (percentil 0,73); mediana histórica 5,4%; p10–p90 = 3,1%–8,3%; valor em 3,1% = R$ 41,19 vs R$ 23,28 em 8,3%; D&A 2025 = 4,3%.
+- Resposta curta: O capex acima da D&A indica expansão, o que é coerente com o crescimento usado. Reconheço o risco de dupla contagem entre crescimento alto e capex elevado e mostro o intervalo de R$ 18 no tornado.
 
-**5. Por que o prêmio maduro de 5% (ou 4%–7%) é adequado, e como a escolha afeta o ke?** (Equity risk premium)
-- Por que é perigosa: A faixa é de teste, não dado observado; combinada com beta e prêmio-país, eleva ou reduz o ke de forma direta e pode mudar a conclusão do valuation.
-- Números: Faixa testada 4%–7%; valor com 0,040 = R$ 48,22 e com 0,070 = R$ 35,70 (swing R$ 12,52); preço de mercado R$ 16,43.
-- Resposta curta: Trato o prêmio como premissa de teste; mesmo no extremo de 4% o valor fica acima do preço de mercado, o que indica que a conclusão de subvalorização é robusta a essa escolha.
+**5. Por que o prêmio maduro de 5% e o lambda vinculado ao EMBI não estão contabilizando o risco-país duas vezes?** (Equity risk premium)
+- Por que é perigosa: O ke soma prêmio maduro, beta e lambda × EMBI, e a taxa rf já desconta o EMBI. Uma banca pode alegar dupla contagem do risco-país.
+- Números: Prêmio maduro faixa 4%–7%; swing no tornado = R$ 7,09 (value_at_low R$ 34,24; value_at_high R$ 27,15); rf = NTN-F − EMBI; prêmio-país faixa 1,5%–4% com swing R$ 2,29.
+- Resposta curta: rf é a NTN-F menos o EMBI, então o risco-país sai da taxa livre e volta via lambda × EMBI no ke, sem dupla contagem. Mostro que a sensibilidade ao prêmio maduro é de R$ 7, e que o risco-país tem efeito menor.
 
-**6. Por que a janela de 5 anos é suficiente para estimar as premissas, dado que o ciclo do aço dura mais de 5 anos?** (Janela de estimação)
-- Por que é perigosa: Janela curta captura apenas parte do ciclo; as premissas de 2021 a 2025 podem refletir um período atípico (pico de 2021–2022), enviesando margens e crescimento.
-- Números: Datas de 2021 a 2025; steel_vs_10y_avg em 2022 = 0,881 (fase rising); em 2025 = 0,093; histórico completo 2010–2024 usado para percentis.
-- Resposta curta: A janela de 5 anos é a que o modelo usa para premissas operacionais, mas os percentis são calculados sobre 2010–2024, o que ancora as premissas no ciclo completo; reconheço o risco de viés do período recente.
+**6. A janela de 5 anos é suficiente para capturar a dinâmica do aço? Por que as datas de 2021 e 2022 incluem o boom pós-pandemia?** (Janela de estimação)
+- Por que é perigosa: O período inclui o auge de 2021–2022 (steel_vs_10y_avg de 0,88 em 2022) e pode inflar as premissas de margem e crescimento.
+- Números: Ciclo: 2022 steel_vs_10y_avg = 0,881 (phase rising); 2025 = 0,093 (falling); margem 2021 = 7,4% vs 2022 = 11,7%; janela de 5 anos em todas as datas.
+- Resposta curta: A janela de 5 anos mistura fases de alta e de queda, mas as premissas mudam muito entre 2021 e 2022 justamente pelo ciclo. Reconheço que a estimação é sensível à janela e proponho testar janelas alternativas como robustez.
 
-**7. Por que o custo da dívida usa Selic futura + spread Baa menos Treasury, e não a despesa financeira contábil?** (Cost of debt)
-- Por que é perigosa: O custo contábil inclui variação cambial e não reflete o custo marginal atual; a escolha altera o WACC, mas o swing associado ao spread de crédito é pequeno (R$ 2,51), o que precisa ser explicado.
-- Números: Credit spread faixa testada 1%–3%; valor com 0,010 = R$ 42,89 e com 0,030 = R$ 40,38 (swing R$ 2,51); valor base R$ 42,30.
-- Resposta curta: O custo marginal de captação é a referência correta para o WACC; o spread tem impacto pequeno no valor, então a escolha do custo contábil não mudaria a conclusão de forma relevante.
+**7. Por que o custo da dívida usa NTN-F mais spread Baa menos Treasury, e não a despesa financeira contábil da DRE?** (Cost of debt)
+- Por que é perigosa: A definição muda de Selic + spread para NTN-F + spread em 20/10. Sem explicar a troca, a banca pode questionar a comparabilidade entre datas e o efeito cambial.
+- Números: Cost of debt usa NTN-F + spread Baa − Treasury 10a; spread teste 1%–3% com swing de R$ 1,43 (R$ 31,34 em 1% e R$ 29,91 em 3%); custo contábil = despesa financeira total (inclui variação cambial) / dívida média.
+- Resposta curta: Uso o custo de captação atual por ser prospectivo, enquanto o custo contábil mistura variação cambial e dívidas antigas. Mostro que o efeito do spread é pequeno (R$ 1,43) e que a troca de metodologia em 20/10 foi documentada.
 
 ---
 Gerado por `python -m valuation_gerdau reviewer` · modelo claude-haiku-5-5 · modo demo · chamadas à API 0 · respostas gravadas usadas 8 · custo estimado US$ 0.0000

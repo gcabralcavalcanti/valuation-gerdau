@@ -132,8 +132,8 @@ def build(wb: Workbook) -> str:
             0.07,
             0.925,
             "Undergraduate thesis (Economics, UFRJ). Five valuation dates, each using only data public "
-            "on that date.\nCost of debt = expected Selic + Baa credit spread.\nCost of equity = rf + beta x mature US "
-            "premium + lambda x EMBI+ Brazil.",
+            "on that date.\nRisk-free rate = longest fixed-rate government bond (NTN-F) − EMBI+ Brazil. Cost of debt = "
+            "NTN-F + Baa credit spread.\nCost of equity = rf + beta x mature US premium + lambda x EMBI+ Brazil.",
             fontsize=8.6,
             color=MUTED,
             va="top",

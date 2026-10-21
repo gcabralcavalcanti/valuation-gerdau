@@ -11,7 +11,7 @@
 | Tests (no network, no API) | `python -m pytest -q` |
 
 Every API call is logged in `output/logs/` with its tokens. A run stops at 40 calls (`VALUATION_MAX_CALLS`). Building
-and testing the project cost about US$ 0.03 in total.
+and testing the project cost about US$ 0.04 in total.
 
 ## Update after the thesis spreadsheet changes
 

@@ -1,108 +1,108 @@
 {
- "what": "Results printed by the thesis notebook after the 19/10/2026 update (cost of debt = expected Selic + Baa credit spread; cost of equity = rf + beta x mature US premium + lambda x EMBI+ Brazil). The default Spec must reproduce them (tolerance = rounding of the printed table).",
+ "what": "Results printed by the thesis notebook after the 21/10/2026 update (rf = longest NTN-F − EMBI+ Brazil; cost of debt = NTN-F + Baa credit spread; cost of equity = rf + beta x mature US premium + lambda x EMBI+ Brazil). The default Spec must reproduce them (tolerance = rounding of the printed table).",
  "cases": [
   {
    "date": "2021-02-25",
    "window": 3,
-   "fair_value": 33.27,
+   "fair_value": 33.12,
    "tol": 0.006,
    "beta": 1.23
   },
   {
    "date": "2022-02-24",
    "window": 3,
-   "fair_value": 79.17,
+   "fair_value": 62.58,
    "tol": 0.006,
    "beta": 1.22
   },
   {
    "date": "2023-03-02",
    "window": 3,
-   "fair_value": 118.83,
+   "fair_value": 85.08,
    "tol": 0.006,
    "beta": 1.15
   },
   {
    "date": "2024-02-21",
    "window": 3,
-   "fair_value": 92.66,
+   "fair_value": 84.35,
    "tol": 0.006,
    "beta": 0.8
   },
   {
    "date": "2025-02-20",
    "window": 3,
-   "fair_value": 30.21,
+   "fair_value": 21.35,
    "tol": 0.006,
    "beta": 0.8
   },
   {
    "date": "2021-02-25",
    "window": 5,
-   "fair_value": 25.43,
+   "fair_value": 25.06,
    "tol": 0.006,
    "beta": 1.35
   },
   {
    "date": "2022-02-24",
    "window": 5,
-   "fair_value": 73.35,
+   "fair_value": 57.13,
    "tol": 0.006,
    "beta": 1.16
   },
   {
    "date": "2023-03-02",
    "window": 5,
-   "fair_value": 87.35,
+   "fair_value": 62.13,
    "tol": 0.006,
    "beta": 1.1
   },
   {
    "date": "2024-02-21",
    "window": 5,
-   "fair_value": 55.09,
+   "fair_value": 50.88,
    "tol": 0.006,
    "beta": 1.1
   },
   {
    "date": "2025-02-20",
    "window": 5,
-   "fair_value": 42.3,
+   "fair_value": 31.01,
    "tol": 0.006,
    "beta": 1.14
   },
   {
    "date": "2021-02-25",
    "window": 10,
-   "fair_value": 19.56,
+   "fair_value": 19.17,
    "tol": 0.006,
    "beta": 1.18
   },
   {
    "date": "2022-02-24",
    "window": 10,
-   "fair_value": 41.58,
+   "fair_value": 31.69,
    "tol": 0.006,
    "beta": 1.15
   },
   {
    "date": "2023-03-02",
    "window": 10,
-   "fair_value": 53.74,
+   "fair_value": 37.79,
    "tol": 0.006,
    "beta": 1.1
   },
   {
    "date": "2024-02-21",
    "window": 10,
-   "fair_value": 41.41,
+   "fair_value": 38.07,
    "tol": 0.006,
    "beta": 1.15
   },
   {
    "date": "2025-02-20",
    "window": 10,
-   "fair_value": 30.0,
+   "fair_value": 22.16,
    "tol": 0.006,
    "beta": 1.22
   }

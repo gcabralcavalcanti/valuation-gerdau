@@ -27,6 +27,7 @@ def specs() -> dict[str, list[Spec]]:
         "Equity risk premium": [Spec(window=5, erp=e) for e in ("us_mature", 0.04, 0.05, 0.06, 0.07)],
         "Cost of capital method": [
             Spec(window=5),
+            Spec(window=5, rf="selic"),
             Spec(window=5, country_risk=False),
             Spec(window=5, kd="book"),
             legacy(window=5, erp=0.05),

@@ -37,8 +37,15 @@ def test_mature_premium_and_country_risk(synthetic_wb):
     v = m.value(row)
     assert v["erp"] == pytest.approx(0.065 - 0.02, abs=1e-9)  # geometric mean of stocks − geometric mean of bonds
     assert v["ke"] == pytest.approx(v["rf"] + v["beta"] * v["erp"] + 0.44 * 0.023, abs=1e-9)
-    assert v["Cost of debt"] == pytest.approx(v["rf"] + 0.015, abs=1e-9)  # expected Selic + credit spread
+    assert v["rf"] == pytest.approx(0.13 - 0.023, abs=1e-9)  # NTN-F − EMBI
+    assert v["Cost of debt"] == pytest.approx(0.13 + 0.015, abs=1e-9)  # NTN-F + credit spread
     assert m.value(row, Spec(country_risk=False))["fair_value"] > v["fair_value"]
+
+
+def test_selic_as_risk_free_rate(synthetic_wb):
+    v = DCF(synthetic_wb).value(synthetic_wb.dates.iloc[-1], Spec(rf="selic"))
+    assert v["rf"] == pytest.approx(0.10, abs=1e-9)  # expected Selic t+4
+    assert v["Cost of debt"] == pytest.approx(0.10 + 0.015, abs=1e-9)  # Selic + credit spread
 
 
 @pytest.mark.skipif(real_workbook_path() is None, reason="real spreadsheet not on disk")
@@ -47,6 +54,18 @@ def test_golden_thesis_results():
     golden = json.loads((config.GOLDEN / "thesis_results.json").read_text(encoding="utf-8"))
     m = DCF(data.load(real_workbook_path()))
     runs = {w: m.run(Spec(window=w)).set_index("date") for w in (3, 5, 10)}
+    for c in golden["cases"]:
+        got = runs[c["window"]].loc[c["date"]]
+        assert got["fair_value"] == pytest.approx(c["fair_value"], abs=c["tol"]), c
+        assert got["beta"] == pytest.approx(c["beta"], abs=0.005), c
+
+
+@pytest.mark.skipif(real_workbook_path() is None, reason="real spreadsheet not on disk")
+def test_golden_thesis_results_v2():
+    """Spec(rf="selic") reproduces the 15 results the notebook printed on 19/10 (expected Selic as rf)."""
+    golden = json.loads((config.GOLDEN / "thesis_results_v2.json").read_text(encoding="utf-8"))
+    m = DCF(data.load(real_workbook_path()))
+    runs = {w: m.run(Spec(window=w, rf="selic")).set_index("date") for w in (3, 5, 10)}
     for c in golden["cases"]:
         got = runs[c["window"]].loc[c["date"]]
         assert got["fair_value"] == pytest.approx(c["fair_value"], abs=c["tol"]), c

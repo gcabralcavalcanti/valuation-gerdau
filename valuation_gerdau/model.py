@@ -1,9 +1,11 @@
 """Independent re-implementation of the thesis DCF (FCFF / WACC), parameterised by a `Spec`.
 
-The default Spec reproduces the thesis notebook (tests/golden/thesis_results.json, model of 19/10/2026: cost of debt =
-expected Selic + Baa credit spread; ke = rf + beta x mature US premium + lambda x Brazil country premium).
-LEGACY reproduces the first version of the notebook (tests/golden/thesis_results_v1.json: Ibovespa − CDI premium and
-book cost of debt). Every other Spec is an alternative the lab or the reviewer can test. All values in R$ million.
+The default Spec reproduces the thesis notebook (tests/golden/thesis_results.json, model of 21/10/2026: rf = longest
+NTN-F − EMBI+ Brazil; cost of debt = NTN-F + Baa credit spread; ke = rf + beta x mature US premium + lambda x Brazil
+country premium). Spec(rf="selic") reproduces the model of 19/10 (tests/golden/thesis_results_v2.json: expected Selic
+as rf, Selic + Baa spread as cost of debt). LEGACY reproduces the first version of the notebook
+(tests/golden/thesis_results_v1.json: Ibovespa − CDI premium and book cost of debt). Every other Spec is an
+alternative the lab or the reviewer can test. All values in R$ million.
 """
 
 from __future__ import annotations
@@ -31,7 +33,8 @@ class Spec:
     erp: float | str = "us_mature"  # "us_mature" (US stocks − 10y bonds, geometric, since 1928),
     # "brazil_historical" (Ibovespa − CDI since 2009) or a fixed number
     country_risk: bool = True  # add lambda x country premium (EMBI+ Brazil) to the cost of equity
-    kd: str = "rating_spread"  # "rating_spread" (expected Selic + Baa spread) or "book" (financial expense / debt)
+    rf: str = "ntnf"  # "ntnf" (longest fixed-rate government bond − EMBI+ Brazil) or "selic" (expected Selic t+4)
+    kd: str = "rating_spread"  # "rating_spread" (government rate + Baa spread) or "book" (financial expense / debt)
     tax: str = "effective"  # "effective" (clipped to 0–34%) or "statutory" (34%)
     overrides: dict = field(default_factory=dict)  # fixed values for named assumptions
 
@@ -40,14 +43,14 @@ class Spec:
         crp = " + country" if self.country_risk else ""
         return (
             f"window {self.window}y · beta {self.beta_window or self.window}y {self.beta_freq} {self.beta_adjust}"
-            f" · ERP {erp}{crp} · kd {self.kd} · tax {self.tax}"
+            f" · rf {self.rf} · ERP {erp}{crp} · kd {self.kd} · tax {self.tax}"
         )
 
     def with_overrides(self, **kw) -> Spec:
         return replace(self, overrides={**self.overrides, **kw})
 
 
-LEGACY = Spec(erp="brazil_historical", country_risk=False, kd="book")  # thesis notebook v1 (16/10/2026)
+LEGACY = Spec(erp="brazil_historical", country_risk=False, rf="selic", kd="book")  # thesis notebook v1 (16/10/2026)
 
 
 def legacy(**kw) -> Spec:
@@ -56,15 +59,16 @@ def legacy(**kw) -> Spec:
 
 # Plain definitions sent to the LLM with the numbers, so it does not guess what each column means.
 DEFINITIONS = (
-    "Definições (do código): Cost of debt da tese (desde 19/10) = Selic esperada t+4 + spread de crédito "
-    "Baa − Treasury "
-    "de 10 anos (custo atual de captação). Custo contábil antigo = despesa financeira total da DRE (inclui variação "
-    "cambial) / dívida total média. ke = rf + beta × prêmio maduro dos EUA + lambda × EMBI+ Brasil, lambda = fatia da "
-    "receita no Brasil. 'Interest on debt (DFC)' = linha 'Despesa de juros sobre dívidas "
-    "financeiras' da DFC / dívida bruta média (despesa de juros, não juros pagos). Tax rate = IR e CSLL / lucro antes "
-    "do IR, limitado a 0–34%. EBIT margin exclui impairment e ganhos não recorrentes identificados no 20-F. "
-    "Percentis e faixas p10–p90 vêm do histórico anual da própria Gerdau. As faixas do prêmio maduro (4%–7%), do "
-    "prêmio-país (1,5%–4%), do spread de crédito (1%–3%) e de g (± 1 p.p.) são faixas de teste, não dados."
+    "Definições (do código): rf da tese (desde 21/10) = NTN-F de vencimento mais longo na véspera − EMBI+ Brasil (a "
+    "taxa do governo já embute o risco-país, que entra no ke por lambda × EMBI). Cost of debt da tese = NTN-F + "
+    "spread de crédito Baa − Treasury de 10 anos (risco do país + risco da empresa; custo atual de captação). Até "
+    "20/10 o rf era a Selic esperada t+4, e o Cost of debt, Selic + spread. Custo contábil antigo = despesa "
+    "financeira total da DRE (inclui variação cambial) / dívida total média. ke = rf + beta × prêmio maduro dos EUA +"
+    " lambda × EMBI+ Brasil, lambda = fatia da receita no Brasil. 'Interest on debt (DFC)' = linha 'Despesa de juros "
+    "sobre dívidas financeiras' da DFC / dívida bruta média (despesa de juros, não juros pagos). Tax rate = IR e CSLL"
+    " / lucro antes do IR, limitado a 0–34%. EBIT margin exclui impairment e ganhos não recorrentes identificados no "
+    "20-F. Percentis e faixas p10–p90 vêm do histórico anual da própria Gerdau. As faixas do prêmio maduro (4%–7%), "
+    "do prêmio-país (1,5%–4%), do spread de crédito (1%–3%) e de g (± 1 p.p.) são faixas de teste, não dados."
 )
 
 ASSUMPTIONS = [
@@ -162,16 +166,25 @@ class DCF:
         else:
             erp = float(spec.erp)
         erp = ov.get("Equity risk premium", erp)
-        rf = ov.get("Risk-free rate", fo["Selic ano t+4 (%)"] / 100)
-        lam = crp = 0.0
-        if spec.country_risk or spec.kd == "rating_spread":
+        lam = crp = country_spread = 0.0
+        if spec.country_risk or spec.kd == "rating_spread" or spec.rf == "ntnf":
             me = self.market_at(d)
+        if spec.rf == "ntnf":
+            # The Brazilian government rate already carries the country default spread: take it out of rf so that
+            # country risk is not counted twice (it enters ke through lambda x EMBI), and put it back in the cost of
+            # debt, which pays both the country spread and the company spread.
+            country_spread = me["EMBI+ Brasil, véspera (%)"] / 100
+            rf = me["NTN-F mais longa, véspera (% a.a.)"] / 100 - country_spread
+        else:
+            rf = fo["Selic ano t+4 (%)"] / 100
+        rf = ov.get("Risk-free rate", rf)
         if spec.country_risk:
             lam = me["Receita no Brasil, último exercício (%)"] / 100
             crp = me["EMBI+ Brasil, véspera (%)"] / 100
         lam, crp = ov.get("Lambda", lam), ov.get("Country risk premium", crp)
         if spec.kd == "rating_spread":
-            kd = rf + ov.get("Credit spread", me["Spread Baa − Treasury 10 anos, mês anterior (%)"] / 100)
+            spread = ov.get("Credit spread", me["Spread Baa − Treasury 10 anos, mês anterior (%)"] / 100)
+            kd = rf + country_spread + spread
         else:
             kd = float(a["Book cost of debt"])
         kd = ov.get("Cost of debt", kd)

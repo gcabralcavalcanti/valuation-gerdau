@@ -18,7 +18,7 @@ from .llm import LLM, load_schema, unsupported_numbers
 from .model import DCF, DEFINITIONS, Spec
 
 TOL = 0.005
-BASE = Spec(window=5)  # thesis model since 19/10: Selic + Baa spread for debt, mature premium + country risk
+BASE = Spec(window=5)  # thesis model since 21/10: rf = NTN-F − EMBI, debt = NTN-F + Baa spread, country risk
 
 
 def reconcile(wb: Workbook, years) -> pd.DataFrame:
@@ -87,7 +87,7 @@ def recompute(wb: Workbook, raw: dict[int, dict]) -> pd.DataFrame:
     rows = []
     for _, row in wb.dates.iterrows():
         base = m.value(row, BASE)
-        rows.append({"date": base["date"], "variant": "Thesis model (19/10)", **_pick(base)})
+        rows.append({"date": base["date"], "variant": "Thesis model (21/10)", **_pick(base)})
         for name, build in alternative_specs(wb, raw).items():
             v = m.value(row, build(row, BASE))
             rows.append(
@@ -117,12 +117,12 @@ def memo(llm: LLM, recon: pd.DataFrame, alt: pd.DataFrame) -> dict:
     topics = sorted(alt["variant"].unique().tolist() + ["Reconciliação com a CVM"])
     differs = recon[recon["status"] != "match"]
     summary_alt = (
-        alt[alt["variant"] != "Thesis model (19/10)"]
+        alt[alt["variant"] != "Thesis model (21/10)"]
         .pivot_table(index="variant", columns="date", values="fair_value_change")
         .round(3)
     )
     base = (
-        alt[alt["variant"] == "Thesis model (19/10)"]
+        alt[alt["variant"] == "Thesis model (21/10)"]
         .set_index("date")[["fair_value", "price", "wacc", "Cost of debt", "Tax rate"]]
         .round(3)
     )
@@ -132,7 +132,7 @@ def memo(llm: LLM, recon: pd.DataFrame, alt: pd.DataFrame) -> dict:
         + (
             f"Reconciliação planilha × CVM: {len(recon) - len(differs)} de {len(recon)} linhas batem "
             f"(tolerância 0,5%). Divergências:\n{differs.to_string(index=False) if len(differs) else 'nenhuma'}\n\n"
-            f"Valuation com o modelo do TCC (desde 19/10):\n{base.to_string()}\n\n"
+            f"Valuation com o modelo do TCC (desde 21/10):\n{base.to_string()}\n\n"
             f"Variação do valor justo por ação quando a segunda analista muda UMA escolha (fração; 0.10 = +10%):\n"
             f"{summary_alt.to_string()}\n\n"
             f"Custo da dívida por variante e data:\n"
