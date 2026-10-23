@@ -63,4 +63,5 @@ index and long-run US stock and bond returns.
 ## More limits
 
 - The results reports are web pages, so "page" means the page breaks of the filed document.
-- The safe interest rate is the expected Brazilian policy rate; a long government bond is the next thing to test.
+- The safe interest rate is the longest fixed-rate government bond minus the Brazil risk index, read the day before
+  each valuation date; the expected policy rate is kept as an alternative in the method lab.
