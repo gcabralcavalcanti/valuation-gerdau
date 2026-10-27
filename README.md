@@ -1,5 +1,7 @@
 # valuation-gerdau
 
+**[See it working](https://gcabralcavalcanti.github.io/valuation-gerdau/)** · [Final report, 2 pages (PDF)](final-report.pdf)
+
 Four AI reviewers for my undergraduate thesis, which values the steelmaker Gerdau from the cash it is expected to
 generate: one checks the data, one redoes the math, one tests other ways of doing it, and one prepares the questions
 the examining board is likely to ask.

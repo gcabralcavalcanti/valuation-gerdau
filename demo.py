@@ -11,6 +11,7 @@ import json
 import sys
 from pathlib import Path
 
+from valuation_gerdau import page
 from valuation_gerdau.__main__ import main
 
 REPORTS = Path(__file__).resolve().parent / "output"
@@ -48,4 +49,5 @@ if __name__ == "__main__":
         sys.exit(code)
     main(["final", *extra])
     summary()
-    print("\nFull report: final-report.pdf · details: output/*.md")
+    page.build()
+    print("\nFull report: final-report.pdf · details: output/*.md · all on one page: output/index.html")
