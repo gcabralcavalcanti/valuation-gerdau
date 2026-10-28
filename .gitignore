@@ -1,7 +1,6 @@
 .env
 .cache/
 output/logs/
-output/*.json
 __pycache__/
 .pytest_cache/
 *.pyc

@@ -1,0 +1,593 @@
+{
+ "history": [
+  {
+   "date": "2021-02-25",
+   "assumption": "Revenue growth",
+   "used": 0.0010689072596339333,
+   "hist_min": -0.14115124958735448,
+   "hist_p10": -0.13605794291172202,
+   "hist_median": 0.06731303487990647,
+   "hist_p90": 0.1828617127699459,
+   "hist_max": 0.2503373524711874,
+   "percentile_of_used": 0.2727272727272727,
+   "years": "2010–2020"
+  },
+  {
+   "date": "2021-02-25",
+   "assumption": "EBIT margin",
+   "used": 0.0738210228474894,
+   "hist_min": 0.03403703214521683,
+   "hist_p10": 0.04085996541493621,
+   "hist_median": 0.0761137168582237,
+   "hist_p90": 0.10537966985152745,
+   "hist_max": 0.10654976880912076,
+   "percentile_of_used": 0.45454545454545453,
+   "years": "2010–2020"
+  },
+  {
+   "date": "2021-02-25",
+   "assumption": "D&A / revenue",
+   "used": 0.05487602225534931,
+   "hist_min": 0.0409843022921533,
+   "hist_p10": 0.048115290776592545,
+   "hist_median": 0.05235223646387061,
+   "hist_p90": 0.060302022644451544,
+   "hist_max": 0.06735306035719481,
+   "percentile_of_used": 0.5454545454545454,
+   "years": "2010–2020"
+  },
+  {
+   "date": "2021-02-25",
+   "assumption": "Capex / revenue",
+   "used": 0.035282410481580026,
+   "hist_min": 0.02468382373196928,
+   "hist_p10": 0.02734697303119415,
+   "hist_median": 0.04658744158323035,
+   "hist_p90": 0.06915328603789019,
+   "hist_max": 0.08646437012718873,
+   "percentile_of_used": 0.18181818181818182,
+   "years": "2010–2020"
+  },
+  {
+   "date": "2021-02-25",
+   "assumption": "Working capital / revenue",
+   "used": 0.18137912425079433,
+   "hist_min": 0.1657082368811833,
+   "hist_p10": 0.17046198303348734,
+   "hist_median": 0.23388253216561683,
+   "hist_p90": 0.2611029352370728,
+   "hist_max": 0.26755264171942417,
+   "percentile_of_used": 0.2727272727272727,
+   "years": "2010–2020"
+  },
+  {
+   "date": "2021-02-25",
+   "assumption": "Tax rate",
+   "used": 0.11804682089425611,
+   "hist_min": 0.0,
+   "hist_p10": 0.0,
+   "hist_median": 0.04054090449142076,
+   "hist_p90": 0.2733788334766409,
+   "hist_max": 0.31685527099463967,
+   "percentile_of_used": 0.6363636363636364,
+   "years": "2010–2020"
+  },
+  {
+   "date": "2022-02-24",
+   "assumption": "Revenue growth",
+   "used": 0.15783188431434603,
+   "hist_min": -0.14115124958735448,
+   "hist_p10": -0.12440172498326438,
+   "hist_median": 0.0700180278625333,
+   "hist_p90": 0.24358978850106325,
+   "hist_max": 0.7881019551880135,
+   "percentile_of_used": 0.75,
+   "years": "2010–2021"
+  },
+  {
+   "date": "2022-02-24",
+   "assumption": "EBIT margin",
+   "used": 0.11712950052864306,
+   "hist_min": 0.03403703214521683,
+   "hist_p10": 0.042773486339615044,
+   "hist_median": 0.07847882886045823,
+   "hist_p90": 0.10643275891336143,
+   "hist_max": 0.2505794205509852,
+   "percentile_of_used": 0.9166666666666666,
+   "years": "2010–2021"
+  },
+  {
+   "date": "2022-02-24",
+   "assumption": "D&A / revenue",
+   "used": 0.04819220768559396,
+   "hist_min": 0.03393398750841804,
+   "hist_p10": 0.04169740114059722,
+   "hist_median": 0.05233763670597463,
+   "hist_p90": 0.060255837677724,
+   "hist_max": 0.06735306035719481,
+   "percentile_of_used": 0.25,
+   "years": "2010–2021"
+  },
+  {
+   "date": "2022-02-24",
+   "assumption": "Capex / revenue",
+   "used": 0.0361124419982274,
+   "hist_min": 0.02468382373196928,
+   "hist_p10": 0.028271967608383783,
+   "hist_median": 0.045326622875629594,
+   "hist_p90": 0.06817762492151459,
+   "hist_max": 0.08646437012718873,
+   "percentile_of_used": 0.16666666666666666,
+   "years": "2010–2021"
+  },
+  {
+   "date": "2022-02-24",
+   "assumption": "Working capital / revenue",
+   "used": 0.17616243057061648,
+   "hist_min": 0.1657082368811833,
+   "hist_p10": 0.1712892277530428,
+   "hist_median": 0.22098056399755944,
+   "hist_p90": 0.25959983558979255,
+   "hist_max": 0.26755264171942417,
+   "percentile_of_used": 0.16666666666666666,
+   "years": "2010–2021"
+  },
+  {
+   "date": "2022-02-24",
+   "assumption": "Tax rate",
+   "used": 0.16454936561380026,
+   "hist_min": 0.0,
+   "hist_p10": 0.0,
+   "hist_median": 0.07410527054447771,
+   "hist_p90": 0.2706277844859808,
+   "hist_max": 0.31685527099463967,
+   "percentile_of_used": 0.5833333333333334,
+   "years": "2010–2021"
+  },
+  {
+   "date": "2023-03-02",
+   "assumption": "Revenue growth",
+   "used": 0.1742256836856395,
+   "hist_min": -0.14115124958735448,
+   "hist_p10": -0.11274550705480672,
+   "hist_median": 0.06731303487990647,
+   "hist_p90": 0.23684222453093912,
+   "hist_max": 0.7881019551880135,
+   "percentile_of_used": 0.7692307692307693,
+   "years": "2010–2022"
+  },
+  {
+   "date": "2023-03-02",
+   "assumption": "EBIT margin",
+   "used": 0.14821032961159397,
+   "hist_min": 0.03403703214521683,
+   "hist_p10": 0.04468700726429388,
+   "hist_median": 0.08084394086269275,
+   "hist_p90": 0.1936294098230074,
+   "hist_max": 0.2505794205509852,
+   "percentile_of_used": 0.8461538461538461,
+   "years": "2010–2022"
+  },
+  {
+   "date": "2023-03-02",
+   "assumption": "D&A / revenue",
+   "used": 0.043812857113403665,
+   "hist_min": 0.03393398750841804,
+   "hist_p10": 0.0360247660563997,
+   "hist_median": 0.05232303694807866,
+   "hist_p90": 0.06020965271099646,
+   "hist_max": 0.06735306035719481,
+   "percentile_of_used": 0.23076923076923078,
+   "years": "2010–2022"
+  },
+  {
+   "date": "2023-03-02",
+   "assumption": "Capex / revenue",
+   "used": 0.04205089829007532,
+   "hist_min": 0.02468382373196928,
+   "hist_p10": 0.02919696218557341,
+   "hist_median": 0.04658744158323035,
+   "hist_p90": 0.06720196380513901,
+   "hist_max": 0.08646437012718873,
+   "percentile_of_used": 0.38461538461538464,
+   "years": "2010–2022"
+  },
+  {
+   "date": "2023-03-02",
+   "assumption": "Working capital / revenue",
+   "used": 0.17868885403811835,
+   "hist_min": 0.1657082368811833,
+   "hist_p10": 0.17211647247259826,
+   "hist_median": 0.20807859582950206,
+   "hist_p90": 0.25809673594251237,
+   "hist_max": 0.26755264171942417,
+   "percentile_of_used": 0.15384615384615385,
+   "years": "2010–2022"
+  },
+  {
+   "date": "2023-03-02",
+   "assumption": "Tax rate",
+   "used": 0.2197794248097396,
+   "hist_min": 0.0,
+   "hist_p10": 0.0,
+   "hist_median": 0.10766963659753466,
+   "hist_p90": 0.27559600347908547,
+   "hist_max": 0.31685527099463967,
+   "percentile_of_used": 0.6153846153846154,
+   "years": "2010–2022"
+  },
+  {
+   "date": "2024-02-21",
+   "assumption": "Revenue growth",
+   "used": 0.08345879185285443,
+   "hist_min": -0.16375926576899236,
+   "hist_p10": -0.13962325758466473,
+   "hist_median": 0.0596130226096907,
+   "hist_p90": 0.230094660560815,
+   "hist_max": 0.7881019551880135,
+   "percentile_of_used": 0.6428571428571429,
+   "years": "2010–2023"
+  },
+  {
+   "date": "2024-02-21",
+   "assumption": "EBIT margin",
+   "used": 0.15900866985296064,
+   "hist_min": 0.03403703214521683,
+   "hist_p10": 0.04660052818897271,
+   "hist_median": 0.08107813854378135,
+   "hist_p90": 0.193280793743193,
+   "hist_max": 0.2505794205509852,
+   "percentile_of_used": 0.8571428571428571,
+   "years": "2010–2023"
+  },
+  {
+   "date": "2024-02-21",
+   "assumption": "D&A / revenue",
+   "used": 0.04445920356028547,
+   "hist_min": 0.03393398750841804,
+   "hist_p10": 0.0366447080858689,
+   "hist_median": 0.051617519229827206,
+   "hist_p90": 0.060163467744268916,
+   "hist_max": 0.06735306035719481,
+   "percentile_of_used": 0.2857142857142857,
+   "years": "2010–2023"
+  },
+  {
+   "date": "2024-02-21",
+   "assumption": "Capex / revenue",
+   "used": 0.052067859212292567,
+   "hist_min": 0.02468382373196928,
+   "hist_p10": 0.03012195676276304,
+   "hist_median": 0.05048177338721964,
+   "hist_p90": 0.07494823016096333,
+   "hist_max": 0.08646437012718873,
+   "percentile_of_used": 0.5,
+   "years": "2010–2023"
+  },
+  {
+   "date": "2024-02-21",
+   "assumption": "Working capital / revenue",
+   "used": 0.18415706139374427,
+   "hist_min": 0.1657082368811833,
+   "hist_p10": 0.17294371719215373,
+   "hist_median": 0.2070770314183369,
+   "hist_p90": 0.25659363629523213,
+   "hist_max": 0.26755264171942417,
+   "percentile_of_used": 0.35714285714285715,
+   "years": "2010–2023"
+  },
+  {
+   "date": "2024-02-21",
+   "assumption": "Tax rate",
+   "used": 0.2585019770091746,
+   "hist_min": 0.0,
+   "hist_p10": 0.0,
+   "hist_median": 0.13863012709109834,
+   "hist_p90": 0.2753188572287799,
+   "hist_max": 0.31685527099463967,
+   "percentile_of_used": 0.7857142857142857,
+   "years": "2010–2023"
+  },
+  {
+   "date": "2025-02-20",
+   "assumption": "Revenue growth",
+   "used": 0.11074404907435875,
+   "hist_min": -0.16375926576899236,
+   "hist_p10": -0.1391139269171015,
+   "hist_median": 0.05191301033947493,
+   "hist_p90": 0.22334709659069077,
+   "hist_max": 0.7881019551880135,
+   "percentile_of_used": 0.7333333333333333,
+   "years": "2010–2024"
+  },
+  {
+   "date": "2025-02-20",
+   "assumption": "EBIT margin",
+   "used": 0.16473486925074038,
+   "hist_min": 0.03403703214521683,
+   "hist_p10": 0.048514049113651536,
+   "hist_median": 0.08131233622486993,
+   "hist_p90": 0.18590795163209758,
+   "hist_max": 0.2505794205509852,
+   "percentile_of_used": 0.8666666666666667,
+   "years": "2010–2024"
+  },
+  {
+   "date": "2025-02-20",
+   "assumption": "D&A / revenue",
+   "used": 0.043322965468997846,
+   "hist_min": 0.03393398750841804,
+   "hist_p10": 0.0372646501153381,
+   "hist_median": 0.05091200151157575,
+   "hist_p90": 0.06011728277754137,
+   "hist_max": 0.06735306035719481,
+   "percentile_of_used": 0.2,
+   "years": "2010–2024"
+  },
+  {
+   "date": "2025-02-20",
+   "assumption": "Capex / revenue",
+   "used": 0.06049381016255547,
+   "hist_min": 0.02468382373196928,
+   "hist_p10": 0.031046951339952666,
+   "hist_median": 0.05437610519120892,
+   "hist_p90": 0.08285133313322539,
+   "hist_max": 0.08871719633454488,
+   "percentile_of_used": 0.7333333333333333,
+   "years": "2010–2024"
+  },
+  {
+   "date": "2025-02-20",
+   "assumption": "Working capital / revenue",
+   "used": 0.19864949261453624,
+   "hist_min": 0.1657082368811833,
+   "hist_p10": 0.1737709619117092,
+   "hist_median": 0.20807859582950206,
+   "hist_p90": 0.2550905366479519,
+   "hist_max": 0.26755264171942417,
+   "percentile_of_used": 0.4,
+   "years": "2010–2024"
+  },
+  {
+   "date": "2025-02-20",
+   "assumption": "Tax rate",
+   "used": 0.23547694612272368,
+   "hist_min": 0.0,
+   "hist_p10": 0.0,
+   "hist_median": 0.15825367904438647,
+   "hist_p90": 0.27504171097847435,
+   "hist_max": 0.31685527099463967,
+   "percentile_of_used": 0.7333333333333333,
+   "years": "2010–2024"
+  }
+ ],
+ "tornado": [
+  {
+   "assumption": "EBIT margin",
+   "low": 0.048514049113651536,
+   "high": 0.18590795163209758,
+   "range_source": "Gerdau p10–p90",
+   "value_at_low": 0.2819125748755813,
+   "value_at_high": 36.60323950800441,
+   "swing": 36.32132693312882,
+   "base_value": 31.00594273384737,
+   "price": 16.43,
+   "date": "2025-02-20"
+  },
+  {
+   "assumption": "Capex / revenue",
+   "low": 0.031046951339952666,
+   "high": 0.08285133313322539,
+   "range_source": "Gerdau p10–p90",
+   "value_at_low": 41.18816646017369,
+   "value_at_high": 23.275090956913463,
+   "swing": 17.913075503260227,
+   "base_value": 31.00594273384737,
+   "price": 16.43,
+   "date": "2025-02-20"
+  },
+  {
+   "assumption": "Revenue growth",
+   "low": -0.1391139269171015,
+   "high": 0.22334709659069077,
+   "range_source": "Gerdau p10–p90",
+   "value_at_low": 21.024380251967933,
+   "value_at_high": 36.58237514559133,
+   "swing": 15.557994893623395,
+   "base_value": 31.00594273384737,
+   "price": 16.43,
+   "date": "2025-02-20"
+  },
+  {
+   "assumption": "Tax rate",
+   "low": 0.0,
+   "high": 0.27504171097847435,
+   "range_source": "Gerdau p10–p90",
+   "value_at_low": 39.914923261643295,
+   "value_at_high": 29.320773465480894,
+   "swing": 10.594149796162402,
+   "base_value": 31.00594273384737,
+   "price": 16.43,
+   "date": "2025-02-20"
+  },
+  {
+   "assumption": "D&A / revenue",
+   "low": 0.0372646501153381,
+   "high": 0.06011728277754137,
+   "range_source": "Gerdau p10–p90",
+   "value_at_low": 28.9110801643888,
+   "value_at_high": 36.813132464904385,
+   "swing": 7.902052300515585,
+   "base_value": 31.00594273384737,
+   "price": 16.43,
+   "date": "2025-02-20"
+  },
+  {
+   "assumption": "Equity risk premium",
+   "low": 0.04,
+   "high": 0.07,
+   "range_source": "test range 4%–7%",
+   "value_at_low": 34.23893901641169,
+   "value_at_high": 27.1462206283969,
+   "swing": 7.0927183880147915,
+   "base_value": 31.00594273384737,
+   "price": 16.43,
+   "date": "2025-02-20"
+  },
+  {
+   "assumption": "Terminal growth",
+   "low": 0.04926999999999993,
+   "high": 0.06926999999999993,
+   "range_source": "test range ± 1 p.p.",
+   "value_at_low": 28.88115903933263,
+   "value_at_high": 33.55419545486282,
+   "swing": 4.673036415530191,
+   "base_value": 31.00594273384737,
+   "price": 16.43,
+   "date": "2025-02-20"
+  },
+  {
+   "assumption": "Working capital / revenue",
+   "low": 0.1737709619117092,
+   "high": 0.2550905366479519,
+   "range_source": "Gerdau p10–p90",
+   "value_at_low": 32.2498374038126,
+   "value_at_high": 28.183962823576355,
+   "swing": 4.065874580236244,
+   "base_value": 31.00594273384737,
+   "price": 16.43,
+   "date": "2025-02-20"
+  },
+  {
+   "assumption": "Beta",
+   "low": 0.9661296536498859,
+   "high": 1.303961870347968,
+   "range_source": "95% interval of the regression",
+   "value_at_low": 33.00613983425955,
+   "value_at_high": 29.216254542097044,
+   "swing": 3.7898852921625057,
+   "base_value": 31.00594273384737,
+   "price": 16.43,
+   "date": "2025-02-20"
+  },
+  {
+   "assumption": "Country risk premium",
+   "low": 0.015,
+   "high": 0.04,
+   "range_source": "test range 1.5%–4%",
+   "value_at_low": 31.75337828594202,
+   "value_at_high": 29.46620870693431,
+   "swing": 2.28716957900771,
+   "base_value": 31.00594273384737,
+   "price": 16.43,
+   "date": "2025-02-20"
+  },
+  {
+   "assumption": "Credit spread",
+   "low": 0.01,
+   "high": 0.03,
+   "range_source": "test range 1%–3%",
+   "value_at_low": 31.337467261966506,
+   "value_at_high": 29.911442798652885,
+   "swing": 1.4260244633136203,
+   "base_value": 31.00594273384737,
+   "price": 16.43,
+   "date": "2025-02-20"
+  }
+ ],
+ "cycle": [
+  {
+   "date": "2021-02-25",
+   "steel_month": "2020-12",
+   "steel_ppi": 230.7,
+   "steel_yoy": 0.11287988422575967,
+   "steel_vs_10y_avg": 0.041495805274444075,
+   "phase": "rising"
+  },
+  {
+   "date": "2022-02-24",
+   "steel_month": "2021-12",
+   "steel_ppi": 433.252,
+   "steel_yoy": 0.8779887299523192,
+   "steel_vs_10y_avg": 0.8806997936231802,
+   "phase": "rising"
+  },
+  {
+   "date": "2023-03-02",
+   "steel_month": "2023-01",
+   "steel_ppi": 323.534,
+   "steel_yoy": -0.23586137832814125,
+   "steel_vs_10y_avg": 0.31594399941754747,
+   "phase": "falling"
+  },
+  {
+   "date": "2024-02-21",
+   "steel_month": "2023-12",
+   "steel_ppi": 325.503,
+   "steel_yoy": 0.008754857783920711,
+   "steel_vs_10y_avg": 0.27276222700707486,
+   "phase": "flat"
+  },
+  {
+   "date": "2025-02-20",
+   "steel_month": "2024-12",
+   "steel_ppi": 288.188,
+   "steel_yoy": -0.11463796032601847,
+   "steel_vs_10y_avg": 0.09290813905363793,
+   "phase": "falling"
+  }
+ ],
+ "questions": {
+  "questions": [
+   {
+    "assumption": "EBIT margin",
+    "question": "Por que a margem EBIT vai de 7,4% em 2021 a 16,5% em 2025, quando o histórico da Gerdau tem mediana de 8,1% e p90 de 18,6%? Você está assumindo que o pico do ciclo é o novo normal?",
+    "why_it_is_risky": "A margem é a premissa de maior peso no tornado (swing de R$ 36,3), e a data de 2025 está no percentil 0,87, em região de ciclo alto. Se a margem reverter à mediana, o valor cai drasticamente.",
+    "numbers_for_the_answer": "Margem 2025 = 16,5% (percentil 0,87); mediana histórica 8,1%; p10–p90 = 4,9%–18,6%; valor em 4,9% = R$ 0,28 vs base R$ 31,01 e em 18,6% = R$ 36,60.",
+    "suggested_answer": "A margem foi limitada ao p10–p90 histórico, mas a base usa 16,5%, acima da mediana. Reconheço que o resultado é muito sensível a essa premissa e apresento o cenário com margem mediana como teste de robustez."
+   },
+   {
+    "assumption": "Revenue growth",
+    "question": "Como você justifica crescimento de receita de 11,1% em 2025 se o ciclo do aço está em queda (steel_yoy -11,5%, fase falling)?",
+    "why_it_is_risky": "O crescimento usado fica no percentil 0,73 e acima da mediana histórica de 5,2%, o que descola a projeção do ciclo setorial observado.",
+    "numbers_for_the_answer": "Crescimento 2025 = 11,1% (percentil 0,73); mediana histórica 5,2%; p90 22,3%; steel_yoy 2024-12 = -11,5%; valor em -13,9% = R$ 21,02 vs R$ 36,58 em 22,3%.",
+    "suggested_answer": "O crescimento de 11,1% reflete a média recente da própria empresa, mas admito que o ciclo indica desaceleração. O tornado mostra que o intervalo p10–p90 move o valor em cerca de R$ 15, o que deve ser comunicado como incerteza."
+   },
+   {
+    "assumption": "Tax rate",
+    "question": "Por que a alíquota efetiva sobe de 11,8% para 23,5% e por que não usar 34%, a alíquota nominal brasileira?",
+    "why_it_is_risky": "A alíquota efetiva oscila muito e a escolha afeta o valor. Além disso, a série histórica tem mínimo zero, o que pode refletir benefícios fiscais temporários.",
+    "numbers_for_the_answer": "Tax rate 2025 = 23,5% (percentil 0,73); mediana histórica 15,8%; p90 27,5%; valor em 0% = R$ 39,92 e em 27,5% = R$ 29,32; limite do cálculo 0–34%.",
+    "suggested_answer": "Usei a alíquota efetiva observada, limitada a 0–34%, pois reflete benefícios e juros sobre capital próprio. Mostro que o valor varia cerca de R$ 10 entre os extremos do p10–p90 e que o uso de 34% reduziria o valor."
+   },
+   {
+    "assumption": "Capex / revenue",
+    "question": "Capex de 6,0% da receita em 2025, no percentil 0,73, é investimento de expansão ou manutenção? Como isso afeta o FCFF?",
+    "why_it_is_risky": "Capex alto reduz o FCFF, mas também pode gerar crescimento; a banca pode questionar se a premissa é coerente com o crescimento e a margem assumidos.",
+    "numbers_for_the_answer": "Capex 2025 = 6,0% (percentil 0,73); mediana histórica 5,4%; p10–p90 = 3,1%–8,3%; valor em 3,1% = R$ 41,19 vs R$ 23,28 em 8,3%; D&A 2025 = 4,3%.",
+    "suggested_answer": "O capex acima da D&A indica expansão, o que é coerente com o crescimento usado. Reconheço o risco de dupla contagem entre crescimento alto e capex elevado e mostro o intervalo de R$ 18 no tornado."
+   },
+   {
+    "assumption": "Equity risk premium",
+    "question": "Por que o prêmio maduro de 5% e o lambda vinculado ao EMBI não estão contabilizando o risco-país duas vezes?",
+    "why_it_is_risky": "O ke soma prêmio maduro, beta e lambda × EMBI, e a taxa rf já desconta o EMBI. Uma banca pode alegar dupla contagem do risco-país.",
+    "numbers_for_the_answer": "Prêmio maduro faixa 4%–7%; swing no tornado = R$ 7,09 (value_at_low R$ 34,24; value_at_high R$ 27,15); rf = NTN-F − EMBI; prêmio-país faixa 1,5%–4% com swing R$ 2,29.",
+    "suggested_answer": "rf é a NTN-F menos o EMBI, então o risco-país sai da taxa livre e volta via lambda × EMBI no ke, sem dupla contagem. Mostro que a sensibilidade ao prêmio maduro é de R$ 7, e que o risco-país tem efeito menor."
+   },
+   {
+    "assumption": "Janela de estimação",
+    "question": "A janela de 5 anos é suficiente para capturar a dinâmica do aço? Por que as datas de 2021 e 2022 incluem o boom pós-pandemia?",
+    "why_it_is_risky": "O período inclui o auge de 2021–2022 (steel_vs_10y_avg de 0,88 em 2022) e pode inflar as premissas de margem e crescimento.",
+    "numbers_for_the_answer": "Ciclo: 2022 steel_vs_10y_avg = 0,881 (phase rising); 2025 = 0,093 (falling); margem 2021 = 7,4% vs 2022 = 11,7%; janela de 5 anos em todas as datas.",
+    "suggested_answer": "A janela de 5 anos mistura fases de alta e de queda, mas as premissas mudam muito entre 2021 e 2022 justamente pelo ciclo. Reconheço que a estimação é sensível à janela e proponho testar janelas alternativas como robustez."
+   },
+   {
+    "assumption": "Cost of debt",
+    "question": "Por que o custo da dívida usa NTN-F mais spread Baa menos Treasury, e não a despesa financeira contábil da DRE?",
+    "why_it_is_risky": "A definição muda de Selic + spread para NTN-F + spread em 20/10. Sem explicar a troca, a banca pode questionar a comparabilidade entre datas e o efeito cambial.",
+    "numbers_for_the_answer": "Cost of debt usa NTN-F + spread Baa − Treasury 10a; spread teste 1%–3% com swing de R$ 1,43 (R$ 31,34 em 1% e R$ 29,91 em 3%); custo contábil = despesa financeira total (inclui variação cambial) / dívida média.",
+    "suggested_answer": "Uso o custo de captação atual por ser prospectivo, enquanto o custo contábil mistura variação cambial e dívidas antigas. Mostro que o efeito do spread é pequeno (R$ 1,43) e que a troca de metodologia em 20/10 foi documentada."
+   }
+  ]
+ }
+}
