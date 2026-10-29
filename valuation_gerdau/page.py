@@ -294,6 +294,7 @@ def build(out=OUT):
             "Gerdau valuation with AI reviewers", esc(lead), links, "\n".join(body), "python -m valuation_gerdau.page"
         ),
         encoding="utf-8",
+        newline="\n",
     )
     return out
 
