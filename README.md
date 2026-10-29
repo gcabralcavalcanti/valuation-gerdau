@@ -6,6 +6,9 @@ Four AI reviewers for my undergraduate thesis, which values the steelmaker Gerda
 generate: one checks the data, one redoes the math, one tests other ways of doing it, and one prepares the questions
 the examining board is likely to ask.
 
+**Result:** 20 of 20 figures in the thesis spreadsheet match Gerdau's published results, each with the page it came
+from ([audit](output/auditor.md)).
+
 ![Public data only](https://img.shields.io/badge/data-public%20only-2a78d6)
 ![Built with AI assistance](https://img.shields.io/badge/built%20with-AI%20assistance-52514e)
 
